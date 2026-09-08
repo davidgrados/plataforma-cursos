@@ -9,7 +9,9 @@ import { useAuthUser } from '@/lib/auth-context';
 import dynamic from 'next/dynamic';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import Markdown from '@/components/Markdown';
+import Quiz from '@/components/Quiz';
 import { api } from '@/lib/api';
+import { QUIZZES } from '@/lib/quiz-data';
 import type { Lesson } from '@/lib/types';
 import { cn, LESSON_TYPE_LABEL } from '@/lib/utils';
 
@@ -71,6 +73,7 @@ export default function LessonPage() {
   const showTerminal = lesson.type !== 'exam';
   const crumbCourse = lesson.course;
   const crumbModule = lesson.module;
+  const quiz = QUIZZES[lesson.slug];
 
   const typeStyles: Record<string, string> = {
     chapter: 'bg-accent-cyan/10 text-accent-cyan border-accent-cyan/20',
@@ -106,7 +109,16 @@ export default function LessonPage() {
       </header>
 
       <article className="rounded-2xl border border-white/5 bg-ink-900/60 p-6 sm:p-8">
-        <Markdown content={lesson.content_md} />
+        {quiz ? (
+          <div className="flex flex-col gap-4">
+            <p className="text-sm text-slate-400">
+              Selecciona una opción por pregunta y pulsa <b>«Comprobar respuestas»</b>.
+            </p>
+            <Quiz questions={quiz} />
+          </div>
+        ) : (
+          <Markdown content={lesson.content_md} />
+        )}
       </article>
 
       {showTerminal && (
