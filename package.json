@@ -1,0 +1,53 @@
+{
+  "name": "plataforma-cursos-linux",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Plataforma multi-curso con laboratorio Linux interactivo (Next.js + Cloudflare Pages + D1 + R2 + Clerk)",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "seed": "tsx scripts/seed-linux-course.ts",
+    "seed:local": "tsx scripts/seed-linux-course.ts --local",
+    "db:init": "wrangler d1 execute DB --local --file=./schema.sql",
+    "db:init:remote": "wrangler d1 execute DB --remote --file=./schema.sql",
+    "pages:build": "npx @cloudflare/next-on-pages",
+    "pages:dev": "wrangler pages dev .vercel/output/static --compatibility-date=2024-06-20 --compatibility-flags=nodejs_compat",
+    "pages:deploy": "npx @cloudflare/next-on-pages && wrangler pages deploy .vercel/output/static"
+  },
+  "dependencies": {
+    "@clerk/nextjs": "^5.2.0",
+    "@clerk/themes": "^2.1.0",
+    "@xterm/addon-fit": "^0.10.0",
+    "@xterm/xterm": "^5.5.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "easymde": "^2.18.0",
+    "framer-motion": "^11.3.0",
+    "highlight.js": "^11.10.0",
+    "lucide-react": "^0.414.0",
+    "next": "^15.5.24",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-markdown": "^9.0.1",
+    "react-simplemde-editor": "^5.2.0",
+    "rehype-highlight": "^7.0.0",
+    "remark-gfm": "^4.0.0",
+    "sonner": "^1.5.0",
+    "tailwind-merge": "^2.4.0"
+  },
+  "devDependencies": {
+    "@opennextjs/cloudflare": "^1.20.6",
+    "@tailwindcss/typography": "^0.5.13",
+    "@types/node": "^20.14.10",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.39",
+    "tailwindcss": "^3.4.6",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3",
+    "wrangler": "^4.125.0"
+  }
+}

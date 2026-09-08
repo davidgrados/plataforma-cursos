@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-ink-950 text-slate-200 antialiased;
+  background-image:
+    radial-gradient(60rem 40rem at 100% -10%, rgba(34, 211, 238, 0.08), transparent 60%),
+    radial-gradient(50rem 35rem at -10% 0%, rgba(52, 211, 153, 0.08), transparent 55%),
+    radial-gradient(40rem 40rem at 50% 120%, rgba(139, 92, 246, 0.06), transparent 60%);
+  background-attachment: fixed;
+}
+
+::selection {
+  background: rgba(52, 211, 153, 0.35);
+}
+
+/* Scrollbar sutil */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: #1b2440;
+  border-radius: 9999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #2b3a63;
+}
+
+/* Xterm ocupa todo el contenedor */
+.xterm {
+  height: 100%;
+}
+.xterm .xterm-viewport {
+  border-radius: 0.5rem;
+}
+.xterm .xterm-screen {
+  padding: 0.5rem;
+}
+
+/* Resaltado de código en el markdown */
+pre code.hljs {
+  @apply font-mono text-sm leading-relaxed;
+}
+
+/* Editor EasyMDE en tema oscuro */
+.EasyMDEContainer .CodeMirror {
+  background: #0e1424 !important;
+  color: #d4d4d4 !important;
+  border: 1px solid #1b2440 !important;
+  border-radius: 0.5rem !important;
+  font-family: var(--font-mono) !important;
+  min-height: 260px;
+}
+.EasyMDEContainer .editor-toolbar {
+  border: 1px solid #1b2440 !important;
+  border-radius: 0.5rem 0.5rem 0 0 !important;
+  background: #0b0f1a !important;
+}
+.EasyMDEContainer .editor-toolbar button {
+  color: #cbd5e1 !important;
+}
+.EasyMDEContainer .editor-toolbar button.active,
+.EasyMDEContainer .editor-toolbar button:hover {
+  background: #1b2440 !important;
+  border-color: #2b3a63 !important;
+}
+.EasyMDEContainer .editor-statusbar {
+  color: #64748b !important;
+}
+.EasyMDEContainer .CodeMirror-cursor {
+  border-left: 1px solid #34d399 !important;
+}
+.editor-preview,
+.editor-preview-side {
+  background: #0b0f1a !important;
+  color: #d4d4d4 !important;
+}

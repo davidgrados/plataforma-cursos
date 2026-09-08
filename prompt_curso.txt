@@ -1,0 +1,284 @@
+Perfecto. Incorporo tus dos nuevas solicitudes al prompt:
+
+1. **Soporte para múltiples cursos** (Linux, Inteligencia Artificial, Seguridad Informática, etc.) con un panel de administración que permita crear, editar y eliminar cursos completos.
+2. **Reestructuración del curso "Linux Básico"** para que **solo tenga un único examen final** (eliminando los exámenes por módulo y el examen parcial), manteniendo solo los capítulos y prácticas.
+
+A continuación, el **prompt definitivo y completo** en español:
+
+---
+
+# 🚀 PROMPT DEFINITIVO: Plataforma Multi-Curso con Laboratorio Linux Interactivo
+
+## 1. Objetivo del Proyecto
+
+Construir una aplicación web full‑stack desplegada en Cloudflare (Pages + Workers + D1 + R2) que funcione como una **plataforma de cursos interactivos**. El principal curso es **"Linux Básico"**, pero el sistema debe estar diseñado para soportar **múltiples cursos** (ej. "Inteligencia Artificial", "Seguridad Informática", etc.) que el administrador pueda crear y gestionar dinámicamente desde el panel de control.
+
+Cada curso contendrá **módulos**, y cada módulo tendrá **lecciones** (capítulos teóricos, prácticas y exámenes). En el caso específico del curso **"Linux Básico"**, la estructura es la siguiente:
+- **16 módulos** (del 1 al 16).
+- Cada módulo incluye su respectivo **Capítulo** (teoría).
+- Los módulos del 4 al 16 incluyen además una **Práctica** (ejercicio interactivo con terminal).
+- **No hay exámenes por módulo** ni examen parcial.
+- **Únicamente hay un Examen Final Integral** (que cubre los 16 módulos) al final del curso.
+
+El núcleo técnico sigue siendo el emulador de terminal 100% en JavaScript (Xterm.js) con sistema de archivos virtual persistente en D1, validación de ejercicios y panel de administración para editar contenido, estado inicial del FS y lógica de verificación.
+
+---
+
+## 2. Stack Tecnológico (Obligatorio)
+
+- **Frontend**: Next.js 14 (App Router) con TypeScript y Tailwind CSS. Desplegado en Cloudflare Pages.
+- **Backend API**: Cloudflare Functions (Worker) usando el enrutador nativo de Pages (`/functions`).
+- **Base de Datos**: Cloudflare D1 (SQLite) – tablas para cursos, módulos, lecciones, usuarios y progreso.
+- **Autenticación**: Clerk.dev con login exclusivo vía Google (OAuth). Uso de `clerk_id` como clave foránea en D1.
+- **Almacenamiento**: Cloudflare R2 para imágenes de los cursos (soportado en el panel admin).
+- **Entorno de Ejecución**: Node.js v18+ / Bun (para desarrollo local).
+
+---
+
+## 3. Estructura del Curso "Linux Básico" (Contenido Semilla)
+
+Este es el contenido que debe estar precargado en la base de datos (mediante un script de seed). El administrador podrá luego agregar más cursos (ej. IA, Ciberseguridad) desde el panel.
+
+| Módulo | Nombre del Módulo                               | Lecciones incluidas                     |
+|--------|-------------------------------------------------|-----------------------------------------|
+| 1      | Introducción a Linux                            | Capítulo 1                              |
+| 2      | Aplicaciones de código abierto y Licencias      | Capítulo 2                              |
+| 3      | El uso de Linux                                 | Capítulo 3                              |
+| 4      | Competencias de Línea de Comandos               | Capítulo 4, Práctica 04                 |
+| 5      | Encontrar Ayuda                                 | Capítulo 5, Práctica 05                 |
+| 6      | Gestión de los Archivos y Directorios           | Capítulo 6, Práctica 06                 |
+| 7      | Empacamiento y Compresión                       | Capítulo 7, Práctica 07                 |
+| 8      | Barras Verticales, Redirección y Regex          | Capítulo 8, Práctica 08                 |
+| 9      | El Scripting Básico                             | Capítulo 9, Práctica 09                 |
+| 10     | Comprensión del hardware de la computadora      | Capítulo 10, Práctica 10                |
+| 11     | Gestión de paquetes y procesos                  | Capítulo 11, Práctica 11                |
+| 12     | Configuración de la red                         | Capítulo 12, Práctica 12                |
+| 13     | Seguridad del sistema y del usuario             | Capítulo 13, Práctica 13                |
+| 14     | Crear un nuevo usuario                          | Capítulo 14, Práctica 14                |
+| 15     | Propiedad y permisos                            | Capítulo 15, Práctica 15                |
+| 16     | Permisos especiales, vínculos y ubicaciones     | Capítulo 16, Práctica 16                |
+| –      | **Examen Final Integral (Módulos 1-16)**        | Examen final (único examen del curso)   |
+
+**Nota**: El administrador puede crear otros cursos (ej. "Inteligencia Artificial" o "Seguridad Informática") con su propia estructura de módulos y lecciones, sin estar limitado al esquema de 16 módulos.
+
+---
+
+## 4. Base de Datos (Esquema D1)
+
+```sql
+-- Cursos (nuevo nivel superior)
+CREATE TABLE courses (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  slug TEXT UNIQUE NOT NULL,
+  title TEXT NOT NULL,
+  description TEXT,
+  image_url TEXT,               -- opcional, para portada del curso
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Módulos (pertenecen a un curso)
+CREATE TABLE modules (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  course_id INTEGER NOT NULL,
+  title TEXT NOT NULL,
+  order_num INTEGER NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE
+);
+
+-- Lecciones (capítulos, prácticas, exámenes)
+CREATE TABLE lessons (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  slug TEXT UNIQUE NOT NULL,
+  module_id INTEGER NOT NULL,
+  title TEXT NOT NULL,
+  type TEXT NOT NULL CHECK(type IN ('chapter','practice','exam')),
+  content_md TEXT NOT NULL,          -- Markdown
+  initial_fs TEXT NOT NULL,          -- JSON del sistema de archivos inicial
+  check_logic TEXT,                  -- Código JS (string) para validar ejercicio
+  order_num INTEGER NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (module_id) REFERENCES modules(id) ON DELETE CASCADE
+);
+
+-- Usuarios (sincronizados con Clerk)
+CREATE TABLE users (
+  clerk_id TEXT PRIMARY KEY,
+  email TEXT UNIQUE NOT NULL,
+  name TEXT,
+  role TEXT DEFAULT 'student',       -- 'admin' o 'student'
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Sesión de terminal (progreso por usuario/lección)
+CREATE TABLE user_sessions (
+  clerk_id TEXT NOT NULL,
+  lesson_id INTEGER NOT NULL,
+  current_path TEXT DEFAULT '/home/student',
+  virtual_fs TEXT NOT NULL,          -- JSON del estado actual del FS
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (clerk_id, lesson_id),
+  FOREIGN KEY (clerk_id) REFERENCES users(clerk_id) ON DELETE CASCADE,
+  FOREIGN KEY (lesson_id) REFERENCES lessons(id) ON DELETE CASCADE
+);
+
+-- Progreso de ejercicios completados
+CREATE TABLE user_progress (
+  clerk_id TEXT NOT NULL,
+  lesson_id INTEGER NOT NULL,
+  completed BOOLEAN DEFAULT FALSE,
+  completed_at DATETIME,
+  PRIMARY KEY (clerk_id, lesson_id),
+  FOREIGN KEY (clerk_id) REFERENCES users(clerk_id) ON DELETE CASCADE,
+  FOREIGN KEY (lesson_id) REFERENCES lessons(id) ON DELETE CASCADE
+);
+```
+
+---
+
+## 5. Endpoints API (Workers)
+
+### Públicos (autenticación opcional)
+- `GET /api/courses` – Lista todos los cursos disponibles.
+- `GET /api/courses/:slug` – Devuelve un curso con sus módulos y lecciones.
+- `GET /api/lessons/:id` – Devuelve los datos de una lección específica.
+
+### Terminal
+- `POST /api/terminal` – Ejecuta comando sobre la sesión del usuario.  
+  Body: `{ lesson_id: number, command: string }`.  
+  Headers: `x-clerk-user-id`.  
+  Lógica: Obtener sesión de D1 -> ejecutar comando con el intérprete -> guardar nuevo estado -> devolver `{ output, current_path }`.
+
+### Administración (solo admin)
+- **Cursos**:
+  - `GET /api/admin/courses` – Lista todos los cursos.
+  - `POST /api/admin/courses` – Crea un nuevo curso (slug, título, descripción).
+  - `PUT /api/admin/courses/:id` – Actualiza un curso.
+  - `DELETE /api/admin/courses/:id` – Elimina un curso (con sus módulos y lecciones en cascada).
+- **Módulos**:
+  - `POST /api/admin/modules` – Crea un módulo dentro de un curso.
+  - `PUT /api/admin/modules/:id` – Actualiza módulo (título, orden).
+  - `DELETE /api/admin/modules/:id` – Elimina módulo.
+- **Lecciones**:
+  - `GET /api/admin/lessons` – Lista todas las lecciones (con filtro por módulo).
+  - `PUT /api/admin/lessons` – Crea o actualiza una lección (título, tipo, contenido, initial_fs, check_logic, orden).
+  - `DELETE /api/admin/lessons/:id` – Elimina lección.
+- **Imágenes**:
+  - `POST /api/admin/upload` – Sube imagen a R2 y devuelve URL pública.
+
+---
+
+## 6. Módulo Público (El Alumno)
+
+### Página de inicio (`/`)
+- Muestra una **galería o lista de cursos** disponibles (ej. "Linux Básico", "Inteligencia Artificial", "Seguridad Informática").
+- Al hacer clic en un curso, se navega a `/course/[slug]`.
+
+### Página del curso (`/course/[slug]`)
+- Muestra el título y descripción del curso.
+- Lista todos los **módulos** en orden, con sus lecciones (capítulos, prácticas, exámenes) en formato acordeón o tabla.
+- Cada lección enlaza a `/lesson/[id]`.
+
+### Página de lección (`/lesson/[id]`)
+- Renderiza el título y el contenido Markdown.
+- Debajo, el **emulador de terminal** (Xterm.js) con las siguientes características:
+  - Prompt: `student@linux:~$ `
+  - Comandos soportados: `pwd`, `ls`, `cd`, `mkdir`, `touch`, `echo` (con y sin `>`), `cat`, `rm` (con `-r`), `grep`, `find . -name`, `clear`.
+  - Comandos no soportados: `bash: comando: command not found`.
+  - Persistencia automática en D1 por usuario y lección.
+  - Botón **"Verificar ejercicio"** que ejecuta `check_logic` (código JS) sobre el FS actual. Si es correcto, marca la lección como completada en `user_progress` y muestra mensaje de éxito.
+
+---
+
+## 7. Módulo de Administración (El Profesor)
+
+- Ruta: `/admin/dashboard` (protegida con Clerk y verificación de `role = 'admin'`).
+- **Panel lateral** con secciones:
+  1. **Cursos**: Lista, crea, edita y elimina cursos. Al editar, permite cambiar título, slug, descripción e imagen de portada.
+  2. **Módulos**: Dentro de un curso, permite agregar/editar/eliminar módulos y reordenarlos (drag & drop o input numérico).
+  3. **Lecciones**: Dentro de un módulo, permite:
+     - Seleccionar tipo (`chapter`, `practice`, `exam`).
+     - Título.
+     - Contenido en Markdown con editor (react-simplemde-editor) y vista previa en vivo.
+     - Editor JSON para el `initial_fs` (con validación de sintaxis).
+     - Textarea para el código JavaScript de `check_logic`.
+     - Orden.
+     - Botón "Guardar" (PUT a `/api/admin/lessons`).
+  4. **Subida de imágenes**: botón en el editor Markdown que sube el archivo a R2 e inserta la URL en el texto.
+
+---
+
+## 8. Seguridad y Middleware
+
+- Usar `clerkMiddleware` para proteger todas las rutas, excepto `/` y `/course/*` (que son públicos para ver el catálogo, pero las lecciones requieren autenticación).
+- Si un usuario no autenticado intenta acceder a `/lesson/*`, redirigir a login de Clerk.
+- En el Worker de terminal, validar que el `clerk_id` exista en D1; si no existe, crearlo con `role = 'student'`.
+- Para rutas `/admin/*`, verificar que el `role` del usuario en D1 sea `'admin'`. Si no, devolver `403 Forbidden`.
+
+---
+
+## 9. Estructura de Carpetas Esperada
+
+```
+/project-root
+├── /app
+│   ├── /(public)
+│   │   ├── /page.tsx                 # Lista de cursos
+│   │   └── /course/[slug]/page.tsx  # Vista de un curso con sus módulos
+│   ├── /lesson/[id]/page.tsx        # Lección con terminal
+│   ├── /admin/dashboard/page.tsx    # Panel de administración
+│   ├── layout.tsx
+│   └── globals.css
+├── /components
+│   ├── TerminalEmbed.tsx
+│   ├── MarkdownEditor.tsx
+│   ├── CourseList.tsx
+│   ├── ModuleList.tsx
+│   └── LessonForm.tsx
+├── /lib
+│   ├── d1.ts
+│   ├── terminal.ts                  # Intérprete de comandos
+│   └── fs-utils.ts                  # Manipulación del FS virtual (JSON)
+├── /functions
+│   ├── /api
+│   │   ├── /terminal.ts
+│   │   ├── /courses.ts
+│   │   ├── /lessons.ts
+│   │   └── /admin
+│   │       ├── /courses.ts
+│   │       ├── /modules.ts
+│   │       ├── /lessons.ts
+│   │       └── /upload.ts
+│   └── _middleware.ts
+├── /scripts
+│   └── seed-linux-course.ts         # Script para poblar el curso Linux con los 16 módulos y su examen final
+├── wrangler.toml
+├── next.config.js
+├── package.json
+└── schema.sql
+```
+
+---
+
+## 10. Instrucciones de Estilo y UX
+
+- **Tema oscuro** en la terminal: fondo `#1e1e1e`, texto `#d4d4d4`.
+- **Prompt**: `student@linux:~$ `.
+- **Diseño responsive**: terminal ocupa 100% del ancho y al menos 400px de alto.
+- **Persistencia**: al recargar la página, restaurar el estado guardado en D1.
+- **Navegación intuitiva**: migas de pan (Curso > Módulo > Lección) para que el alumno sepa siempre dónde está.
+
+---
+
+## 11. Notas Técnicas Obligatorias
+
+- **No usar** `child_process` ni `exec`; toda la terminal es simulada en memoria/JSON.
+- Soporte para rutas absolutas (`/home/...`) y relativas (`.`, `..`).
+- `rm -r` debe eliminar recursivamente todas las claves del JSON que comiencen con esa ruta.
+- Usar `xterm-addon-fit` para ajustar automáticamente el tamaño de la terminal.
+- Validar que el JSON de `initial_fs` esté bien formado antes de guardar en el panel de admin.
+- El script de seed debe crear el curso "Linux Básico" con los 16 módulos y sus respectivas lecciones (capítulos y prácticas), y al final agregar la lección de tipo `'exam'` correspondiente al **Examen Final Integral**. Los exámenes por módulo y el examen parcial **no deben ser creados**.
+
+---
+
+Este prompt ya incluye **gestión multi-curso** y la **estructura específica de Linux Básico con un solo examen final**. Con esto, el desarrollador tendrá todas las especificaciones claras para implementar la plataforma tal como la necesitas.
