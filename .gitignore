@@ -35,6 +35,7 @@ yarn-error.log*
 seed.sql
 seed-english.sql
 seed-ai.sql
+seed-seguridad.sql
 
 # tipos
 *.tsbuildinfo

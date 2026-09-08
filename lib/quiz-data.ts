@@ -273,4 +273,67 @@ export const QUIZZES: Record<string, QuizQuestion[]> = {
       answer: 0,
     },
   ],
+
+  'seg-examen-final': [
+    {
+      question: '¿Cuáles son los tres pilares de la seguridad (tríada CIA)?',
+      options: ['Confidencialidad, integridad y disponibilidad', 'Velocidad, color y tamaño', 'Red, disco y RAM', 'Clave, usuario y correo'],
+      answer: 0,
+    },
+    {
+      question: '¿Qué es el phishing?',
+      options: ['Un engaño para robar credenciales o datos', 'Un virus que borra archivos', 'Un cortafuegos', 'Un tipo de contraseña'],
+      answer: 0,
+    },
+    {
+      question: 'Una contraseña segura es…',
+      options: ['Larga, única y con varios tipos de caracteres', 'Tu nombre de nacimiento', 'La misma en todos los sitios', 'Corta y fácil de recordar'],
+      answer: 0,
+    },
+    {
+      question: '¿Qué aporta la autenticación en dos pasos (2FA)?',
+      options: ['Una segunda verificación además de la contraseña', 'Más velocidad', 'Borrar el historial', 'Una contraseña más corta'],
+      answer: 0,
+    },
+    {
+      question: 'El ransomware…',
+      options: ['Cifra tus archivos y pide rescate', 'Espía tu teclado', 'Muestra publicidad', 'Acelera el equipo'],
+      answer: 0,
+    },
+    {
+      question: '¿Por qué es clave actualizar el software?',
+      options: ['Corrige vulnerabilidades de seguridad', 'Solo cambia el aspecto', 'Libera espacio', 'No tiene importancia'],
+      answer: 0,
+    },
+    {
+      question: 'En una red Wi-Fi pública es recomendable…',
+      options: ['Usar una VPN y HTTPS', 'Entrar al banco sin protección', 'Compartir tu contraseña', 'Desactivar el antivirus'],
+      answer: 0,
+    },
+    {
+      question: 'Una señal de phishing es…',
+      options: ['Un mensaje urgente que pide datos o contraseñas', 'Un correo de un amigo', 'Una actualización del sistema', 'Un enlace conocido'],
+      answer: 0,
+    },
+    {
+      question: '¿Qué hace el cifrado?',
+      options: ['Convierte la información en un código que solo se lee con clave', 'Borra los datos', 'Acelera internet', 'Copia archivos'],
+      answer: 0,
+    },
+    {
+      question: 'La regla 3-2-1 de copias de seguridad significa…',
+      options: ['3 copias en 2 soportes, 1 fuera de sitio', '3 discos en 2 PCs', '2 copias en 3 nubes', '1 copia en 3 carpetas'],
+      answer: 0,
+    },
+    {
+      question: '¿Qué es un gestor de contraseñas?',
+      options: ['Guarda contraseñas fuertes y únicas de forma cifrada', 'Un antivirus', 'Un navegador', 'Un cortafuegos'],
+      answer: 0,
+    },
+    {
+      question: '¿Cuál es el "eslabón más débil" en la seguridad?',
+      options: ['El error humano', 'El antivirus', 'El hardware', 'El cifrado'],
+      answer: 0,
+    },
+  ],
 };
