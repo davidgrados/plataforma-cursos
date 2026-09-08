@@ -173,27 +173,33 @@ npx wrangler d1 execute DB --local --file=./seed.sql   # aplica el seed
 
 ---
 
-## ☁️ Despliegue en Cloudflare Pages
+## ☁️ Despliegue en Cloudflare Workers (OpenNext)
 
-La app usa `@cloudflare/next-on-pages` (single-worker): la API vive en `app/api/**` y los
-bindings D1/R2 se leen con `getRequestContext().env`.
+La app se despliega en **Cloudflare Workers** con el adaptador **OpenNext** (`@opennextjs/cloudflare`).
+La API vive en `app/api/**` (route handlers) y los bindings se leen con
+`getCloudflareContext({ async: true })`.
 
-1. Crea los recursos y actualiza `wrangler.toml`:
-   ```bash
-   npx wrangler d1 create plataforma-cursos-db          # copia el database_id a wrangler.toml
-   npx wrangler d1 execute DB --remote --file=./schema.sql
-   npx wrangler d1 execute DB --remote --file=./seed.sql
-   npx wrangler r2 bucket create plataforma-cursos-images
-   ```
-2. Configura en Cloudflare Pages:
-   - Build command: `npm run pages:build`
-   - Output directory: `.vercel/output/static`
-3. Añade los bindings `DB` (D1) y `IMAGES` (R2) y las variables de Clerk
-   (`NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`).
-4. Despliega con `npm run pages:deploy` (o con la integración Git de Cloudflare Pages).
+### Archivos de configuración (en el repo)
+- `wrangler.jsonc`: config del Worker (binding D1 `DB`, `nodejs_compat`, assets, worker `plataforma-cursos`).
+- `open-next.config.ts`: adaptador OpenNext.
+- Scripts: `npm run preview`, `npm run deploy`, `npm run upload`.
 
-Para marcar al primer administrador:
+### Recursos
+```bash
+# base D1 + esquema + semilla
+npx wrangler d1 create plataforma-cursos-db            # copia el database_id a wrangler.jsonc
+npx wrangler d1 execute DB --remote --file=./schema.sql
+npx wrangler d1 execute DB --remote --file=./seed.sql
+```
 
+### En Cloudflare (proyecto Worker conectado a Git)
+- **Build command:** `npm run build`
+- **Deploy command:** `npx opennextjs-cloudflare build`
+- **Bindings → D1:** nombre `DB`, base `plataforma-cursos-db`.
+- **Variables:** `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`.
+- Habilita la URL de `workers.dev`.
+
+### Primer administrador
 ```bash
 npx wrangler d1 execute DB --remote --command "UPDATE users SET role='admin' WHERE clerk_id='user_XXXX';"
 ```
