@@ -8,9 +8,9 @@ import './globals.css';
 
 // @cloudflare/next-on-pages exige el runtime edge en todas las rutas no estáticas.
 export const metadata: Metadata = {
-  title: 'Plataforma de Cursos Interactivos',
+  title: 'Edúcate Comas',
   description:
-    'Aprende Linux y otras disciplinas con un laboratorio de terminal interactivo en tu navegador.',
+    'Aprende Linux, inglés, IA, seguridad y más con cursos interactivos y laboratorio en tu navegador.',
 };
 
 // Sin clave de Clerk => modo vista previa (usuario fijo, sin autenticación).

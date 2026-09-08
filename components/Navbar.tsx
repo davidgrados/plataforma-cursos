@@ -16,7 +16,7 @@ export default function Navbar() {
             <TerminalSquare className="h-5 w-5" strokeWidth={2.2} />
           </span>
           <span className="text-base font-semibold tracking-tight text-white">
-            Aula<span className="text-accent">Linux</span>
+            Edúcate<span className="text-accent"> Comas</span>
           </span>
         </Link>
 
