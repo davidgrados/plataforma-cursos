@@ -1,4 +1,6 @@
 // @ts-check
+import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -25,3 +27,6 @@ const nextConfig = {
 };
 
 export default nextConfig;
+
+// Habilita los bindings (D1/R2) durante `next dev` (solo en desarrollo).
+initOpenNextCloudflareForDev();

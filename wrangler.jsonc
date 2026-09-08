@@ -1,0 +1,37 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "plataforma-cursos",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2025-06-01",
+  "compatibility_flags": [
+    "nodejs_compat",
+    "global_fetch_strictly_public"
+  ],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      // Debe coincidir con el "name" del worker (el nombre del proyecto en Cloudflare).
+      "service": "plataforma-cursos"
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "plataforma-cursos-db",
+      "database_id": "ad91bb43-1566-43bc-b6d0-229abaeff62a"
+    }
+  ],
+  // R2 (cache/ISR + subida de imágenes): descomenta cuando habilites R2 y crees el bucket.
+  "r2_buckets": [
+    // { "binding": "NEXT_INC_CACHE_R2_BUCKET", "bucket_name": "plataforma-cursos-images" },
+    // { "binding": "IMAGES", "bucket_name": "plataforma-cursos-images" }
+  ],
+  "vars": {
+    "NEXTJS_ENV": "production",
+    "PUBLIC_R2_URL": "https://pub-REPLACE_WITH_HASH.r2.dev"
+  }
+}

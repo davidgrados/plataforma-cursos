@@ -2,19 +2,17 @@
   "name": "plataforma-cursos-linux",
   "version": "1.0.0",
   "private": true,
-  "description": "Plataforma multi-curso con laboratorio Linux interactivo (Next.js + Cloudflare Pages + D1 + R2 + Clerk)",
+  "description": "Plataforma multi-curso con laboratorio Linux interactivo (Next.js 15 + Cloudflare Workers vía OpenNext)",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
     "seed": "tsx scripts/seed-linux-course.ts",
-    "seed:local": "tsx scripts/seed-linux-course.ts --local",
     "db:init": "wrangler d1 execute DB --local --file=./schema.sql",
     "db:init:remote": "wrangler d1 execute DB --remote --file=./schema.sql",
-    "pages:build": "npx @cloudflare/next-on-pages",
-    "pages:dev": "wrangler pages dev .vercel/output/static --compatibility-date=2024-06-20 --compatibility-flags=nodejs_compat",
-    "pages:deploy": "npx @cloudflare/next-on-pages && wrangler pages deploy .vercel/output/static"
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.2.0",
