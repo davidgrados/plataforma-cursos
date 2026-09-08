@@ -70,7 +70,7 @@ export default function LessonPage() {
     );
   }
 
-  const showTerminal = lesson.type !== 'exam';
+  const showTerminal = lesson.type === 'practice';
   const crumbCourse = lesson.course;
   const crumbModule = lesson.module;
   const quiz = QUIZZES[lesson.slug];

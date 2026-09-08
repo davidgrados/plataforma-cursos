@@ -33,6 +33,7 @@ yarn-error.log*
 
 # generado (se regenera con npm run seed)
 seed.sql
+seed-english.sql
 
 # tipos
 *.tsbuildinfo

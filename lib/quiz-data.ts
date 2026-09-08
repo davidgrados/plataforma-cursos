@@ -132,4 +132,67 @@ export const QUIZZES: Record<string, QuizQuestion[]> = {
       answer: 0,
     },
   ],
+
+  'ingles-examen-final': [
+    {
+      question: '¿Cómo se dice "Buenos días"?',
+      options: ['Good morning', 'Good night', 'See you', 'How are you'],
+      answer: 0,
+    },
+    {
+      question: '"Nice to meet you" significa…',
+      options: ['Encantado/a de conocerte', 'Hasta luego', 'Buenos días', 'No entiendo'],
+      answer: 0,
+    },
+    {
+      question: 'Para decir "Me llamo Ana" usas…',
+      options: ['My name is Ana', 'I from Ana', 'Name Ana is', 'Ana my name'],
+      answer: 0,
+    },
+    {
+      question: 'Completa: "I ___ a student".',
+      options: ['am', 'is', 'are', 'be'],
+      answer: 0,
+    },
+    {
+      question: '¿Cuál es el presente simple correcto en 3ª persona?',
+      options: ['She works', 'She work', 'She working', 'She worked'],
+      answer: 0,
+    },
+    {
+      question: 'La negación de "He works" es…',
+      options: ["He doesn't work", 'He not work', "He don't work", 'He no work'],
+      answer: 0,
+    },
+    {
+      question: '"Thank you" significa…',
+      options: ['Gracias', 'Por favor', 'De nada', 'Disculpe'],
+      answer: 0,
+    },
+    {
+      question: '"See you later" se usa para…',
+      options: ['Despedirse (hasta luego)', 'Saludar', 'Preguntar la hora', 'Presentarse'],
+      answer: 0,
+    },
+    {
+      question: '¿Cómo preguntas "¿De dónde eres?"?',
+      options: ['Where are you from?', 'What is your name?', 'How old are you?', 'Where you go?'],
+      answer: 0,
+    },
+    {
+      question: '¿Cuál pronombre significa "ellos"?',
+      options: ['They', 'We', 'He', 'It'],
+      answer: 0,
+    },
+    {
+      question: '"red" es…',
+      options: ['Un color', 'Un número', 'Un saludo', 'Un verbo'],
+      answer: 0,
+    },
+    {
+      question: 'Para decir "¿Cómo estás?" preguntas…',
+      options: ['How are you?', 'What is this?', 'Who are they?', 'Where is it?'],
+      answer: 0,
+    },
+  ],
 };
