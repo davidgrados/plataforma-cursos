@@ -195,4 +195,82 @@ export const QUIZZES: Record<string, QuizQuestion[]> = {
       answer: 0,
     },
   ],
+
+  'ia-examen-final': [
+    {
+      question: '¿Qué es la Inteligencia Artificial?',
+      options: [
+        'Sistemas que realizan tareas que requieren inteligencia humana',
+        'Un tipo de hardware',
+        'Un lenguaje de programación',
+        'Una red social',
+      ],
+      answer: 0,
+    },
+    {
+      question: '¿Quién propuso el "test de Turing"?',
+      options: ['Alan Turing', 'Bill Gates', 'Linus Torvalds', 'Tim Berners-Lee'],
+      answer: 0,
+    },
+    {
+      question: 'El aprendizaje en el que se usan datos etiquetados se llama…',
+      options: ['Supervisado', 'No supervisado', 'Por refuerzo', 'Aleatorio'],
+      answer: 0,
+    },
+    {
+      question: '¿Qué es el Deep Learning?',
+      options: [
+        'Machine Learning con redes de muchas capas',
+        'Aprender sin datos',
+        'Un tipo de base de datos',
+        'Un lenguaje natural',
+      ],
+      answer: 0,
+    },
+    {
+      question: '¿Para qué sirve el NLP (procesamiento del lenguaje)?',
+      options: [
+        'Entender y generar lenguaje humano',
+        'Reconocer imágenes',
+        'Controlar robots',
+        'Comprimir vídeos',
+      ],
+      answer: 0,
+    },
+    {
+      question: 'La visión por computadora permite a las máquinas…',
+      options: ['Ver e interpretar imágenes y vídeo', 'Entender lenguaje', 'Generar audio', 'Conducir sin datos'],
+      answer: 0,
+    },
+    {
+      question: '¿Qué hace la IA generativa?',
+      options: ['Crea contenido nuevo', 'Solo clasifica datos', 'Borra archivos', 'Encripta mensajes'],
+      answer: 0,
+    },
+    {
+      question: 'Cuando un modelo de lenguaje "alucina" significa que…',
+      options: ['Inventa información falsa con seguridad', 'Detecta errores', 'Funciona perfecto', 'Se apaga'],
+      answer: 0,
+    },
+    {
+      question: 'Un riesgo importante de la IA es…',
+      options: ['El sesgo en los datos de entrenamiento', 'Que siempre acierta', 'Que no necesita datos', 'Que es muy lenta'],
+      answer: 0,
+    },
+    {
+      question: '¿Qué es un "prompt"?',
+      options: ['La instrucción que le das al modelo', 'Un tipo de red neuronal', 'Un error del sistema', 'Un dato etiquetado'],
+      answer: 0,
+    },
+    {
+      question: 'Un ejemplo de IA en salud es…',
+      options: ['Diagnóstico por imagen', 'Redes sociales', 'Videojuegos', 'Correo electrónico'],
+      answer: 0,
+    },
+    {
+      question: 'Para un uso responsable de la IA debes…',
+      options: ['Verificar la información generada', 'Compartir datos personales', 'Confiar en todo lo que dice', 'Evitarla siempre'],
+      answer: 0,
+    },
+  ],
 };

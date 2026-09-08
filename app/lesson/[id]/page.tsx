@@ -119,7 +119,7 @@ export default function LessonPage() {
         ) : (
           <Markdown
             content={lesson.content_md}
-            speakEnabled={lesson.course?.slug !== 'linux-basico'}
+            speakEnabled={lesson.course?.slug === 'ingles-basico'}
           />
         )}
       </article>
