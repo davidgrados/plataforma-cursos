@@ -336,4 +336,67 @@ export const QUIZZES: Record<string, QuizQuestion[]> = {
       answer: 0,
     },
   ],
+
+  'mkt-examen-final': [
+    {
+      question: '¿Qué es el marketing digital?',
+      options: ['Promover productos usando medios en línea', 'Vender solo en tiendas', 'Imprimir anuncios', 'Enviar cartas'],
+      answer: 0,
+    },
+    {
+      question: 'Un objetivo SMART debe ser…',
+      options: ['Específico, medible y con tiempo', 'Vago y general', 'Solo de ventas', 'Imposible de medir'],
+      answer: 0,
+    },
+    {
+      question: 'El "buyer persona" es…',
+      options: ['El perfil ideal de tu cliente', 'Un personaje de ficción', 'Tu competidor', 'Una red social'],
+      answer: 0,
+    },
+    {
+      question: '¿Cuál es la ventaja principal del marketing digital?',
+      options: ['Es medible y segmentable', 'No necesita internet', 'Solo sirve para grandes marcas', 'No tiene coste'],
+      answer: 0,
+    },
+    {
+      question: '¿Qué red se usa más para contenido profesional (B2B)?',
+      options: ['LinkedIn', 'TikTok', 'Instagram', 'Snapchat'],
+      answer: 0,
+    },
+    {
+      question: 'El "storytelling" consiste en…',
+      options: ['Contar historias que conecten con la audiencia', 'Publicar solo ofertas', 'Eliminar contenido', 'Comprar seguidores'],
+      answer: 0,
+    },
+    {
+      question: 'En publicidad, CPC significa…',
+      options: ['Pagas por clic', 'Pagas por cada mil vistas', 'Pago por suscriptor', 'Coste de producción'],
+      answer: 0,
+    },
+    {
+      question: '¿Qué es el remarketing?',
+      options: ['Mostrar anuncios a quien ya te visitó', 'Comprar anuncios en TV', 'Borrar la historia', 'Publicar en papel'],
+      answer: 0,
+    },
+    {
+      question: 'En email marketing es fundamental…',
+      options: ['Contar con permiso (no enviar spam)', 'Enviar a cualquier correo', 'Enviar muchas veces al día', 'Ocultar el remitente'],
+      answer: 0,
+    },
+    {
+      question: 'El ROI mide…',
+      options: ['El retorno de la inversión', 'El número de likes', 'La velocidad de la web', 'Los seguidores'],
+      answer: 0,
+    },
+    {
+      question: 'SEO se refiere a…',
+      options: ['Optimizar para buscadores (Google)', 'Una red social', 'Publicidad en TV', 'Diseño de logos'],
+      answer: 0,
+    },
+    {
+      question: 'Para elegir redes sociales debes…',
+      options: ['Ir donde está tu público objetivo', 'Estar en todas sin plan', 'Solo en las nuevas', 'Evitarlas todas'],
+      answer: 0,
+    },
+  ],
 };
