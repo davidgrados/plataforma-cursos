@@ -1,6 +1,10 @@
 // ============================================================
 //  Seed del curso "Inglés Básico" (añade a la BD; no borra los demás cursos).
 //  Genera seed-english.sql y lo aplica a D1 (local o remoto).
+//
+//  Las palabras/frases en inglés van entre backticks (`...`) para que la app
+//  muestre el botón 🔊 de pronunciación, y se añade una guía fonética
+//  aproximada para hispanohablantes.
 // ============================================================
 
 import { writeFileSync } from 'node:fs';
@@ -37,205 +41,159 @@ const chapter = (slug: string, title: string, content: string): SLesson => ({
 
 const M1 = `# Módulo 1 · Saludos y presentaciones
 
-Aprende a saludar, presentarte y despedirte en inglés.
+Pulsa el botón 🔊 junto a cada frase para escuchar cómo se pronuncia.
 
 ## Saludos (Greetings)
-
-- **Hello** / **Hi** → Hola
-- **Good morning** → Buenos días
-- **Good afternoon** → Buenas tardes
-- **Good evening** → Buenas noches (al llegar)
+- \`Hello\` / \`Hi\` (jelóu / jái) → Hola
+- \`Good morning\` (gud mórnin) → Buenos días
+- \`Good afternoon\` (gud áfternún) → Buenas tardes
+- \`Good evening\` (gud ívnin) → Buenas noches
 
 ## ¿Cómo estás? (How are you?)
-
-- **How are you?** → ¿Cómo estás?
-- **I'm fine, thank you** → Estoy bien, gracias
-- **Very well** → Muy bien
-- **And you?** → ¿Y tú?
+- \`How are you?\` (jáu ar iú) → ¿Cómo estás?
+- \`I'm fine, thank you\` (áim fáin, zénk iu) → Estoy bien, gracias
+- \`And you?\` (and iú) → ¿Y tú?
 
 ## Presentarte (Introductions)
-
-- **My name is Ana** → Me llamo Ana
-- **I am from Peru** → Soy de Perú
-- **Nice to meet you** → Encantado/a de conocerte
+- \`My name is Ana\` (mái néim is ána) → Me llamo Ana
+- \`I am from Peru\` (ái am from perú) → Soy de Perú
+- \`Nice to meet you\` (náis tu mít iu) → Encantado de conocerte
 
 ## Despedidas (Farewells)
+- \`Goodbye\` (gudbái) → Adiós
+- \`See you later\` (sí iu léiter) → Hasta luego
+- \`Bye\` (bái) → Chao
 
-- **Goodbye** → Adiós
-- **See you later** → Hasta luego
-- **Bye** → Chao
-
-> 💡 Usa "Good morning/afternoon/evening" en situaciones formales. "Hi/Hello" es más informal.`;
+> 🔊 Escucha: \`Hello\`, \`Good morning\`, \`How are you?\`, \`Nice to meet you\``;
 
 const M2 = `# Módulo 2 · El alfabeto y la pronunciación
 
-El alfabeto inglés tiene 26 letras. Conocerlo te ayuda a deletrear nombres y palabras.
+El alfabeto inglés tiene 26 letras. Conocerlo te ayuda a deletrear.
 
 ## Las vocales
-
-- **A** /eɪ/, **E** /iː/, **I** /aɪ/, **O** /oʊ/, **U** /juː/
+- \`A\` (/eɪ/, léi), \`E\` (/iː/, í), \`I\` (/aɪ/, ái), \`O\` (/oʊ/, óu), \`U\` (/juː/, iú)
 
 ## Deletrear (Spelling)
-
-Para deletrear se dicen los nombres de las letras:
-
-- **A-N-A** → "ei - en - ei"
-- **How do you spell your name?** → ¿Cómo se deletrea tu nombre?
+- \`How do you spell your name?\` (jáu du iu spél ior néim) → ¿Cómo se deletrea tu nombre?
+- Para deletrear se dicen las letras: A-N-A → \`ei - en - ei\`
 
 ## Sonidos clave
-
-- **th** → como en *this* y *think* (no existe en español).
-- **sh** → como en *she*.
-- **ch** → como en *chair*.
-- **ee** → largo, como en *see*.
+- \`th\` → como en \`this\` (dis) y \`think\` (zínk) — no existe en español.
+- \`sh\` → como en \`she\` (shi).
+- \`ee\` → largo, como en \`see\` (sí).
 
 ## Palabras de ejemplo
+- \`cat\` (kat) → gato
+- \`dog\` (dog) → perro
+- \`sun\` (san) → sol
 
-- **cat** /kæt/ → gato
-- **dog** /dɔːɡ/ → perro
-- **sun** /sʌn/ → sol
-
-> 💡 Escucha y repite. La pronunciación se mejora con la práctica diaria.`;
+> 🔊 Escucha: \`Hello\`, \`cat\`, \`dog\`, \`How do you spell your name?\``;
 
 const M3 = `# Módulo 3 · Números, fechas y horas
 
 ## Números cardinales
-
-- 1 **one**, 2 **two**, 3 **three**, 4 **four**, 5 **five**
-- 6 **six**, 7 **seven**, 8 **eight**, 9 **nine**, 10 **ten**
-- 11 **eleven**, 12 **twelve**, 20 **twenty**, 30 **thirty**
-- 100 **one hundred**
+- 1 \`one\` (uán), 2 \`two\` (tú), 3 \`three\` (zrí), 4 \`four\` (for), 5 \`five\` (fáiv)
+- 6 \`six\` (siks), 7 \`seven\` (séven), 8 \`eight\` (éit), 9 \`nine\` (náin), 10 \`ten\` (ten)
+- 20 \`twenty\` (tuénti), 100 \`one hundred\` (uán hándred)
 
 ## Días de la semana
-
-- **Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday**
-
-## Meses
-
-- **January, February, March, April, May, June, July, August, September, October, November, December**
+- \`Monday\` (mándei), \`Tuesday\` (tiúsdei), \`Wednesday\` (wénsdei), \`Thursday\` (zérsdei)
+- \`Friday\` (fráidei), \`Saturday\` (sáturdei), \`Sunday\` (sándei)
 
 ## La hora
+- \`What time is it?\` (uat táim is it) → ¿Qué hora es?
+- \`It's three o'clock\` (its zrí oclók) → Son las tres
+- \`It's half past three\` (its jaf past zrí) → Son las tres y media
 
-- **What time is it?** → ¿Qué hora es?
-- **It's three o'clock** → Son las tres en punto
-- **It's half past three** → Son las tres y media
-
-> 💡 En inglés la fecha se escribe normalmente: *the 5th of May* o *May 5th*.`;
+> 🔊 Escucha: \`What time is it?\`, \`Monday\`, \`seven\`, \`one hundred\``;
 
 const M4 = `# Módulo 4 · Pronombres personales y el verbo "to be"
 
 ## Pronombres personales
+- \`I\` (ái) yo · \`you\` (iú) tú/usted · \`he\` (jí) él · \`she\` (shi) ella
+- \`it\` (it) ello · \`we\` (uí) nosotros · \`they\` (déi) ellos
 
-- **I** → yo · **you** → tú/usted · **he** → él · **she** → ella
-- **it** → ello · **we** → nosotros · **they** → ellos
-
-## El verbo "to be" (ser o estar)
-
-- **I am** (I'm) · **you are** (you're) · **he/she/it is** (he's)
-- **we are** (we're) · **they are** (they're)
+## El verbo "to be" (ser/estar)
+- \`I am\` (ái am) / \`I'm\` (áim)
+- \`you are\` (iú ar) / \`you're\`
+- \`he/she/it is\` (is)
+- \`we are\` / \`they are\`
 
 ## Ejemplos
+- \`I am a student\` (ái am a stiúdent) → Soy estudiante
+- \`She is from Mexico\` (shi is from méxico) → Ella es de México
+- \`They are happy\` (déi ar jápi) → Ellos están felices
 
-- **I am a student** → Soy estudiante
-- **She is from Mexico** → Ella es de México
-- **They are happy** → Ellos están felices
+## Negación y preguntas
+- \`I am not tired\` → No estoy cansado
+- \`Are you a teacher?\` (ar iú a tícher) → ¿Eres profesor?
 
-## Negación
-
-- **I am not tired** → No estoy cansado
-- **He is not here** (he isn't) → Él no está aquí
-
-## Preguntas
-
-- **Are you a teacher?** → ¿Eres profesor/a?
-- **Yes, I am / No, I'm not**
-
-> 💡 "You" se usa tanto para "tú" como para "usted".`;
+> 🔊 Escucha: \`I am a student\`, \`She is from Mexico\`, \`Are you a teacher?\``;
 
 const M5 = `# Módulo 5 · El presente simple
 
 Se usa para hábitos, rutinas y hechos generales.
 
 ## Afirmativo
-
-- **I work** · **you work** · **he/she works** (añade -s)
-- **we work** · **they work**
+- \`I work\` (ái uérk) · \`you work\` · \`he/she works\` (añade -s)
+- \`we work\` · \`they work\`
 
 ## Tercera persona (-s / -es)
+- \`He works\` en una oficina
+- \`She watches\` (shi uáches) televisión
 
-- **He works** en una oficina
-- **She watches** televisión
-- **It goes** rápido
-
-## Negación
-
-- **I don't work** (do not)
-- **He doesn't work** (does not)
-
-## Preguntas
-
-- **Do you work?**
-- **Does she work?**
-- Respuestas cortas: **Yes, I do / No, I don't**
+## Negación y preguntas
+- \`I don't work\` (ái dóunt uérk) → No trabajo
+- \`He doesn't work\` (jí dázent uérk) → Él no trabaja
+- \`Do you work?\` (du iú uérk) → ¿Trabajas?
+- \`Yes, I do / No, I don't\`
 
 ## Adverbios de frecuencia
+- \`always\` (ólueis) siempre · \`usually\` (iúshuali) normalmente · \`never\` (néver) nunca
 
-- **always** (siempre) · **usually** (normalmente) · **often** (a menudo)
-- **sometimes** (a veces) · **never** (nunca)
-
-> 💡 Ejemplo: *I always drink coffee in the morning.*`;
+> 🔊 Escucha: \`He works\`, \`She watches\`, \`I don't work\`, \`Do you work?\``;
 
 const M6 = `# Módulo 6 · Vocabulario esencial
 
 ## La familia (Family)
-
-- **mother** madre · **father** padre · **brother** hermano · **sister** hermana
-- **grandparents** abuelos · **child** hijo/a
+- \`mother\` (máder) madre · \`father\` (fáder) padre · \`brother\` (bráder) hermano · \`sister\` (síster) hermana
 
 ## Colores (Colors)
-
-- **red, blue, green, yellow, black, white, orange, purple, pink, brown**
+- \`red\` (red), \`blue\` (blu), \`green\` (grín), \`yellow\` (iélou), \`black\` (blak), \`white\` (uáit)
 
 ## Verbos comunes
-
-- **to eat** comer · **to drink** beber · **to go** ir · **to come** venir
-- **to have** tener · **to like** gustar · **to want** querer
+- \`to eat\` (tu ít) comer · \`to drink\` (tu drink) beber · \`to go\` (tu góu) ir · \`to have\` (tu jav) tener
+- \`to like\` (tu láik) gustar · \`to want\` (tu uánt) querer
 
 ## Objetos cotidianos
-
-- **book** libro · **pen** bolígrafo · **phone** teléfono · **bag** bolso · **chair** silla
+- \`book\` (buk) libro · \`pen\` (pen) bolígrafo · \`phone\` (fóun) teléfono · \`chair\` (chér) silla
 
 ## Preposiciones de lugar
+- \`in\` (in) en · \`on\` (on) sobre · \`under\` (ánder) debajo · \`next to\` (nekst tu) al lado de
 
-- **in** en · **on** sobre · **under** debajo · **next to** al lado de
-
-> 💡 Frase útil: *The book is on the table.*`;
+> 🔊 Escucha: \`mother\`, \`book\`, \`I want\`, \`to eat\`, \`blue\``;
 
 const M7 = `# Módulo 7 · Preguntas y frases útiles
 
 ## Preguntas con WH-
-
-- **What?** → ¿Qué? · **Where?** → ¿Dónde? · **When?** → ¿Cuándo?
-- **Who?** → ¿Quién? · **Why?** → ¿Por qué? · **How?** → ¿Cómo?
+- \`What?\` (uát) ¿Qué? · \`Where?\` (uér) ¿Dónde? · \`When?\` (uén) ¿Cuándo?
+- \`Who?\` (ju) ¿Quién? · \`Why?\` (uái) ¿Por qué? · \`How?\` (jáu) ¿Cómo?
 
 ## Ejemplos
-
-- **What is your name?** → ¿Cómo te llamas?
-- **Where are you from?** → ¿De dónde eres?
-- **How old are you?** → ¿Cuántos años tienes?
+- \`What is your name?\` (uát is ior néim) → ¿Cómo te llamas?
+- \`Where are you from?\` (uér ar iu from) → ¿De dónde eres?
+- \`How old are you?\` (jáu óuld ar iu) → ¿Cuántos años tienes?
 
 ## Frases de cortesía
-
-- **Please** por favor · **Thank you** gracias · **You're welcome** de nada
-- **Excuse me** disculpe · **I'm sorry** lo siento · **Can you help me?** ¿puede ayudarme?
+- \`Please\` (plís) por favor · \`Thank you\` (zénk iu) gracias · \`You're welcome\` (ior uélcom) de nada
+- \`Excuse me\` (ekskiús mi) disculpe · \`I'm sorry\` (áim sori) lo siento
+- \`Can you help me?\` (kan iu jelp mi) ¿Puede ayudarme?
 
 ## En la tienda / restaurante
+- \`How much is it?\` (jáu mach is it) → ¿Cuánto cuesta?
+- \`I would like a coffee, please\` → Quisiera un café, por favor
 
-- **How much is it?** → ¿Cuánto cuesta?
-- **I would like a coffee, please** → Quisiera un café, por favor
-- **The bill, please** → La cuenta, por favor
-
-> 💡 Usa "Excuse me" para llamar la atención y "I'm sorry" para disculparte.`;
+> 🔊 Escucha: \`Where are you from?\`, \`Thank you\`, \`Can you help me?\`, \`How much is it?\``;
 
 const EXAM = `# Examen Final · Inglés Básico
 
@@ -259,7 +217,7 @@ const MODULES: SModule[] = [
 const statements: string[] = [];
 statements.push(`DELETE FROM courses WHERE slug = '${SLUG}';`);
 statements.push(
-  `INSERT INTO courses (slug, title, description) VALUES (${sqlStr(SLUG)}, 'Inglés Básico', 'Aprende inglés desde cero: saludos, gramática básica, vocabulario y frases útiles para comunicarte en situaciones cotidianas.');`,
+  `INSERT INTO courses (slug, title, description) VALUES (${sqlStr(SLUG)}, 'Inglés Básico', 'Aprende inglés desde cero: saludos, gramática, vocabulario, frases útiles y pronunciación interactiva (botón 🔊).');`,
 );
 const courseExpr = `(SELECT id FROM courses WHERE slug = '${SLUG}')`;
 for (const m of MODULES) {

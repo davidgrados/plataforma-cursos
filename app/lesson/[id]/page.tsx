@@ -117,7 +117,10 @@ export default function LessonPage() {
             <Quiz questions={quiz} />
           </div>
         ) : (
-          <Markdown content={lesson.content_md} />
+          <Markdown
+            content={lesson.content_md}
+            speakEnabled={lesson.course?.slug !== 'linux-basico'}
+          />
         )}
       </article>
 
