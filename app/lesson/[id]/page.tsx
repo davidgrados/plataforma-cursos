@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { SignInButton } from '@clerk/nextjs';
-import { AlertTriangle, Loader2, Lock } from 'lucide-react';
+import { AlertTriangle, ArrowLeft, ArrowRight, Loader2, Lock } from 'lucide-react';
 import { useAuthUser } from '@/lib/auth-context';
 import dynamic from 'next/dynamic';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -24,12 +25,29 @@ export default function LessonPage() {
   const { id } = useParams<{ id: string }>();
   const { userId, isLoaded } = useAuthUser();
   const [lesson, setLesson] = useState<Lesson | null>(null);
+  const [prevLesson, setPrevLesson] = useState<Lesson | null>(null);
+  const [nextLesson, setNextLesson] = useState<Lesson | null>(null);
   const [error, setError] = useState('');
 
   useEffect(() => {
     api
       .lesson(id)
-      .then(setLesson)
+      .then((l) => {
+        setLesson(l);
+        if (l.course) {
+          api
+            .course(l.course.slug)
+            .then((course) => {
+              const all = course.modules.flatMap((m) => m.lessons ?? []);
+              const idx = all.findIndex((ls) => ls.id === l.id);
+              setPrevLesson(idx > 0 ? all[idx - 1] : null);
+              setNextLesson(idx >= 0 && idx < all.length - 1 ? all[idx + 1] : null);
+            })
+            .catch(() => {
+              /* opcional: sin navegación si falla la estructura */
+            });
+        }
+      })
       .catch((e) => setError(e.message));
   }, [id]);
 
@@ -122,6 +140,38 @@ export default function LessonPage() {
             <TerminalEmbed lessonId={lesson.id} verify={lesson.type === 'practice'} />
           )}
         </section>
+      )}
+
+      {(prevLesson || nextLesson) && (
+        <nav className="mt-2 flex items-center justify-between gap-4 border-t border-white/5 pt-6">
+          {prevLesson ? (
+            <Link
+              href={`/lesson/${prevLesson.id}`}
+              className="flex min-w-0 items-center gap-2 rounded-xl border border-ink-700 px-4 py-3 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white"
+            >
+              <ArrowLeft className="h-4 w-4 shrink-0" />
+              <span className="flex min-w-0 flex-col">
+                <span className="text-xs text-slate-500">Anterior</span>
+                <span className="truncate font-medium">{prevLesson.title}</span>
+              </span>
+            </Link>
+          ) : (
+            <span />
+          )}
+
+          {nextLesson ? (
+            <Link
+              href={`/lesson/${nextLesson.id}`}
+              className="ml-auto flex min-w-0 items-center gap-2 rounded-xl bg-gradient-to-r from-accent to-accent-cyan px-5 py-3 text-sm font-semibold text-ink-950 transition hover:opacity-90"
+            >
+              <span className="flex min-w-0 flex-col text-left">
+                <span className="text-[11px] font-medium opacity-80">Siguiente</span>
+                <span className="truncate font-semibold">{nextLesson.title}</span>
+              </span>
+              <ArrowRight className="h-4 w-4 shrink-0" />
+            </Link>
+          ) : null}
+        </nav>
       )}
     </div>
   );
