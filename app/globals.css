@@ -14,14 +14,14 @@ html {
 body {
   @apply bg-ink-950 text-slate-200 antialiased;
   background-image:
-    radial-gradient(60rem 40rem at 100% -10%, rgba(34, 211, 238, 0.08), transparent 60%),
-    radial-gradient(50rem 35rem at -10% 0%, rgba(52, 211, 153, 0.08), transparent 55%),
-    radial-gradient(40rem 40rem at 50% 120%, rgba(139, 92, 246, 0.06), transparent 60%);
+    radial-gradient(60rem 40rem at 100% -10%, rgba(56, 189, 248, 0.10), transparent 60%),
+    radial-gradient(50rem 35rem at -10% 0%, rgba(14, 165, 233, 0.12), transparent 55%),
+    radial-gradient(40rem 40rem at 50% 120%, rgba(96, 165, 250, 0.08), transparent 60%);
   background-attachment: fixed;
 }
 
 ::selection {
-  background: rgba(52, 211, 153, 0.35);
+  background: rgba(14, 165, 233, 0.35);
 }
 
 /* Scrollbar sutil */

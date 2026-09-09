@@ -5,18 +5,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Paleta oscura estilo "terminal"
+        // Fondo oscuro azulado (suave y coherente con el tema azul)
         ink: {
-          950: '#05070d',
-          900: '#0b0f1a',
-          850: '#0e1424',
-          800: '#131a2e',
-          700: '#1b2440',
+          950: '#060b17',
+          900: '#0b1526',
+          850: '#0e1c33',
+          800: '#122543',
+          700: '#1b3358',
         },
         accent: {
-          DEFAULT: '#34d399',
-          cyan: '#22d3ee',
-          violet: '#8b5cf6',
+          DEFAULT: '#0ea5e9',
+          cyan: '#38bdf8',
+          violet: '#818cf8',
         },
       },
       fontFamily: {
@@ -24,8 +24,8 @@ const config: Config = {
         mono: ['var(--font-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       boxShadow: {
-        glow: '0 0 40px -10px rgba(52, 211, 153, 0.45)',
-        'glow-cyan': '0 0 40px -10px rgba(34, 211, 238, 0.4)',
+        glow: '0 0 40px -10px rgba(14, 165, 233, 0.45)',
+        'glow-cyan': '0 0 40px -10px rgba(56, 189, 248, 0.4)',
       },
       animation: {
         'fade-up': 'fadeUp 0.5s ease-out both',

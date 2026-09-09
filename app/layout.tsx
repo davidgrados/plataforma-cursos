@@ -35,7 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <ClerkProvider
       appearance={{
         baseTheme: dark,
-        variables: { colorPrimary: '#34d399', colorBackground: '#0b0f1a' },
+        variables: { colorPrimary: '#0ea5e9', colorBackground: '#0b1526' },
       }}
     >
       <ClerkAuthBridge>{content}</ClerkAuthBridge>
