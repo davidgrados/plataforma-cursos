@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { ClerkProvider } from '@clerk/nextjs';
 import { Toaster } from 'sonner';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import { ClerkAuthBridge, PreviewAuthProvider } from '@/lib/auth-context';
 import './globals.css';
 
@@ -17,11 +18,12 @@ const PREVIEW_MODE = !process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const content = (
-    <html lang="es" className="dark">
+    <html lang="es">
       <body className="min-h-screen">
         <Navbar />
-        <main className="mx-auto w-full max-w-6xl px-4 pb-24 pt-8 sm:px-6">{children}</main>
-        <Toaster theme="dark" position="top-right" richColors closeButton />
+        <main className="mx-auto w-full max-w-6xl px-4 pb-16 pt-8 sm:px-6">{children}</main>
+        <Footer />
+        <Toaster theme="light" position="top-right" richColors closeButton />
       </body>
     </html>
   );
