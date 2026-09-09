@@ -193,7 +193,7 @@ export default function TerminalEmbed({ lessonId, verify = false }: Props) {
 
   return (
     <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#1e1e1e] shadow-2xl">
-      <div className="flex items-center justify-between gap-2 border-b border-white/10 bg-ink-900 px-4 py-2.5">
+      <div className="flex items-center justify-between gap-2 border-b border-white/10 bg-[#27272a] px-4 py-2.5">
         <div className="flex items-center gap-2">
           <span className="flex gap-1.5">
             <span className="h-3 w-3 rounded-full bg-red-500/80" />
@@ -216,7 +216,7 @@ export default function TerminalEmbed({ lessonId, verify = false }: Props) {
           {verify && (
             <button
               onClick={handleVerify}
-              className="flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-accent to-accent-cyan px-3 py-1.5 text-xs font-semibold text-ink-950 transition hover:opacity-90"
+              className="flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-accent to-accent-cyan px-3 py-1.5 text-xs font-semibold text-white transition hover:opacity-90"
             >
               <Check className="h-3.5 w-3.5" /> Verificar ejercicio
             </button>

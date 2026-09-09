@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
 import { Volume2 } from 'lucide-react';
-import 'highlight.js/styles/github-dark.css';
+import 'highlight.js/styles/github.css';
 
 function speak(text: string) {
   if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
@@ -34,7 +34,7 @@ export default function Markdown({ content, speakEnabled = false }: { content: s
       if (speakEnabled && isInline && text.trim()) {
         return (
           <span className="inline-flex items-center gap-1 align-baseline">
-            <code className={className} {...props}>
+            <code className="rounded bg-sky-100 px-1 py-0.5 text-sky-800" {...props}>
               {children}
             </code>
             <button
@@ -46,7 +46,7 @@ export default function Markdown({ content, speakEnabled = false }: { content: s
                 e.stopPropagation();
                 speak(text);
               }}
-              className="inline-flex h-4 w-4 shrink-0 cursor-pointer items-center justify-center rounded-full bg-accent/20 text-accent transition hover:bg-accent hover:text-ink-950"
+              className="inline-flex h-4 w-4 shrink-0 cursor-pointer items-center justify-center rounded-full bg-accent text-white transition hover:brightness-90"
             >
               <Volume2 className="h-2.5 w-2.5" />
             </button>
@@ -62,7 +62,7 @@ export default function Markdown({ content, speakEnabled = false }: { content: s
   };
 
   return (
-    <div className="prose prose-invert max-w-none prose-headings:scroll-mt-24 prose-a:text-accent-cyan prose-code:text-accent prose-pre:bg-ink-900 prose-pre:border prose-pre:border-white/5 prose-img:rounded-xl">
+    <div className="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:text-slate-900 prose-a:text-sky-700 prose-code:text-sky-800 prose-pre:bg-slate-900 prose-pre:text-slate-100 prose-pre:border prose-pre:border-slate-200 prose-img:rounded-xl">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeHighlight]}

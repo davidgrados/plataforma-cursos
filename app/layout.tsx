@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { ClerkProvider } from '@clerk/nextjs';
-import { dark } from '@clerk/themes';
 import { Toaster } from 'sonner';
 import Navbar from '@/components/Navbar';
 import { ClerkAuthBridge, PreviewAuthProvider } from '@/lib/auth-context';
@@ -34,8 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <ClerkProvider
       appearance={{
-        baseTheme: dark,
-        variables: { colorPrimary: '#0ea5e9', colorBackground: '#0b1526' },
+        variables: { colorPrimary: '#0ea5e9', colorBackground: '#ffffff', colorText: '#0f172a' },
       }}
     >
       <ClerkAuthBridge>{content}</ClerkAuthBridge>

@@ -105,12 +105,12 @@ export default function ModulesPanel({ clerkId }: Props) {
   }
 
   const input =
-    'w-full rounded-xl border border-ink-700 bg-ink-900 px-3.5 py-2.5 text-sm text-slate-200 outline-none transition focus:border-accent/50 focus:ring-2 focus:ring-accent/20';
+    'w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-800 outline-none transition focus:border-accent/50 focus:ring-2 focus:ring-accent/20';
 
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <label className="text-sm text-slate-300">
+        <label className="text-sm text-slate-600">
           Curso
           <select
             value={courseId}
@@ -128,13 +128,13 @@ export default function ModulesPanel({ clerkId }: Props) {
       </div>
 
       {courseId && (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3 rounded-2xl border border-white/5 bg-ink-900/60 p-5">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-5">
           <div className="flex items-center justify-between">
             <h2 className="text-base font-semibold text-white">
               {editing ? 'Editar módulo' : 'Nuevo módulo'}
             </h2>
             {editing && (
-              <button onClick={resetForm} className="text-slate-400 transition hover:text-white">
+              <button onClick={resetForm} className="text-slate-500 transition hover:text-slate-900">
                 <X className="h-4 w-4" />
               </button>
             )}
@@ -155,7 +155,7 @@ export default function ModulesPanel({ clerkId }: Props) {
             />
             <button
               type="submit"
-              className="flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-accent to-accent-cyan px-4 py-2.5 text-sm font-semibold text-ink-950 transition hover:opacity-90"
+              className="flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-accent to-accent-cyan px-4 py-2.5 text-sm font-semibold text-white transition hover:opacity-90"
             >
               {editing ? <Pencil className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
               {editing ? 'Guardar' : 'Añadir'}
@@ -166,21 +166,21 @@ export default function ModulesPanel({ clerkId }: Props) {
 
       <div className="flex flex-col gap-2">
         {loading ? (
-          <div className="flex items-center gap-2 py-8 text-slate-400">
+          <div className="flex items-center gap-2 py-8 text-slate-500">
             <Loader2 className="h-5 w-5 animate-spin" /> Cargando módulos…
           </div>
         ) : (
           modules.map((m) => (
-            <div key={m.id} className="flex items-center gap-3 rounded-xl border border-white/5 bg-ink-900/60 px-4 py-3">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-ink-800 font-mono text-sm font-bold text-accent">
+            <div key={m.id} className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-sky-100 font-mono text-sm font-bold text-accent">
                 {m.order_num}
               </span>
-              <span className="flex-1 text-sm text-slate-200">{m.title}</span>
+              <span className="flex-1 text-sm text-slate-800">{m.title}</span>
               <div className="flex items-center gap-1">
-                <button onClick={() => move(m, -1)} className="rounded-lg p-1.5 text-slate-400 transition hover:bg-white/5 hover:text-white">
+                <button onClick={() => move(m, -1)} className="rounded-lg p-1.5 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900">
                   <ArrowUp className="h-4 w-4" />
                 </button>
-                <button onClick={() => move(m, 1)} className="rounded-lg p-1.5 text-slate-400 transition hover:bg-white/5 hover:text-white">
+                <button onClick={() => move(m, 1)} className="rounded-lg p-1.5 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900">
                   <ArrowDown className="h-4 w-4" />
                 </button>
                 <button
@@ -189,7 +189,7 @@ export default function ModulesPanel({ clerkId }: Props) {
                     setTitle(m.title);
                     setOrder(m.order_num);
                   }}
-                  className="rounded-lg p-1.5 text-slate-400 transition hover:bg-white/5 hover:text-white"
+                  className="rounded-lg p-1.5 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
                 >
                   <Pencil className="h-4 w-4" />
                 </button>
@@ -204,7 +204,7 @@ export default function ModulesPanel({ clerkId }: Props) {
           ))
         )}
         {!loading && courseId && modules.length === 0 && (
-          <div className="rounded-xl border border-white/5 bg-ink-900/60 p-6 text-center text-sm text-slate-400">
+          <div className="rounded-xl border border-slate-200 bg-white p-6 text-center text-sm text-slate-500">
             Este curso no tiene módulos. Añade el primero.
           </div>
         )}

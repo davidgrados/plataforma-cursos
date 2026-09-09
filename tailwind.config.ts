@@ -5,13 +5,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Fondo oscuro azulado (suave y coherente con el tema azul)
+        // Superficies claras (tema amigable); acentos azules
         ink: {
-          950: '#060b17',
-          900: '#0b1526',
-          850: '#0e1c33',
-          800: '#122543',
-          700: '#1b3358',
+          950: '#eef4fc',
+          900: '#ffffff',
+          850: '#f6faff',
+          800: '#e6eefb',
+          700: '#d3e2f8',
         },
         accent: {
           DEFAULT: '#0ea5e9',

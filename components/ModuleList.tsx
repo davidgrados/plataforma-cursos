@@ -3,24 +3,24 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
-import { BookOpen, ChevronDown, FileText, GraduationCap, TerminalSquare } from 'lucide-react';
+import { BookOpen, ChevronDown, GraduationCap, TerminalSquare } from 'lucide-react';
 import type { Module } from '@/lib/types';
 import { cn, LESSON_TYPE_LABEL } from '@/lib/utils';
 
 function typeIcon(type: string) {
-  if (type === 'practice') return <TerminalSquare className="h-4 w-4 text-accent" />;
-  if (type === 'exam') return <GraduationCap className="h-4 w-4 text-violet-400" />;
-  return <BookOpen className="h-4 w-4 text-accent-cyan" />;
+  if (type === 'practice') return <TerminalSquare className="h-4 w-4 text-sky-600" />;
+  if (type === 'exam') return <GraduationCap className="h-4 w-4 text-indigo-600" />;
+  return <BookOpen className="h-4 w-4 text-sky-600" />;
 }
 
 function typeBadge(type: string) {
   const styles: Record<string, string> = {
-    chapter: 'bg-accent-cyan/10 text-accent-cyan border-accent-cyan/20',
-    practice: 'bg-accent/10 text-accent border-accent/20',
-    exam: 'bg-violet-500/10 text-violet-300 border-violet-500/20',
+    chapter: 'bg-sky-100 text-sky-700 border-sky-200',
+    practice: 'bg-blue-100 text-blue-700 border-blue-200',
+    exam: 'bg-indigo-100 text-indigo-700 border-indigo-200',
   };
   return (
-    <span className={cn('rounded-full border px-2 py-0.5 text-[11px] font-medium', styles[type] ?? styles.chapter)}>
+    <span className={cn('rounded-full border px-2 py-0.5 text-[11px] font-semibold', styles[type] ?? styles.chapter)}>
       {LESSON_TYPE_LABEL[type] ?? type}
     </span>
   );
@@ -31,7 +31,7 @@ export default function ModuleList({ modules }: { modules: Module[] }) {
 
   if (!modules.length) {
     return (
-      <div className="rounded-2xl border border-white/5 bg-ink-900 p-8 text-center text-slate-400">
+      <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-slate-500">
         Este curso aún no tiene módulos.
       </div>
     );
@@ -43,23 +43,20 @@ export default function ModuleList({ modules }: { modules: Module[] }) {
         const isOpen = open === mod.id;
         const lessons = mod.lessons ?? [];
         return (
-          <div
-            key={mod.id}
-            className="overflow-hidden rounded-2xl border border-white/5 bg-ink-900/60"
-          >
+          <div key={mod.id} className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
             <button
               onClick={() => setOpen(isOpen ? null : mod.id)}
-              className="flex w-full items-center gap-3 px-5 py-4 text-left transition hover:bg-white/[0.03]"
+              className="flex w-full items-center gap-3 px-5 py-4 text-left transition hover:bg-sky-50/60"
             >
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-ink-800 font-mono text-sm font-bold text-accent">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-sky-100 font-mono text-sm font-bold text-sky-700">
                 {mod.order_num}
               </span>
-              <span className="flex-1 text-base font-medium text-white">{mod.title}</span>
+              <span className="flex-1 text-base font-semibold text-slate-800">{mod.title}</span>
               <span className="hidden text-xs text-slate-500 sm:block">
                 {lessons.length} {lessons.length === 1 ? 'lección' : 'lecciones'}
               </span>
               <ChevronDown
-                className={cn('h-5 w-5 text-slate-500 transition-transform', isOpen && 'rotate-180')}
+                className={cn('h-5 w-5 text-slate-400 transition-transform', isOpen && 'rotate-180')}
               />
             </button>
 
@@ -72,15 +69,15 @@ export default function ModuleList({ modules }: { modules: Module[] }) {
                   transition={{ duration: 0.25 }}
                   className="overflow-hidden"
                 >
-                  <ul className="border-t border-white/5 bg-ink-950/40 px-5 py-2">
+                  <ul className="border-t border-slate-100 bg-sky-50/40 px-5 py-2">
                     {lessons.map((lesson) => (
                       <li key={lesson.id}>
                         <Link
                           href={`/lesson/${lesson.id}`}
-                          className="group flex items-center gap-3 rounded-lg px-3 py-2.5 transition hover:bg-white/5"
+                          className="group flex items-center gap-3 rounded-lg px-3 py-2.5 transition hover:bg-white"
                         >
                           {typeIcon(lesson.type)}
-                          <span className="flex-1 text-sm text-slate-300 transition group-hover:text-white">
+                          <span className="flex-1 text-sm text-slate-600 transition group-hover:text-slate-900">
                             {lesson.title}
                           </span>
                           {typeBadge(lesson.type)}

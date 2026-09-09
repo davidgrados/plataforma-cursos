@@ -102,12 +102,12 @@ export default function LessonForm({
   }
 
   const inputCls =
-    'w-full rounded-xl border border-ink-700 bg-ink-900 px-3.5 py-2.5 text-sm text-slate-200 outline-none transition focus:border-accent/50 focus:ring-2 focus:ring-accent/20';
+    'w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-800 outline-none transition focus:border-accent/60 focus:ring-2 focus:ring-accent/20';
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-5">
       <div className="grid gap-4 sm:grid-cols-2">
-        <label className="flex flex-col gap-1.5 text-sm text-slate-300">
+        <label className="flex flex-col gap-1.5 text-sm text-slate-600">
           Módulo
           <select
             value={moduleId}
@@ -123,7 +123,7 @@ export default function LessonForm({
           </select>
         </label>
 
-        <label className="flex flex-col gap-1.5 text-sm text-slate-300">
+        <label className="flex flex-col gap-1.5 text-sm text-slate-600">
           Título
           <input
             value={title}
@@ -133,7 +133,7 @@ export default function LessonForm({
           />
         </label>
 
-        <label className="flex flex-col gap-1.5 text-sm text-slate-300">
+        <label className="flex flex-col gap-1.5 text-sm text-slate-600">
           Tipo de lección
           <select
             value={type}
@@ -148,7 +148,7 @@ export default function LessonForm({
           </select>
         </label>
 
-        <label className="flex flex-col gap-1.5 text-sm text-slate-300">
+        <label className="flex flex-col gap-1.5 text-sm text-slate-600">
           Orden
           <input
             type="number"
@@ -159,13 +159,13 @@ export default function LessonForm({
         </label>
       </div>
 
-      <div className="flex flex-col gap-1.5 text-sm text-slate-300">
+      <div className="flex flex-col gap-1.5 text-sm text-slate-600">
         <span>Contenido (Markdown)</span>
         <MarkdownEditor value={content} onChange={setContent} onUploadImage={onUploadImage} />
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <label className="flex flex-col gap-1.5 text-sm text-slate-300">
+        <label className="flex flex-col gap-1.5 text-sm text-slate-600">
           <span className="flex items-center justify-between">
             Sistema de archivos inicial (JSON)
             <span
@@ -186,7 +186,7 @@ export default function LessonForm({
           />
         </label>
 
-        <label className="flex flex-col gap-1.5 text-sm text-slate-300">
+        <label className="flex flex-col gap-1.5 text-sm text-slate-600">
           <span className="flex items-center justify-between">
             Validación del ejercicio (JSON)
             <span
@@ -217,12 +217,12 @@ export default function LessonForm({
         </label>
       </div>
 
-      <div className="flex items-center justify-end gap-3 border-t border-white/5 pt-4">
+      <div className="flex items-center justify-end gap-3 border-t border-slate-200 pt-4">
         {onCancel && (
           <button
             type="button"
             onClick={onCancel}
-            className="rounded-xl border border-ink-700 px-4 py-2.5 text-sm text-slate-300 transition hover:bg-white/5"
+            className="rounded-xl border border-slate-300 px-4 py-2.5 text-sm text-slate-600 transition hover:bg-slate-100"
           >
             Cancelar
           </button>
@@ -230,7 +230,7 @@ export default function LessonForm({
         <button
           type="submit"
           disabled={busy}
-          className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-accent to-accent-cyan px-5 py-2.5 text-sm font-semibold text-ink-950 transition hover:opacity-90 disabled:opacity-50"
+          className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-accent to-accent-cyan px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-50"
         >
           <Save className="h-4 w-4" />
           {busy ? 'Guardando…' : 'Guardar lección'}

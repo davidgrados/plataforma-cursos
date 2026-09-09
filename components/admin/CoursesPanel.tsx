@@ -94,21 +94,21 @@ export default function CoursesPanel({ clerkId }: Props) {
   }
 
   const input =
-    'w-full rounded-xl border border-ink-700 bg-ink-900 px-3.5 py-2.5 text-sm text-slate-200 outline-none transition focus:border-accent/50 focus:ring-2 focus:ring-accent/20';
+    'w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-800 outline-none transition focus:border-accent/50 focus:ring-2 focus:ring-accent/20';
 
   return (
     <div className="grid gap-6 lg:grid-cols-[380px_1fr]">
       {/* Formulario */}
       <form
         onSubmit={handleSubmit}
-        className="h-fit rounded-2xl border border-white/5 bg-ink-900/60 p-5"
+        className="h-fit rounded-2xl border border-slate-200 bg-white p-5"
       >
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-base font-semibold text-white">
             {editing ? 'Editar curso' : 'Nuevo curso'}
           </h2>
           {editing && (
-            <button onClick={resetForm} className="text-slate-400 transition hover:text-white">
+            <button onClick={resetForm} className="text-slate-500 transition hover:text-slate-900">
               <X className="h-4 w-4" />
             </button>
           )}
@@ -145,7 +145,7 @@ export default function CoursesPanel({ clerkId }: Props) {
                 inp.onchange = () => inp.files?.[0] && handleUpload(inp.files[0]);
                 inp.click();
               }}
-              className="flex items-center gap-1.5 rounded-lg border border-ink-700 px-3 py-2 text-xs text-slate-300 transition hover:bg-white/5"
+              className="flex items-center gap-1.5 rounded-lg border border-slate-300 px-3 py-2 text-xs text-slate-600 transition hover:bg-slate-100"
             >
               <ImagePlus className="h-4 w-4" /> Subir portada
             </button>
@@ -158,7 +158,7 @@ export default function CoursesPanel({ clerkId }: Props) {
           <button
             type="submit"
             disabled={busy}
-            className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-accent to-accent-cyan px-4 py-2.5 text-sm font-semibold text-ink-950 transition hover:opacity-90 disabled:opacity-50"
+            className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-accent to-accent-cyan px-4 py-2.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-50"
           >
             {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : editing ? <Pencil className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
             {editing ? 'Guardar cambios' : 'Crear curso'}
@@ -169,20 +169,20 @@ export default function CoursesPanel({ clerkId }: Props) {
       {/* Lista */}
       <div className="flex flex-col gap-3">
         {loading ? (
-          <div className="flex items-center gap-2 py-10 text-slate-400">
+          <div className="flex items-center gap-2 py-10 text-slate-500">
             <Loader2 className="h-5 w-5 animate-spin" /> Cargando…
           </div>
         ) : courses.length === 0 ? (
-          <div className="rounded-2xl border border-white/5 bg-ink-900/60 p-8 text-center text-slate-400">
+          <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-slate-500">
             No hay cursos todavía.
           </div>
         ) : (
           courses.map((c) => (
             <div
               key={c.id}
-              className="flex items-center gap-4 rounded-2xl border border-white/5 bg-ink-900/60 p-4"
+              className="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4"
             >
-              <div className="h-14 w-20 shrink-0 overflow-hidden rounded-xl bg-ink-800">
+              <div className="h-14 w-20 shrink-0 overflow-hidden rounded-xl bg-sky-100">
                 {c.image_url ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={c.image_url} alt="" className="h-full w-full object-cover" />
@@ -197,7 +197,7 @@ export default function CoursesPanel({ clerkId }: Props) {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => startEdit(c)}
-                  className="rounded-lg border border-ink-700 p-2 text-slate-300 transition hover:bg-white/5"
+                  className="rounded-lg border border-slate-300 p-2 text-slate-600 transition hover:bg-slate-100"
                 >
                   <Pencil className="h-4 w-4" />
                 </button>

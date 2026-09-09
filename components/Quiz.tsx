@@ -34,12 +34,10 @@ export default function Quiz({ questions }: { questions: QuizQuestion[] }) {
     <div className="flex flex-col gap-5">
       {questions.map((q, i) => {
         const chosen = answers[i];
-        const isCorrect = checked && chosen === q.answer;
-        const isWrong = checked && chosen !== undefined && chosen !== q.answer;
         return (
-          <div key={i} className="rounded-2xl border border-white/5 bg-ink-900/60 p-5">
-            <p className="mb-3 font-medium text-white">
-              <span className="mr-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-ink-800 text-xs font-bold text-accent">
+          <div key={i} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <p className="mb-3 font-semibold text-slate-900">
+              <span className="mr-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-sky-100 text-xs font-bold text-sky-700">
                 {i + 1}
               </span>
               {q.question}
@@ -56,19 +54,19 @@ export default function Quiz({ questions }: { questions: QuizQuestion[] }) {
                     onClick={() => !checked && setAnswers((a) => ({ ...a, [i]: srcIdx }))}
                     className={cn(
                       'flex items-center gap-3 rounded-xl border px-4 py-2.5 text-left text-sm transition',
-                      selected && !checked && 'border-accent/50 bg-accent/10',
-                      checked && correct && 'border-green-500/50 bg-green-500/10 text-green-300',
-                      checked && selected && !correct && 'border-red-500/50 bg-red-500/10 text-red-300',
-                      !selected && !checked && 'border-ink-700 hover:bg-white/5',
-                      !selected && checked && 'border-ink-700 opacity-60',
+                      selected && !checked && 'border-sky-400 bg-sky-50 font-medium',
+                      checked && correct && 'border-green-400 bg-green-50 text-green-800',
+                      checked && selected && !correct && 'border-red-400 bg-red-50 text-red-700',
+                      !selected && !checked && 'border-slate-300 text-slate-700 hover:bg-slate-50',
+                      !selected && checked && 'border-slate-200 text-slate-400',
                     )}
                   >
                     <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border text-xs">
                       {String.fromCharCode(65 + pos)}
                     </span>
                     <span>{opt}</span>
-                    {checked && correct && <CheckCircle2 className="ml-auto h-4 w-4 shrink-0 text-green-400" />}
-                    {checked && selected && !correct && <XCircle className="ml-auto h-4 w-4 shrink-0 text-red-400" />}
+                    {checked && correct && <CheckCircle2 className="ml-auto h-4 w-4 shrink-0 text-green-500" />}
+                    {checked && selected && !correct && <XCircle className="ml-auto h-4 w-4 shrink-0 text-red-500" />}
                   </button>
                 );
               })}
@@ -77,8 +75,8 @@ export default function Quiz({ questions }: { questions: QuizQuestion[] }) {
         );
       })}
 
-      <div className="flex items-center justify-between gap-3 border-t border-white/5 pt-4">
-        <p className="flex items-center gap-1.5 text-sm text-slate-400">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-4">
+        <p className="flex items-center gap-1.5 text-sm font-medium text-slate-600">
           <HelpCircle className="h-4 w-4" />
           {checked
             ? `Puntuación: ${score} / ${questions.length}`
@@ -88,7 +86,7 @@ export default function Quiz({ questions }: { questions: QuizQuestion[] }) {
           <button
             type="button"
             onClick={reset}
-            className="flex items-center gap-1.5 rounded-xl border border-ink-700 px-4 py-2.5 text-sm text-slate-300 transition hover:bg-white/5"
+            className="flex items-center gap-1.5 rounded-xl border border-slate-300 px-4 py-2.5 text-sm text-slate-600 transition hover:bg-slate-100"
           >
             <RotateCcw className="h-4 w-4" /> Reiniciar
           </button>
@@ -96,7 +94,7 @@ export default function Quiz({ questions }: { questions: QuizQuestion[] }) {
             type="button"
             onClick={() => setChecked(true)}
             disabled={answered < questions.length}
-            className="rounded-xl bg-gradient-to-r from-accent to-accent-cyan px-5 py-2.5 text-sm font-semibold text-ink-950 transition hover:opacity-90 disabled:opacity-50"
+            className="rounded-xl bg-gradient-to-r from-accent to-accent-cyan px-5 py-2.5 text-sm font-semibold text-white transition hover:brightness-105 disabled:opacity-50"
           >
             Comprobar respuestas
           </button>
