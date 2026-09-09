@@ -5,9 +5,22 @@ import { CheckCircle2, HelpCircle, RotateCcw, XCircle } from 'lucide-react';
 import type { QuizQuestion } from '@/lib/quiz-data';
 import { cn } from '@/lib/utils';
 
+function shuffleIndexes(n: number): number[] {
+  const a = Array.from({ length: n }, (_, i) => i);
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 export default function Quiz({ questions }: { questions: QuizQuestion[] }) {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [checked, setChecked] = useState(false);
+  // Orden (mezclado) de las opciones por pregunta, para que la correcta no caiga siempre en la A.
+  const [order, setOrder] = useState<number[][]>(() =>
+    questions.map((q) => shuffleIndexes(q.options.length)),
+  );
 
   const answered = Object.keys(answers).length;
   const score = questions.reduce((acc, q, i) => (answers[i] === q.answer ? acc + 1 : acc), 0);
@@ -32,14 +45,15 @@ export default function Quiz({ questions }: { questions: QuizQuestion[] }) {
               {q.question}
             </p>
             <div className="flex flex-col gap-2">
-              {q.options.map((opt, oi) => {
-                const selected = chosen === oi;
-                const correct = checked && oi === q.answer;
+              {order[i].map((srcIdx, pos) => {
+                const opt = q.options[srcIdx];
+                const selected = chosen === srcIdx;
+                const correct = checked && srcIdx === q.answer;
                 return (
                   <button
-                    key={oi}
+                    key={srcIdx}
                     type="button"
-                    onClick={() => !checked && setAnswers((a) => ({ ...a, [i]: oi }))}
+                    onClick={() => !checked && setAnswers((a) => ({ ...a, [i]: srcIdx }))}
                     className={cn(
                       'flex items-center gap-3 rounded-xl border px-4 py-2.5 text-left text-sm transition',
                       selected && !checked && 'border-accent/50 bg-accent/10',
@@ -50,7 +64,7 @@ export default function Quiz({ questions }: { questions: QuizQuestion[] }) {
                     )}
                   >
                     <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border text-xs">
-                      {String.fromCharCode(65 + oi)}
+                      {String.fromCharCode(65 + pos)}
                     </span>
                     <span>{opt}</span>
                     {checked && correct && <CheckCircle2 className="ml-auto h-4 w-4 shrink-0 text-green-400" />}
