@@ -3,10 +3,10 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { Toaster } from 'sonner';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import ScrollToTop from '@/components/ScrollToTop';
 import { ClerkAuthBridge, PreviewAuthProvider } from '@/lib/auth-context';
 import './globals.css';
 
-// @cloudflare/next-on-pages exige el runtime edge en todas las rutas no estáticas.
 export const metadata: Metadata = {
   title: 'Edúcate Comas',
   description:
@@ -20,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const content = (
     <html lang="es">
       <body className="min-h-screen">
+        <ScrollToTop />
         <Navbar />
         <main className="mx-auto w-full max-w-6xl px-4 pb-16 pt-8 sm:px-6">{children}</main>
         <Footer />

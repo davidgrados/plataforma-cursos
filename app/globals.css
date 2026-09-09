@@ -7,8 +7,9 @@
   --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace;
 }
 
+/* Desactivado: el scroll-behavior smooth interfería con el scroll al cambiar de página. */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 body {
