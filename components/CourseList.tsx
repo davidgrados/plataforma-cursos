@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { AlertTriangle, ArrowRight, BrainCircuit, Cpu, Fingerprint, Loader2, ShieldCheck, TerminalSquare } from 'lucide-react';
+import { AlertTriangle, ArrowRight, BrainCircuit, Clock, Cpu, Fingerprint, Loader2, ShieldCheck, TerminalSquare } from 'lucide-react';
 import { api } from '@/lib/api';
 import type { Course } from '@/lib/types';
 
@@ -75,7 +75,11 @@ export default function CourseList() {
           >
             <Link
               href={`/course/${course.slug}`}
-              className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-sky-300 hover:shadow-lg"
+              className={`group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg ${
+                comingSoon
+                  ? 'border-2 border-dashed border-sky-300 hover:border-sky-400'
+                  : 'border border-slate-200 hover:border-sky-300'
+              }`}
             >
               <div className="relative h-32 overflow-hidden bg-gradient-to-br from-sky-200 via-sky-100 to-white">
                 {course.image_url ? (
@@ -83,7 +87,9 @@ export default function CourseList() {
                   <img
                     src={course.image_url}
                     alt={course.title}
-                    className="h-full w-full object-cover opacity-90 transition group-hover:scale-105"
+                    className={`h-full w-full object-cover transition group-hover:scale-105 ${
+                      comingSoon ? 'opacity-75 saturate-[0.85]' : 'opacity-90'
+                    }`}
                   />
                 ) : (
                   <div className="flex h-full items-center justify-center">
@@ -91,8 +97,10 @@ export default function CourseList() {
                   </div>
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-white/60 to-transparent" />
+                {comingSoon && <div className="absolute inset-0 bg-white/25" />}
                 {comingSoon && (
-                  <span className="absolute left-3 top-3 rounded-full border border-sky-200 bg-white/95 px-3 py-1 text-xs font-semibold text-sky-700 shadow-sm">
+                  <span className="absolute left-3 top-3 flex items-center gap-1.5 rounded-full bg-sky-600 px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-white shadow-md">
+                    <Clock className="h-3.5 w-3.5" />
                     Próximamente
                   </span>
                 )}
@@ -103,10 +111,23 @@ export default function CourseList() {
                 <p className="line-clamp-3 flex-1 text-sm leading-relaxed text-slate-500">
                   {course.description || 'Sin descripción.'}
                 </p>
-                <span className="mt-auto flex items-center gap-1.5 text-sm font-semibold text-sky-600">
-                  {comingSoon ? 'Ver portada' : 'Ver curso'}
-                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                </span>
+                {comingSoon ? (
+                  <div className="mt-auto flex flex-col gap-2">
+                    <p className="rounded-lg bg-sky-50 px-3 py-1.5 text-xs font-semibold text-sky-700">
+                      Curso en preparación: publicaremos sus módulos muy pronto.
+                    </p>
+                    <span className="flex items-center gap-1.5 text-sm font-semibold text-sky-600">
+                      <Clock className="h-4 w-4" />
+                      Ver portada
+                      <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                    </span>
+                  </div>
+                ) : (
+                  <span className="mt-auto flex items-center gap-1.5 text-sm font-semibold text-sky-600">
+                    Ver curso
+                    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                  </span>
+                )}
               </div>
             </Link>
           </motion.div>
