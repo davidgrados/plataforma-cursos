@@ -38,6 +38,7 @@ seed-ai.sql
 seed-seguridad.sql
 seed-marketing.sql
 seed-ciberseguridad.sql
+seed-forense.sql
 
 # tipos
 *.tsbuildinfo

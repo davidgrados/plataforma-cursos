@@ -11,6 +11,8 @@ export interface Course {
   description?: string | null;
   image_url?: string | null;
   created_at?: string;
+  /** Nº de módulos (0 = curso aún en preparación / "próximamente") */
+  module_count?: number;
 }
 
 export interface Module {

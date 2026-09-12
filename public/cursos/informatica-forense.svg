@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Portada del curso Informática Forense">
+  <defs>
+    <linearGradient id="ifBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e0f2fe"/>
+      <stop offset="0.55" stop-color="#f0f9ff"/>
+      <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+    <linearGradient id="ifDisk" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#0369a1"/>
+    </linearGradient>
+    <linearGradient id="ifLens" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#bae6fd" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#e0e7ff" stop-opacity="0.75"/>
+    </linearGradient>
+    <linearGradient id="ifHandle" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0284c7"/>
+      <stop offset="1" stop-color="#4f46e5"/>
+    </linearGradient>
+    <radialGradient id="ifGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#7dd3fc" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#ifBg)"/>
+  <circle cx="110" cy="70" r="130" fill="url(#ifGlow)"/>
+  <circle cx="710" cy="395" r="150" fill="url(#ifGlow)"/>
+
+  <!-- dígitos binarios decorativos -->
+  <g fill="#7dd3fc" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" letter-spacing="6">
+    <text x="120" y="108">0 1 0 1 1 0</text>
+    <text x="470" y="382">1 0 0 1 0 1</text>
+  </g>
+  <g fill="#bae6fd">
+    <circle cx="352" cy="96" r="7"/>
+    <circle cx="392" cy="118" r="5"/>
+    <circle cx="672" cy="128" r="8"/>
+    <circle cx="70" cy="300" r="6"/>
+  </g>
+
+  <!-- disco duro / evidencia -->
+  <g>
+    <rect x="96" y="152" width="248" height="166" rx="24" fill="#ffffff" stroke="#bae6fd" stroke-width="4"/>
+    <circle cx="158" cy="235" r="40" fill="url(#ifDisk)" opacity="0.92"/>
+    <circle cx="158" cy="235" r="14" fill="#ffffff" opacity="0.9"/>
+    <circle cx="158" cy="235" r="5" fill="#0369a1"/>
+    <circle cx="272" cy="196" r="8" fill="#38bdf8"/>
+    <circle cx="272" cy="235" r="8" fill="#7dd3fc"/>
+    <circle cx="272" cy="274" r="8" fill="#c7d2fe"/>
+    <rect x="216" y="182" width="28" height="8" rx="4" fill="#e0f2fe"/>
+  </g>
+
+  <!-- lupa forense -->
+  <g>
+    <line x1="586" y1="256" x2="654" y2="324" stroke="url(#ifHandle)" stroke-width="22" stroke-linecap="round"/>
+    <circle cx="520" cy="190" r="92" fill="url(#ifLens)" stroke="#0284c7" stroke-width="9"/>
+    <g fill="none" stroke="#0369a1" stroke-width="6" stroke-linecap="round" opacity="0.85">
+      <path d="M 501.2 196.8 A 20 20 0 1 1 538.8 196.8"/>
+      <path d="M 488.1 201.6 A 34 34 0 1 1 551.9 201.6"/>
+      <path d="M 474.9 206.4 A 48 48 0 1 1 565.1 206.4"/>
+    </g>
+    <circle cx="520" cy="190" r="92" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.6"/>
+  </g>
+</svg>

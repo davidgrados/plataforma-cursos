@@ -3,12 +3,13 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { AlertTriangle, ArrowRight, BrainCircuit, Cpu, Loader2, ShieldCheck, TerminalSquare } from 'lucide-react';
+import { AlertTriangle, ArrowRight, BrainCircuit, Cpu, Fingerprint, Loader2, ShieldCheck, TerminalSquare } from 'lucide-react';
 import { api } from '@/lib/api';
 import type { Course } from '@/lib/types';
 
 function iconFor(course: Course) {
   const t = `${course.slug} ${course.title}`.toLowerCase();
+  if (t.includes('forense') || t.includes('forensic')) return Fingerprint;
   if (t.includes('linux') || t.includes('terminal')) return TerminalSquare;
   if (t.includes('seguridad') || t.includes('ciberseguridad') || t.includes('security')) return ShieldCheck;
   if (t.includes('inteligencia') || t.includes('artificial') || t.includes(' ia')) return BrainCircuit;
@@ -64,6 +65,7 @@ export default function CourseList() {
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {courses.map((course, i) => {
         const Icon = iconFor(course);
+        const comingSoon = course.module_count === 0;
         return (
           <motion.div
             key={course.id}
@@ -89,6 +91,11 @@ export default function CourseList() {
                   </div>
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-white/60 to-transparent" />
+                {comingSoon && (
+                  <span className="absolute left-3 top-3 rounded-full border border-sky-200 bg-white/95 px-3 py-1 text-xs font-semibold text-sky-700 shadow-sm">
+                    Próximamente
+                  </span>
+                )}
               </div>
 
               <div className="flex flex-1 flex-col gap-3 p-5">
@@ -97,7 +104,7 @@ export default function CourseList() {
                   {course.description || 'Sin descripción.'}
                 </p>
                 <span className="mt-auto flex items-center gap-1.5 text-sm font-semibold text-sky-600">
-                  Ver curso
+                  {comingSoon ? 'Ver portada' : 'Ver curso'}
                   <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                 </span>
               </div>

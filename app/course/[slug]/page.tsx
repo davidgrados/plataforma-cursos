@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { AlertTriangle, Loader2 } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -58,15 +59,36 @@ export default function CoursePage() {
         )}
       </header>
 
-      <section className="flex flex-col gap-4">
-        <h2 className="text-lg font-semibold text-slate-900">
-          Contenido del curso{' '}
-          <span className="text-sm font-normal text-slate-500">
-            ({course.modules.length} módulos)
+      {course.modules.length === 0 ? (
+        <section className="flex flex-col items-center gap-4 rounded-2xl border border-sky-200 bg-white p-10 text-center shadow-sm">
+          <span className="rounded-full border border-sky-200 bg-sky-50 px-4 py-1.5 text-sm font-semibold text-sky-700">
+            Próximamente
           </span>
-        </h2>
-        <ModuleList modules={course.modules} />
-      </section>
+          <h2 className="text-xl font-semibold text-slate-900">
+            Este curso está en preparación
+          </h2>
+          <p className="max-w-xl text-slate-600">
+            Estamos preparando el contenido de <strong>{course.title}</strong>: sus módulos,
+            prácticas guiadas y examen final. Muy pronto lo tendrás disponible aquí.
+          </p>
+          <Link
+            href="/#cursos"
+            className="rounded-xl bg-gradient-to-r from-accent to-accent-cyan px-6 py-3 font-semibold text-white shadow-glow transition hover:brightness-105"
+          >
+            Ver los cursos disponibles
+          </Link>
+        </section>
+      ) : (
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-semibold text-slate-900">
+            Contenido del curso{' '}
+            <span className="text-sm font-normal text-slate-500">
+              ({course.modules.length} módulos)
+            </span>
+          </h2>
+          <ModuleList modules={course.modules} />
+        </section>
+      )}
     </div>
   );
 }
