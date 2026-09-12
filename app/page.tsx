@@ -44,22 +44,40 @@ export default function HomePage() {
             icon: TerminalSquare,
             title: 'Terminal real (simulado)',
             desc: 'Ejecuta comandos sobre un sistema de archivos virtual, sin riesgo y con validación.',
+            image: '/features/terminal-real.svg',
           },
           {
             icon: GraduationCap,
             title: 'Varios cursos',
             desc: 'Linux, inglés con pronunciación, IA, seguridad y marketing. Para todas las edades.',
+            image: '/features/varios-cursos.svg',
           },
           {
             icon: ShieldCheck,
             title: 'Progreso y exámenes',
             desc: 'Cada lección se valida y tu avance queda guardado en tu cuenta.',
+            image: '/features/progreso-examenes.svg',
           },
         ].map((f) => (
-          <div key={f.title} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <f.icon className="mb-3 h-7 w-7 text-sky-600" />
-            <h3 className="mb-1.5 font-semibold text-slate-900">{f.title}</h3>
-            <p className="text-sm leading-relaxed text-slate-600">{f.desc}</p>
+          <div
+            key={f.title}
+            className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-sky-300 hover:shadow-lg"
+          >
+            <div className="relative h-32 overflow-hidden bg-gradient-to-br from-sky-200 via-sky-100 to-white">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={f.image}
+                alt={f.title}
+                className="h-full w-full object-cover transition duration-300 hover:scale-105"
+              />
+            </div>
+            <div className="flex flex-1 flex-col p-5">
+              <div className="mb-1.5 flex items-center gap-2">
+                <f.icon className="h-5 w-5 shrink-0 text-sky-600" />
+                <h3 className="font-semibold text-slate-900">{f.title}</h3>
+              </div>
+              <p className="text-sm leading-relaxed text-slate-600">{f.desc}</p>
+            </div>
           </div>
         ))}
       </section>
