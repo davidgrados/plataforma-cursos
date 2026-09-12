@@ -18,48 +18,43 @@
       <stop offset="1" stop-color="#4f46e5"/>
     </linearGradient>
     <radialGradient id="ifGlow" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#7dd3fc" stop-opacity="0.5"/>
+      <stop offset="0" stop-color="#7dd3fc" stop-opacity="0.45"/>
       <stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/>
     </radialGradient>
   </defs>
 
   <rect width="800" height="450" fill="url(#ifBg)"/>
-  <circle cx="110" cy="70" r="130" fill="url(#ifGlow)"/>
-  <circle cx="710" cy="395" r="150" fill="url(#ifGlow)"/>
+  <circle cx="130" cy="120" r="140" fill="url(#ifGlow)"/>
+  <circle cx="690" cy="350" r="140" fill="url(#ifGlow)"/>
 
   <!-- dígitos binarios decorativos -->
-  <g fill="#7dd3fc" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" letter-spacing="6">
-    <text x="120" y="108">0 1 0 1 1 0</text>
-    <text x="470" y="382">1 0 0 1 0 1</text>
-  </g>
-  <g fill="#bae6fd">
-    <circle cx="352" cy="96" r="7"/>
-    <circle cx="392" cy="118" r="5"/>
-    <circle cx="672" cy="128" r="8"/>
-    <circle cx="70" cy="300" r="6"/>
+  <g fill="#a5b4fc" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" letter-spacing="6">
+    <text x="150" y="132">0 1 0 1 1</text>
+    <text x="150" y="330">1 0 0 1 0</text>
   </g>
 
   <!-- disco duro / evidencia -->
   <g>
-    <rect x="96" y="152" width="248" height="166" rx="24" fill="#ffffff" stroke="#bae6fd" stroke-width="4"/>
-    <circle cx="158" cy="235" r="40" fill="url(#ifDisk)" opacity="0.92"/>
-    <circle cx="158" cy="235" r="14" fill="#ffffff" opacity="0.9"/>
-    <circle cx="158" cy="235" r="5" fill="#0369a1"/>
-    <circle cx="272" cy="196" r="8" fill="#38bdf8"/>
-    <circle cx="272" cy="235" r="8" fill="#7dd3fc"/>
-    <circle cx="272" cy="274" r="8" fill="#c7d2fe"/>
-    <rect x="216" y="182" width="28" height="8" rx="4" fill="#e0f2fe"/>
+    <rect x="96" y="158" width="248" height="160" rx="24" fill="#ffffff" stroke="#bae6fd" stroke-width="4"/>
+    <circle cx="158" cy="238" r="38" fill="url(#ifDisk)" opacity="0.92"/>
+    <circle cx="158" cy="238" r="13" fill="#ffffff" opacity="0.9"/>
+    <circle cx="158" cy="238" r="5" fill="#0369a1"/>
+    <circle cx="272" cy="200" r="8" fill="#38bdf8"/>
+    <circle cx="272" cy="238" r="8" fill="#7dd3fc"/>
+    <circle cx="272" cy="276" r="8" fill="#c7d2fe"/>
+    <rect x="216" y="186" width="28" height="8" rx="4" fill="#e0f2fe"/>
   </g>
 
   <!-- lupa forense -->
   <g>
-    <line x1="586" y1="256" x2="654" y2="324" stroke="url(#ifHandle)" stroke-width="22" stroke-linecap="round"/>
-    <circle cx="520" cy="190" r="92" fill="url(#ifLens)" stroke="#0284c7" stroke-width="9"/>
-    <g fill="none" stroke="#0369a1" stroke-width="6" stroke-linecap="round" opacity="0.85">
-      <path d="M 501.2 196.8 A 20 20 0 1 1 538.8 196.8"/>
-      <path d="M 488.1 201.6 A 34 34 0 1 1 551.9 201.6"/>
-      <path d="M 474.9 206.4 A 48 48 0 1 1 565.1 206.4"/>
+    <line x1="585" y1="265" x2="652" y2="332" stroke="url(#ifHandle)" stroke-width="22" stroke-linecap="round"/>
+    <circle cx="520" cy="200" r="90" fill="url(#ifLens)" stroke="#0284c7" stroke-width="9"/>
+    <g fill="none" stroke="#0369a1" stroke-width="7" stroke-linecap="round" opacity="0.85">
+      <path d="M 503.1 206.2 A 18 18 0 1 1 536.9 206.2"/>
+      <path d="M 489.9 210.9 A 32 32 0 1 1 550.1 210.9"/>
+      <path d="M 476.8 215.7 A 46 46 0 1 1 563.2 215.7"/>
+      <path d="M 463.6 220.5 A 60 60 0 1 1 576.4 220.5"/>
     </g>
-    <circle cx="520" cy="190" r="92" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.6"/>
+    <circle cx="520" cy="200" r="90" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.6"/>
   </g>
 </svg>

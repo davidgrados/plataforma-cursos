@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Portada del curso Linux Básico">
+  <defs>
+    <linearGradient id="lbBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e0f2fe"/>
+      <stop offset="0.55" stop-color="#f0f9ff"/>
+      <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+    <radialGradient id="lbGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#7dd3fc" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#lbBg)"/>
+  <circle cx="130" cy="120" r="150" fill="url(#lbGlow)"/>
+  <circle cx="690" cy="340" r="150" fill="url(#lbGlow)"/>
+
+  <!-- ventana de terminal -->
+  <rect x="100" y="100" width="500" height="250" rx="20" fill="#ffffff" stroke="#bae6fd" stroke-width="5"/>
+  <circle cx="138" cy="135" r="8" fill="#7dd3fc"/>
+  <circle cx="164" cy="135" r="8" fill="#c7d2fe"/>
+  <circle cx="190" cy="135" r="8" fill="#bae6fd"/>
+  <rect x="100" y="160" width="500" height="4" fill="#e0f2fe"/>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="23">
+    <text x="132" y="210" fill="#0284c7">$ whoami</text>
+    <text x="290" y="210" fill="#94a3b8">estudiante</text>
+    <text x="132" y="256" fill="#0284c7">$ ls</text>
+    <text x="290" y="256" fill="#94a3b8">cursos  practicas</text>
+    <text x="132" y="302" fill="#0284c7">$</text>
+  </g>
+  <rect x="164" y="284" width="15" height="25" rx="3" fill="#0ea5e9"/>
+
+  <!-- pingüino -->
+  <g>
+    <ellipse cx="700" cy="228" rx="52" ry="62" fill="#1e293b"/>
+    <ellipse cx="700" cy="242" rx="32" ry="42" fill="#ffffff"/>
+    <circle cx="686" cy="204" r="11" fill="#ffffff"/>
+    <circle cx="714" cy="204" r="11" fill="#ffffff"/>
+    <circle cx="687" cy="205" r="5" fill="#0f172a"/>
+    <circle cx="713" cy="205" r="5" fill="#0f172a"/>
+    <path d="M 700 215 L 718 225 L 700 235 Z" fill="#fb923c"/>
+    <ellipse cx="682" cy="289" rx="17" ry="10" fill="#fb923c"/>
+    <ellipse cx="718" cy="289" rx="17" ry="10" fill="#fb923c"/>
+  </g>
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Portada del curso Inglés Básico">
+  <defs>
+    <linearGradient id="ibBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e0f2fe"/>
+      <stop offset="0.55" stop-color="#f0f9ff"/>
+      <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+    <radialGradient id="ibGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#7dd3fc" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#ibBg)"/>
+  <circle cx="120" cy="110" r="150" fill="url(#ibGlow)"/>
+  <circle cx="700" cy="350" r="150" fill="url(#ibGlow)"/>
+
+  <!-- globo de diálogo -->
+  <path d="M 205 300 L 262 300 L 202 346 Z" fill="#ffffff" stroke="#bae6fd" stroke-width="5" stroke-linejoin="round"/>
+  <rect x="212" y="293" width="48" height="12" fill="#ffffff"/>
+  <rect x="120" y="120" width="420" height="190" rx="44" fill="#ffffff" stroke="#bae6fd" stroke-width="5"/>
+
+  <g font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" text-anchor="middle">
+    <text x="330" y="218" font-size="70" font-weight="700" fill="#0ea5e9">Hello!</text>
+    <text x="330" y="270" font-size="26" fill="#64748b">How are you?</text>
+  </g>
+
+  <!-- ondas de pronunciación -->
+  <g fill="none" stroke="#38bdf8" stroke-linecap="round">
+    <path d="M 592 178 A 62 62 0 0 1 592 262" stroke-width="9" opacity="0.95"/>
+    <path d="M 618 148 A 102 102 0 0 1 618 292" stroke-width="9" opacity="0.7"/>
+    <path d="M 644 118 A 142 142 0 0 1 644 322" stroke-width="9" opacity="0.45"/>
+  </g>
+
+  <g fill="#bae6fd">
+    <circle cx="176" cy="122" r="9"/>
+    <circle cx="212" cy="104" r="5"/>
+    <circle cx="690" cy="132" r="8"/>
+  </g>
+</svg>

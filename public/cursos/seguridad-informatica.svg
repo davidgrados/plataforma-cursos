@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Portada del curso Seguridad Informática Básica">
+  <defs>
+    <linearGradient id="siBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e0f2fe"/>
+      <stop offset="0.55" stop-color="#f0f9ff"/>
+      <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+    <linearGradient id="siShield" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#e0f2fe"/>
+    </linearGradient>
+    <linearGradient id="siLock" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#0284c7"/>
+    </linearGradient>
+    <radialGradient id="siGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#7dd3fc" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#siBg)"/>
+  <circle cx="400" cy="215" r="205" fill="url(#siGlow)"/>
+  <circle cx="130" cy="130" r="130" fill="url(#siGlow)"/>
+
+  <!-- escudo -->
+  <path d="M 400 108 L 508 148 V 245 C 508 302 454 334 400 348 C 346 334 292 302 292 245 V 148 Z"
+        fill="url(#siShield)" stroke="#38bdf8" stroke-width="9" stroke-linejoin="round"/>
+
+  <!-- candado -->
+  <path d="M 372 220 V 198 A 28 28 0 0 1 428 198 V 220" fill="none" stroke="#0369a1" stroke-width="15" stroke-linecap="round"/>
+  <rect x="350" y="216" width="100" height="82" rx="18" fill="url(#siLock)"/>
+  <circle cx="400" cy="250" r="12" fill="#ffffff"/>
+  <rect x="395" y="258" width="10" height="24" rx="5" fill="#ffffff"/>
+
+  <g fill="#bae6fd">
+    <circle cx="170" cy="170" r="9"/>
+    <circle cx="640" cy="176" r="11"/>
+    <circle cx="620" cy="300" r="7"/>
+    <circle cx="186" cy="310" r="8"/>
+  </g>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" letter-spacing="5" fill="#a5b4fc">
+    <text x="116" y="136">10110</text>
+    <text x="628" y="336">01001</text>
+  </g>
+</svg>
