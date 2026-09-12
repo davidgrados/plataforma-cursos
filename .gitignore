@@ -37,6 +37,7 @@ seed-english.sql
 seed-ai.sql
 seed-seguridad.sql
 seed-marketing.sql
+seed-ciberseguridad.sql
 
 # tipos
 *.tsbuildinfo

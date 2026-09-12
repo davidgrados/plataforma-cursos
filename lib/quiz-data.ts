@@ -399,4 +399,167 @@ export const QUIZZES: Record<string, QuizQuestion[]> = {
       answer: 0,
     },
   ],
+
+  'cib-examen-final': [
+    {
+      question: '¿Qué es el "riesgo" en ciberseguridad?',
+      options: [
+        'La probabilidad de que una amenaza aproveche una vulnerabilidad y cause impacto',
+        'Un virus informático',
+        'Un tipo de contraseña',
+        'El antivirus del equipo',
+      ],
+      answer: 0,
+    },
+    {
+      question: 'La tríada CIA de la seguridad está formada por…',
+      options: [
+        'Confidencialidad, integridad y disponibilidad',
+        'Control, internet y acceso',
+        'Cifrado, identidad y auditoría',
+        'Clave, usuario y correo',
+      ],
+      answer: 0,
+    },
+    {
+      question: 'En la gestión de amenazas, un IoC (indicador de compromiso) es…',
+      options: [
+        'Una huella observable de un ataque, como una IP o un dominio malicioso',
+        'Un tipo de firewall',
+        'Un certificado digital',
+        'Una política de contraseñas',
+      ],
+      answer: 0,
+    },
+    {
+      question: '¿Qué permite hacer un SIEM?',
+      options: [
+        'Centralizar registros y correlacionar eventos para detectar incidentes',
+        'Cifrar el disco duro',
+        'Crear copias de seguridad',
+        'Bloquear la publicidad',
+      ],
+      answer: 0,
+    },
+    {
+      question: 'El marco MITRE ATT&CK sirve para…',
+      options: [
+        'Catalogar tácticas y técnicas reales usadas por atacantes',
+        'Diseñar páginas web',
+        'Gestionar nóminas',
+        'Medir la velocidad de la red',
+      ],
+      answer: 0,
+    },
+    {
+      question: 'Al gestionar el riesgo, "transferir" el riesgo significa…',
+      options: [
+        'Trasladarlo a un tercero, por ejemplo con un seguro o un proveedor',
+        'Ignorarlo por completo',
+        'Eliminar el activo afectado',
+        'Aumentar los permisos de los usuarios',
+      ],
+      answer: 0,
+    },
+    {
+      question: '¿Por qué la ciberseguridad debe mapear los procesos de negocio?',
+      options: [
+        'Para proteger primero lo que es crítico y evita parar la operación',
+        'Para despedir personal',
+        'Para reducir los precios',
+        'Para vender más publicidad',
+      ],
+      answer: 0,
+    },
+    {
+      question: 'El RTO (Recovery Time Objective) define…',
+      options: [
+        'El tiempo máximo aceptable de interrupción antes de recuperar el servicio',
+        'La cantidad de datos que puedes perder',
+        'El coste del seguro',
+        'El número de empleados del SOC',
+      ],
+      answer: 0,
+    },
+    {
+      question: 'El RPO (Recovery Point Objective) indica…',
+      options: [
+        'Cuánta información como máximo puedes permitirte perder',
+        'Cuánto tarda en arrancar el servidor',
+        'El número de copias de seguridad',
+        'Los usuarios con MFA',
+      ],
+      answer: 0,
+    },
+    {
+      question: 'La norma ISO/IEC 27001 establece…',
+      options: [
+        'Los requisitos de un sistema de gestión de seguridad de la información (SGSI)',
+        'El diseño de redes inalámbricas',
+        'El lenguaje de programación de una web',
+        'El formato de las facturas',
+      ],
+      answer: 0,
+    },
+    {
+      question: 'El marco NIST CSF se organiza en las funciones…',
+      options: [
+        'Identificar, proteger, detectar, responder y recuperar',
+        'Comprar, vender, cobrar y facturar',
+        'Diseñar, programar, probar y publicar',
+        'Planear, ejecutar y despedir',
+      ],
+      answer: 0,
+    },
+    {
+      question: 'ISO 22301 es la norma de referencia para…',
+      options: [
+        'La continuidad de negocio',
+        'La calidad del software',
+        'La gestión de redes sociales',
+        'La contabilidad',
+      ],
+      answer: 0,
+    },
+    {
+      question: 'Cumplir una norma de seguridad (compliance)…',
+      options: [
+        'Ordena y demuestra el esfuerzo, pero no garantiza estar libre de ataques',
+        'Garantiza que nunca te hackearán',
+        'Solo sirve para pagar menos impuestos',
+        'Sustituye a la concienciación del personal',
+      ],
+      answer: 0,
+    },
+    {
+      question: 'En la gestión de la ciberseguridad, el CISO es…',
+      options: [
+        'El responsable de la estrategia y el gobierno de la seguridad',
+        'El técnico que repara impresoras',
+        'El encargado de la publicidad',
+        'El proveedor de internet',
+      ],
+      answer: 0,
+    },
+    {
+      question: 'El ciclo de mejora continua de la seguridad (PHVA) es…',
+      options: [
+        'Planificar, hacer, verificar y actuar',
+        'Comprar, instalar y olvidar',
+        'Detectar, borrar y reiniciar',
+        'Programar, vender y facturar',
+      ],
+      answer: 0,
+    },
+    {
+      question: 'Después de un incidente, la fase de "lecciones aprendidas" sirve para…',
+      options: [
+        'Corregir las causas y evitar que vuelva a ocurrir',
+        'Culpar a un empleado y cerrar el caso',
+        'Ocultar lo sucedido',
+        'Pagar el rescate',
+      ],
+      answer: 0,
+    },
+  ],
 };
