@@ -43,6 +43,7 @@ export default function PrivacidadPage() {
           <li>• <strong>No vendemos ni alquilamos</strong> tus datos a nadie.</li>
           <li>• <strong>No usamos publicidad</strong> ni seguimiento con fines comerciales.</li>
           <li>• Las cookies que utilizamos son <strong>necesarias</strong> para el funcionamiento del sitio.</li>
+          <li>• El <strong>tutor de inglés</strong> solo usa el micrófono si lo autorizas: tu voz la procesa tu navegador, no nosotros.</li>
           <li>• Puedes pedir acceso, corrección o borrado de tus datos escribiéndonos.</li>
         </ul>
       </section>
@@ -136,7 +137,73 @@ export default function PrivacidadPage() {
           sesión ni guardar tu progreso.
         </p>
 
-        <h2>6. Con quién compartimos la información</h2>
+        <h2 id="voz">6. Tutor de inglés, micrófono y voz (Web Speech API)</h2>
+        <p>
+          En el curso de inglés ofrecemos un <strong>tutor de conversación</strong> que funciona con
+          la <strong>Web Speech API</strong>, una tecnología del propio navegador. Si aceptas usar el
+          micrófono, tu navegador capta tu voz y <strong>la envía a los servidores del proveedor de
+          ese navegador para convertirla en texto</strong>. Es decir, el audio se procesa fuera de
+          Edúcate Comas, en los servidores de:
+        </p>
+        <ul>
+          <li>
+            <strong>Google</strong>, si usas Chrome o Chrome en Android (y en algunos casos Edge).
+          </li>
+          <li>
+            <strong>Microsoft</strong>, si usas Microsoft Edge.
+          </li>
+          <li>
+            <strong>Apple</strong>, si usas Safari en iPhone, iPad o Mac.
+          </li>
+        </ul>
+        <p>
+          Ese tratamiento se rige por las políticas de privacidad de cada proveedor, que puedes
+          consultar aquí:{' '}
+          <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
+            Google
+          </a>
+          ,{' '}
+          <a
+            href="https://privacy.microsoft.com/privacystatement"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Microsoft
+          </a>{' '}
+          y{' '}
+          <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener noreferrer">
+            Apple
+          </a>
+          .
+        </p>
+        <p>
+          <strong>Qué hacemos y qué no hacemos con tu voz:</strong>
+        </p>
+        <ul>
+          <li>
+            Edúcate Comas <strong>no recibe, no escucha ni almacena tu audio</strong> en ningún
+            momento.
+          </li>
+          <li>No grabamos conversaciones ni guardamos tus transcripciones en nuestros servidores.</li>
+          <li>
+            El texto que devuelve tu navegador se usa <strong>solo en tu pantalla</strong>, para
+            mostrarte tu puntuación y tus correcciones mientras practicas, y desaparece al salir de
+            la página.
+          </li>
+          <li>
+            Para que el tutor hable usamos la voz del propio navegador: tampoco se envía audio a
+            nuestros servidores.
+          </li>
+        </ul>
+        <p>
+          <strong>Tu consentimiento:</strong> el micrófono solo se activa cuando tú pulsas el botón
+          de hablar y después de aceptar el aviso que aparece la primera vez. Puedes retirar el
+          permiso cuando quieras con el enlace «Desactivar el micrófono» del propio tutor y seguir
+          practicando en <strong>modo solo escuchar</strong>. También puedes bloquear el micrófono
+          desde tu navegador.
+        </p>
+
+        <h2>7. Con quién compartimos la información</h2>
         <p>
           Para que la plataforma funcione nos apoyamos en proveedores tecnológicos que actúan como
           encargados del tratamiento:
@@ -156,14 +223,14 @@ export default function PrivacidadPage() {
           vendemos, alquilamos ni cedemos tus datos personales a terceros con fines comerciales.
         </p>
 
-        <h2>7. Cuánto tiempo conservamos los datos</h2>
+        <h2>8. Cuánto tiempo conservamos los datos</h2>
         <p>
           Conservamos los datos de tu cuenta y tu progreso mientras la mantengas activa. Si solicitas
           el borrado de tu cuenta, eliminaremos tus datos personales y tu progreso en un plazo
           razonable, salvo aquellos que debamos conservar por obligación legal.
         </p>
 
-        <h2>8. Tus derechos</h2>
+        <h2>9. Tus derechos</h2>
         <p>
           Puedes ejercer en cualquier momento tus derechos de <strong>acceso</strong>,{' '}
           <strong>rectificación</strong>, <strong>supresión</strong>, <strong>oposición</strong>,{' '}
@@ -172,14 +239,14 @@ export default function PrivacidadPage() {
           máximo, en el plazo que exija la normativa aplicable.
         </p>
 
-        <h2>9. Menores de edad</h2>
+        <h2>10. Menores de edad</h2>
         <p>
           Edúcate Comas está pensada para toda la familia y su contenido es apto para niños, jóvenes
           y adultos. Los menores de edad deben usar la plataforma con la supervisión de su madre,
           padre o tutor, quienes son responsables de crear y gestionar la cuenta.
         </p>
 
-        <h2>10. Seguridad</h2>
+        <h2>11. Seguridad</h2>
         <p>
           Aplicamos medidas técnicas y organizativas razonables para proteger tu información:
           conexiones cifradas (HTTPS), autenticación gestionada por un proveedor especializado y
@@ -187,14 +254,14 @@ export default function PrivacidadPage() {
           mejorar continuamente.
         </p>
 
-        <h2>11. Cambios en esta política</h2>
+        <h2>12. Cambios en esta política</h2>
         <p>
           Podemos actualizar esta política para reflejar mejoras del servicio o cambios normativos.
           Publicaremos siempre la versión vigente en esta página, con la fecha de última
           actualización.
         </p>
 
-        <h2>12. Contacto</h2>
+        <h2>13. Contacto</h2>
         <p>
           Si tienes dudas sobre esta política o sobre cómo tratamos tus datos, escribe a{' '}
           <strong>{RESPONSABLE}</strong>:{' '}

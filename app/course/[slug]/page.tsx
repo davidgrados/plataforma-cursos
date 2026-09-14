@@ -59,6 +59,29 @@ export default function CoursePage() {
         )}
       </header>
 
+      {course.slug === 'ingles-basico' && (
+        <section className="flex flex-col items-start gap-4 rounded-2xl border border-sky-200 bg-gradient-to-br from-sky-50 to-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-start gap-3">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-sky-400 to-indigo-500 text-lg">
+              🎙️
+            </span>
+            <div>
+              <h2 className="font-semibold text-slate-900">Nuevo: tutor de conversación</h2>
+              <p className="text-sm text-slate-600">
+                Practica speaking con un tutor virtual: escucha, responde en voz alta y recibe
+                correcciones al instante. Sin exámenes, solo conversación.
+              </p>
+            </div>
+          </div>
+          <Link
+            href="/ingles/tutor"
+            className="shrink-0 rounded-xl bg-gradient-to-r from-accent to-accent-cyan px-5 py-3 font-semibold text-white shadow-glow transition hover:brightness-105"
+          >
+            Practicar speaking
+          </Link>
+        </section>
+      )}
+
       {course.modules.length === 0 ? (
         <section className="flex flex-col items-center gap-4 rounded-2xl border border-sky-200 bg-white p-10 text-center shadow-sm">
           <span className="rounded-full border border-sky-200 bg-sky-50 px-4 py-1.5 text-sm font-semibold text-sky-700">

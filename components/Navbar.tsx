@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { SignInButton, UserButton } from '@clerk/nextjs';
-import { Eye, LayoutDashboard, TerminalSquare } from 'lucide-react';
+import { Eye, LayoutDashboard, Mic, TerminalSquare } from 'lucide-react';
 import { PREVIEW_MODE, useAuthUser } from '@/lib/auth-context';
 
 export default function Navbar() {
@@ -26,6 +26,14 @@ export default function Navbar() {
             className="hidden rounded-lg px-3 py-2 text-sm text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 sm:block"
           >
             Cursos
+          </Link>
+
+          <Link
+            href="/ingles/tutor"
+            className="hidden items-center gap-1.5 rounded-lg px-3 py-2 text-sm text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 sm:flex"
+          >
+            <Mic className="h-4 w-4" />
+            Tutor de inglés
           </Link>
 
           {PREVIEW_MODE ? (
