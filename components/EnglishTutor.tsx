@@ -695,6 +695,25 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
     quererRef.current = true;
     reiniciosRef.current = 0;
 
+    // Aviso proactivo si el navegador ya tiene el micrófono bloqueado (no bloquea el arranque)
+    try {
+      const perms = (navigator as any).permissions;
+      perms
+        ?.query?.({ name: 'microphone' })
+        .then((p: any) => {
+          if (p?.state === 'denied') {
+            setAviso(
+              'El micrófono está bloqueado para esta web. Toca el candado 🔒 (o el icono ⓘ) junto a la dirección, elige «Permitir» en Micrófono y recarga la página. Mientras tanto puedes escribir tu respuesta. ⌨️',
+            );
+          }
+        })
+        .catch(() => {
+          /* algunos navegadores no permiten consultarlo */
+        });
+    } catch {
+      /* nada */
+    }
+
     // Liberamos cualquier reconocedor anterior que haya quedado vivo
     try {
       recRef.current?.abort();
@@ -1307,7 +1326,7 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
         <Link href="/privacidad#voz" className="font-semibold text-sky-700 underline">
           Política de Privacidad
         </Link>
-        . <span className="text-slate-400">versión 3</span>
+        . <span className="text-slate-400">versión 4</span>
       </p>
     </div>
   );
