@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Edúcate Comas">
+  <defs>
+    <linearGradient id="ecBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset="0.55" stop-color="#0ea5e9"/>
+      <stop offset="1" stop-color="#4f46e5"/>
+    </linearGradient>
+    <linearGradient id="ecCap" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#e0f2fe"/>
+    </linearGradient>
+  </defs>
+
+  <!-- fondo redondeado -->
+  <rect width="512" height="512" rx="116" fill="url(#ecBg)"/>
+  <circle cx="118" cy="86" r="118" fill="#ffffff" opacity="0.10"/>
+
+  <!-- birrete: cuerpo -->
+  <path d="M 190 274 V 324 A 66 66 0 0 0 322 324 V 274 L 256 306 Z"
+        fill="#ffffff" opacity="0.88"/>
+
+  <!-- birrete: tabla superior -->
+  <path d="M 256 120 L 448 216 L 256 312 L 64 216 Z" fill="url(#ecCap)"/>
+
+  <!-- borla -->
+  <path d="M 436 224 V 296" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="436" cy="318" r="18" fill="#ffffff"/>
+</svg>

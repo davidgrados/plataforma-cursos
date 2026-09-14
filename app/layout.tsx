@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { ClerkProvider } from '@clerk/nextjs';
 import { Toaster } from 'sonner';
 import Navbar from '@/components/Navbar';
@@ -12,6 +12,10 @@ export const metadata: Metadata = {
   title: 'Edúcate Comas',
   description:
     'Aprende Linux, inglés, IA, seguridad y más con cursos interactivos y laboratorio en tu navegador.',
+};
+
+export const viewport: Viewport = {
+  themeColor: '#0ea5e9',
 };
 
 // Sin clave de Clerk => modo vista previa (usuario fijo, sin autenticación).
