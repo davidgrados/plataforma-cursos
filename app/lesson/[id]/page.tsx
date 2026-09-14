@@ -23,6 +23,14 @@ const TerminalEmbed = dynamic(() => import('@/components/TerminalEmbed'), {
   ),
 });
 
+// El tutor de inglés usa Web Speech API, disponible solo en el navegador.
+const EnglishTutorEmbed = dynamic(() => import('@/components/EnglishTutor'), {
+  ssr: false,
+  loading: () => (
+    <div className="h-72 animate-pulse rounded-2xl border border-slate-200 bg-slate-100" />
+  ),
+});
+
 export default function LessonPage() {
   const { id } = useParams<{ id: string }>();
   const { userId, isLoaded } = useAuthUser();
@@ -125,25 +133,19 @@ export default function LessonPage() {
       </article>
 
       {lesson.course?.slug === 'ingles-basico' && (
-        <section className="flex flex-col items-start gap-4 rounded-2xl border border-sky-200 bg-gradient-to-br from-sky-50 to-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-start gap-3">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-sky-400 to-indigo-500 text-lg">
-              🎙️
-            </span>
-            <div>
-              <h2 className="font-semibold text-slate-900">¿Practicamos hablando?</h2>
-              <p className="text-sm text-slate-600">
-                Abre el tutor de conversación: escucha frases en inglés, respóndele en voz alta y
-                recibe correcciones al instante.
-              </p>
-            </div>
+        <section className="flex flex-col gap-4">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h2 className="flex items-center gap-2 text-lg font-semibold text-slate-900">
+              🎙️ Practica este módulo hablando
+            </h2>
+            <Link
+              href="/ingles/tutor"
+              className="text-sm font-semibold text-sky-700 hover:underline"
+            >
+              Ver todas las prácticas
+            </Link>
           </div>
-          <Link
-            href="/ingles/tutor"
-            className="shrink-0 rounded-xl bg-gradient-to-r from-accent to-accent-cyan px-5 py-3 font-semibold text-white shadow-glow transition hover:brightness-105"
-          >
-            Practicar ahora
-          </Link>
+          <EnglishTutorEmbed moduloInicial={lesson.slug} />
         </section>
       )}
 

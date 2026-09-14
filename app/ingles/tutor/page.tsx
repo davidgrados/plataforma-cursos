@@ -26,14 +26,14 @@ export default function TutorInglesPage() {
           Tutor de conversación en inglés
         </h1>
         <p className="text-slate-600">
-          Elige una situación, escucha al tutor y responde <strong>en voz alta</strong>. Te diremos
-          al instante qué palabras dijiste bien y cuáles puedes mejorar, sin exámenes y sin prisas.
-          Ideal para perder el miedo a hablar.
+          Elige el <strong>módulo</strong> que estás estudiando, escucha al tutor y responde{' '}
+          <strong>en voz alta</strong>. Te diremos al instante qué palabras dijiste bien y cuáles
+          puedes mejorar, sin exámenes y sin prisas. Ideal para perder el miedo a hablar.
         </p>
         <div className="flex flex-wrap gap-2 text-xs text-slate-500">
           <span className="flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 shadow-sm">
             <Volume2 className="h-3.5 w-3.5 text-sky-600" />
-            5 situaciones cotidianas
+            7 módulos + repaso del examen
           </span>
           <span className="flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 shadow-sm">
             <GraduationCap className="h-3.5 w-3.5 text-sky-600" />

@@ -6,9 +6,11 @@ import Link from 'next/link';
 import {
   Check,
   Info,
+  Keyboard,
   Mic,
   MicOff,
   RotateCcw,
+  Send,
   ShieldCheck,
   Sparkles,
   Star,
@@ -25,154 +27,351 @@ interface Turn {
   tip: string;
 }
 
-interface Scenario {
+interface Practica {
   id: string;
-  title: string;
-  emoji: string;
-  level: string;
+  titulo: string;
   turns: Turn[];
 }
 
-const SCENARIOS: Scenario[] = [
+interface Modulo {
+  /** Slug de la lección del curso de inglés a la que pertenece esta práctica. */
+  slug: string;
+  num: number;
+  titulo: string;
+  emoji: string;
+  nivel: string;
+  practicas: Practica[];
+}
+
+/**
+ * Práctica de conversación por módulo, alineada con el curso "Inglés Básico".
+ * Cada módulo refuerza justo lo que el estudiante acaba de estudiar.
+ */
+const MODULOS: Modulo[] = [
   {
-    id: 'presentarse',
-    title: 'Presentarme',
+    slug: 'ingles-01',
+    num: 1,
+    titulo: 'Saludos y presentaciones',
     emoji: '👋',
-    level: 'Principiante',
-    turns: [
+    nivel: 'Principiante',
+    practicas: [
       {
-        say: "Hi! I'm Ana. What's your name?",
-        expect: ['name is', 'my name'],
-        example: 'My name is Luis. Nice to meet you!',
-        tip: 'Para decir tu nombre: "My name is ..." o "I\'m ...".',
-      },
-      {
-        say: 'Nice to meet you! How old are you?',
-        expect: ['i am', 'years old'],
-        example: "I'm fifteen years old.",
-        tip: 'La edad se dice con el verbo "to be": "I am 15 years old".',
-      },
-      {
-        say: 'Great! Where are you from?',
-        expect: ['i am from', 'from'],
-        example: "I'm from Comas, in Lima.",
-        tip: '"I\'m from + lugar" sirve para cualquier ciudad o país.',
-      },
-      {
-        say: 'Cool! What do you like to do in your free time?',
-        expect: ['i like', 'like'],
-        example: 'I like playing football and listening to music.',
-        tip: 'Después de "I like" puedes usar un verbo en -ing: "I like reading".',
-      },
-    ],
-  },
-  {
-    id: 'cafe',
-    title: 'En la cafetería',
-    emoji: '☕',
-    level: 'Principiante',
-    turns: [
-      {
-        say: 'Good morning! Welcome. What would you like to drink?',
-        expect: ['would like', 'i want', 'can i have'],
-        example: "I'd like a coffee, please.",
-        tip: '"I\'d like ..." (I would like) es la forma más educada de pedir.',
-      },
-      {
-        say: 'Sure! Would you like something to eat?',
-        expect: ['yes', 'no', 'please', 'sandwich', 'cake'],
-        example: "Yes, please. I'd like a sandwich.",
-        tip: 'Recuerda añadir "please" al final para ser amable.',
-      },
-      {
-        say: 'Perfect. Anything else?',
-        expect: ['no', 'that is all', 'nothing'],
-        example: "No, that's all. Thank you!",
-        tip: '"That\'s all, thank you" cierra el pedido de forma natural.',
+        id: 'conocer',
+        titulo: 'Conocer a alguien nuevo',
+        turns: [
+          {
+            say: "Hi! Good morning. My name is Ana. What's your name?",
+            expect: ['name is', 'my name'],
+            example: 'Good morning! My name is Luis.',
+            tip: 'Para decir tu nombre: "My name is ..." o "I\'m ...".',
+          },
+          {
+            say: 'Nice to meet you! How are you today?',
+            expect: ['i am', 'fine', 'good', 'well'],
+            example: "I'm fine, thank you. And you?",
+            tip: 'Devolver la pregunta con "And you?" hace la charla natural.',
+          },
+          {
+            say: 'Great! Where are you from?',
+            expect: ['from'],
+            example: "I'm from Comas, in Lima.",
+            tip: '"I\'m from + lugar" sirve para cualquier ciudad o país.',
+          },
+          {
+            say: 'Welcome! It was nice talking to you. See you later!',
+            expect: ['thank', 'see you', 'bye', 'goodbye'],
+            example: 'Thank you! See you later. Goodbye!',
+            tip: 'Despedidas: "See you later", "Goodbye", "Have a nice day".',
+          },
+        ],
       },
     ],
   },
   {
-    id: 'tienda',
-    title: 'De compras',
-    emoji: '🛍️',
-    level: 'Básico',
-    turns: [
+    slug: 'ingles-02',
+    num: 2,
+    titulo: 'El alfabeto y la pronunciación',
+    emoji: '🔤',
+    nivel: 'Principiante',
+    practicas: [
       {
-        say: 'Hello! Can I help you?',
-        expect: ['yes', 'looking for', 'how much', 'i would like'],
-        example: "Yes, I'm looking for a T-shirt.",
-        tip: '"I\'m looking for ..." es lo que se dice al buscar algo.',
-      },
-      {
-        say: 'Of course. What size do you need?',
-        expect: ['size', 'small', 'medium', 'large'],
-        example: 'I need a medium size, please.',
-        tip: 'Las tallas: small (S), medium (M), large (L).',
-      },
-      {
-        say: 'Here you are. How would you like to pay?',
-        expect: ['cash', 'card', 'pay'],
-        example: "I'd like to pay in cash.",
-        tip: '"In cash" (efectivo) o "by card" (tarjeta).',
-      },
-    ],
-  },
-  {
-    id: 'colegio',
-    title: 'En clase',
-    emoji: '🎒',
-    level: 'Básico',
-    turns: [
-      {
-        say: "Hello! What's your favourite subject at school?",
-        expect: ['favourite', 'favorite', 'subject'],
-        example: 'My favourite subject is English.',
-        tip: 'En inglés americano: "favorite"; en británico: "favourite".',
-      },
-      {
-        say: 'Nice! Why do you like it?',
-        expect: ['because', 'like'],
-        example: 'Because I like learning new words.',
-        tip: 'Usa "because" para dar la razón: "Because it\'s fun".',
-      },
-      {
-        say: 'Do you study English every day?',
-        expect: ['yes', 'no', 'every day', 'sometimes'],
-        example: 'Yes, I study English every day after school.',
-        tip: '"Every day" son dos palabras (todos los días).',
+        id: 'deletrear',
+        titulo: 'Deletrear y pronunciar',
+        turns: [
+          {
+            say: "Hi! Let's practise the alphabet. Say the letters A, B and C.",
+            expect: ['a', 'b', 'c'],
+            example: 'A, B, C.',
+            tip: 'En inglés la "A" suena /eɪ/ y la "B" suena /biː/.',
+          },
+          {
+            say: 'Very good! Now spell the word HOUSE, letter by letter.',
+            expect: ['h', 'o', 'u', 's', 'e'],
+            example: 'H - O - U - S - E.',
+            tip: 'Para deletrear se dice cada letra separada: "H, O, U, S, E".',
+          },
+          {
+            say: 'Perfect! Now say this word out loud: teacher.',
+            expect: ['teacher'],
+            example: 'Teacher.',
+            tip: 'La "ch" suena como en español; la "ea" suena /iː/.',
+          },
+          {
+            say: 'Excellent! Finally, say the alphabet from A to F.',
+            expect: ['a', 'b', 'c', 'd', 'e', 'f'],
+            example: 'A, B, C, D, E, F.',
+            tip: 'Repite el alfabeto en voz alta todos los días: es la base.',
+          },
+        ],
       },
     ],
   },
   {
-    id: 'conversacion',
-    title: 'Charla libre',
-    emoji: '💬',
-    level: 'Intermedio',
-    turns: [
+    slug: 'ingles-03',
+    num: 3,
+    titulo: 'Números, fechas y horas',
+    emoji: '🔢',
+    nivel: 'Principiante',
+    practicas: [
       {
-        say: 'Hey! How are you today?',
-        expect: ['i am', 'fine', 'good', 'happy'],
-        example: "I'm fine, thank you! And you?",
-        tip: 'Devolver la pregunta con "And you?" hace la charla natural.',
+        id: 'datos',
+        titulo: 'Tus datos y la hora',
+        turns: [
+          {
+            say: 'Hello! How old are you?',
+            expect: ['i am', 'years old'],
+            example: "I'm fifteen years old.",
+            tip: 'La edad se dice con el verbo "to be": "I am 15 years old".',
+          },
+          {
+            say: "Great! What's your phone number?",
+            expect: ['number is', 'my number', 'nine', 'six', 'seven'],
+            example: 'My phone number is 987 654 321.',
+            tip: 'Los números de teléfono se dicen dígito a dígito.',
+          },
+          {
+            say: 'Thanks! What time is it now?',
+            expect: ['it is', 'time', 'oclock', 'o clock'],
+            example: "It's nine o'clock.",
+            tip: '"It\'s + hora + o\'clock" para las horas exactas.',
+          },
+          {
+            say: 'And what day is it today?',
+            expect: [
+              'today is',
+              'monday',
+              'tuesday',
+              'wednesday',
+              'thursday',
+              'friday',
+              'saturday',
+              'sunday',
+            ],
+            example: 'Today is Monday.',
+            tip: 'Los días de la semana en inglés siempre van con mayúscula.',
+          },
+        ],
       },
+    ],
+  },
+  {
+    slug: 'ingles-04',
+    num: 4,
+    titulo: 'Pronombres y el verbo "to be"',
+    emoji: '👥',
+    nivel: 'Básico',
+    practicas: [
       {
-        say: "I'm good, thanks! Did you do anything fun yesterday?",
-        expect: ['yes', 'no', 'yesterday', 'played', 'watched', 'went'],
-        example: 'Yes! I played football with my friends.',
-        tip: 'Para el pasado: "play" → "played", "go" → "went", "watch" → "watched".',
+        id: 'to-be',
+        titulo: 'I am, you are, she is',
+        turns: [
+          {
+            say: 'Hello! Are you a student?',
+            expect: ['i am', 'yes', 'no'],
+            example: 'Yes, I am a student.',
+            tip: 'Recuerda: I am · you are · he/she is · we/they are.',
+          },
+          {
+            say: 'Nice! Who is with you today?',
+            expect: ['he is', 'she is', 'my'],
+            example: 'She is my sister.',
+            tip: 'Con "he/she" el verbo es "is": "She is my sister".',
+          },
+          {
+            say: 'And where are your friends from?',
+            expect: ['they are', 'from', 'he is', 'she is'],
+            example: 'They are from Peru.',
+            tip: 'Con "they" el verbo es "are": "They are from Peru".',
+          },
+          {
+            say: 'Great job! Are you happy today?',
+            expect: ['i am', 'yes', 'no'],
+            example: 'Yes, I am very happy.',
+            tip: 'Puedes añadir adjetivos: happy, tired, excited, ready.',
+          },
+        ],
       },
+    ],
+  },
+  {
+    slug: 'ingles-05',
+    num: 5,
+    titulo: 'El presente simple',
+    emoji: '📅',
+    nivel: 'Básico',
+    practicas: [
       {
-        say: 'That sounds great. What are you going to do this weekend?',
-        expect: ['going to', 'will', 'weekend'],
-        example: "I'm going to visit my grandmother this weekend.",
-        tip: 'Planes: "I\'m going to + verbo".',
+        id: 'rutina',
+        titulo: 'Mi rutina diaria',
+        turns: [
+          {
+            say: 'Hi! Do you study English every day?',
+            expect: ['yes', 'no', 'study'],
+            example: 'Yes, I study English every day.',
+            tip: '"Every day" son dos palabras: todos los días.',
+          },
+          {
+            say: 'Great! What do you do in the morning?',
+            expect: ['i wake up', 'i go', 'i have', 'i get up'],
+            example: 'I wake up at six and I go to school.',
+            tip: 'Presente simple: I wake up, I go, I have breakfast.',
+          },
+          {
+            say: 'Nice! Does your mother work?',
+            expect: ['she works', 'yes', 'no'],
+            example: 'Yes, she works in a hospital.',
+            tip: 'Con he/she/it el verbo lleva -s: "she works".',
+          },
+          {
+            say: 'And what do you like to do after school?',
+            expect: ['i like', 'play', 'watch', 'read'],
+            example: 'I like playing football and watching videos.',
+            tip: 'Después de "I like" puedes usar un verbo en -ing.',
+          },
+        ],
       },
+    ],
+  },
+  {
+    slug: 'ingles-06',
+    num: 6,
+    titulo: 'Vocabulario esencial',
+    emoji: '🧺',
+    nivel: 'Básico',
+    practicas: [
       {
-        say: 'Lovely! Thanks for practising with me. See you next time!',
-        expect: ['thank', 'bye', 'see you'],
-        example: 'Thank you! See you next time. Bye!',
-        tip: 'Despedirse: "See you!", "Bye!", "Take care!".',
+        id: 'mi-mundo',
+        titulo: 'Colores, familia y comida',
+        turns: [
+          {
+            say: "Let's practise vocabulary. What's your favourite colour?",
+            expect: ['favourite', 'favorite', 'colour', 'color'],
+            example: 'My favourite colour is blue.',
+            tip: 'En inglés americano se escribe "color" y "favorite".',
+          },
+          {
+            say: 'Tell me about your family. Who do you live with?',
+            expect: ['mother', 'father', 'brother', 'sister', 'family', 'parents'],
+            example: 'I live with my mother, my father and my brother.',
+            tip: 'Family: mother, father, brother, sister, grandparents.',
+          },
+          {
+            say: 'What do you usually eat for breakfast?',
+            expect: ['bread', 'milk', 'egg', 'coffee', 'eat', 'tea'],
+            example: 'I eat bread with milk for breakfast.',
+            tip: '"For breakfast / for lunch / for dinner".',
+          },
+          {
+            say: "Nice! And what's in your school bag?",
+            expect: ['book', 'pen', 'notebook', 'pencil', 'have'],
+            example: 'I have a book, a notebook and two pens.',
+            tip: 'Recuerda el plural: one book → two books.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'ingles-07',
+    num: 7,
+    titulo: 'Preguntas y frases útiles',
+    emoji: '❓',
+    nivel: 'Intermedio',
+    practicas: [
+      {
+        id: 'preguntar',
+        titulo: 'Preguntar y pedir ayuda',
+        turns: [
+          {
+            say: 'Hello! Do you have any questions for me?',
+            expect: ['can you', 'what is', 'how do', 'repeat'],
+            example: 'Can you repeat that, please?',
+            tip: 'Frases útiles: "Can you repeat, please?", "How do you say ... in English?"',
+          },
+          {
+            say: 'Of course! Now ask me how old I am.',
+            expect: ['how old are you'],
+            example: 'How old are you?',
+            tip: 'Pregunta por la edad: "How old are you?".',
+          },
+          {
+            say: "I'm thirty years old. Now ask me where I live.",
+            expect: ['where do you live'],
+            example: 'Where do you live?',
+            tip: 'Preguntas con "do": Where do you live? What do you do?',
+          },
+          {
+            say: "Perfect! Finally, tell me politely that you don't understand.",
+            expect: ['i do not understand', "don't understand", 'sorry', 'repeat'],
+            example: "Sorry, I don't understand. Can you repeat, please?",
+            tip: '"I don\'t understand" es la forma más clara de pedir ayuda.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'ingles-examen-final',
+    num: 8,
+    titulo: 'Repaso general (antes del examen)',
+    emoji: '🏆',
+    nivel: 'Repaso',
+    practicas: [
+      {
+        id: 'repaso',
+        titulo: 'Conversación completa',
+        turns: [
+          {
+            say: "Hello! I'm your tutor. What's your name and how are you?",
+            expect: ['name is', 'my name', 'i am', 'fine', 'good'],
+            example: "My name is Luis and I'm fine, thank you.",
+            tip: 'Une dos ideas con "and" para sonar más natural.',
+          },
+          {
+            say: 'Nice! Where are you from and what do you do?',
+            expect: ['from', 'i am', 'student', 'study'],
+            example: "I'm from Comas and I'm a student.",
+            tip: 'Puedes responder a dos preguntas en una sola frase.',
+          },
+          {
+            say: 'What time do you usually study English?',
+            expect: ['i study', 'at', 'oclock', 'o clock', 'in the'],
+            example: "I usually study English at six o'clock.",
+            tip: 'Coloca "usually" antes del verbo: "I usually study".',
+          },
+          {
+            say: 'And what do you like most about English?',
+            expect: ['i like', 'because', 'like'],
+            example: 'I like English because I can talk to more people.',
+            tip: 'Usa "because" para explicar el motivo.',
+          },
+          {
+            say: 'Excellent work! Thanks for practising. See you next time!',
+            expect: ['thank', 'see you', 'bye'],
+            example: 'Thank you! See you next time!',
+            tip: '¡Ya puedes presentarte en inglés con confianza! 🎉',
+          },
+        ],
       },
     ],
   },
@@ -198,46 +397,58 @@ function evaluar(dicho: string, turn: Turn) {
     const ok = k.includes(' ') ? said.includes(k) : words.has(k);
     (ok ? matched : missing).push(key);
   }
-  const base = turn.expect.length ? matched.length / turn.expect.length : 0;
+  const ok = matched.length > 0;
+  const ratio = turn.expect.length ? matched.length / turn.expect.length : 0;
   const objetivo = normalize(turn.example).split(' ').length;
-  const bonus = Math.min(1, words.size / Math.max(objetivo, 1)) * 0.2;
-  const pct = Math.round(Math.min(1, base * 0.85 + bonus) * 100);
-  return { pct, matched, missing };
+  const bonus = Math.min(1, words.size / Math.max(objetivo, 1)) * 0.25;
+  const pct = Math.round(Math.min(1, (ok ? 0.75 : 0) + ratio * 0.15 + bonus) * 100);
+  return { pct, matched, missing, ok };
 }
 
-function estrellas(pct: number) {
-  if (pct >= 85) return 3;
-  if (pct >= 60) return 2;
-  return 1;
+function estrellas(pct: number, ok: boolean) {
+  if (!ok) return 1;
+  return pct >= 80 ? 3 : 2;
 }
 
-function mensaje(pct: number) {
+function mensaje(pct: number, ok: boolean) {
+  if (!ok) return 'Casi. Escucha la frase modelo y prueba otra vez. 🙂';
   if (pct >= 90) return '¡Excelente! Sonó muy natural. 🎉';
   if (pct >= 75) return '¡Muy bien! Solo cuida algún detalle. 👏';
-  if (pct >= 50) return '¡Buen intento! Repite la frase despacio. 💪';
-  return 'Casi. Escucha otra vez y vuelve a intentarlo con calma. 🙂';
+  return '¡Bien! Repite la frase completa para sonar más fluido. 💪';
 }
 
-export default function EnglishTutor() {
+export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string }) {
+  const moduloFijo = MODULOS.find((m) => m.slug === moduloInicial);
   const [cargado, setCargado] = useState(false);
   const [consent, setConsent] = useState<boolean | null>(null);
-  const [supported, setSupported] = useState(true);
-  const [scenarioId, setScenarioId] = useState(SCENARIOS[0].id);
+  const [moduloIdx, setModuloIdx] = useState(moduloFijo ? MODULOS.indexOf(moduloFijo) : 0);
+  const [practicaIdx, setPracticaIdx] = useState(0);
   const [turnIndex, setTurnIndex] = useState(0);
   const [listening, setListening] = useState(false);
   const [speaking, setSpeaking] = useState(false);
   const [transcript, setTranscript] = useState('');
-  const [result, setResult] = useState<{ pct: number; matched: string[]; missing: string[] } | null>(null);
+  const [result, setResult] = useState<{
+    pct: number;
+    matched: string[];
+    missing: string[];
+    ok: boolean;
+  } | null>(null);
   const [autoMode, setAutoMode] = useState(true);
   const [aviso, setAviso] = useState('');
   const [vozLocal, setVozLocal] = useState(false);
+  const [supported, setSupported] = useState(true);
+  const [modoTexto, setModoTexto] = useState(false);
+  const [textoEscrito, setTextoEscrito] = useState('');
 
   const recRef = useRef<any>(null);
+  const activoRef = useRef(false);
+  const tiempoRef = useRef<number | null>(null);
   const voiceRef = useRef<SpeechSynthesisVoice | null>(null);
   const finalRef = useRef<(t: string) => void>(() => {});
 
-  const scenario = SCENARIOS.find((s) => s.id === scenarioId) ?? SCENARIOS[0];
-  const turn = scenario.turns[turnIndex];
+  const modulo = MODULOS[moduloIdx] ?? MODULOS[0];
+  const practica = modulo.practicas[practicaIdx] ?? modulo.practicas[0];
+  const turn = practica.turns[turnIndex];
 
   // --- Consentimiento guardado ---
   useEffect(() => {
@@ -271,7 +482,7 @@ export default function EnglishTutor() {
     return () => synth.removeEventListener?.('voiceschanged', cargar);
   }, []);
 
-  // --- Reconocimiento: una sola instancia reutilizada (evita el retardo de crearla cada vez) ---
+  // --- Reconocimiento: una sola instancia reutilizada (menos latencia) ---
   useEffect(() => {
     const w = window as any;
     const Ctor = w.SpeechRecognition || w.webkitSpeechRecognition;
@@ -285,31 +496,39 @@ export default function EnglishTutor() {
     rec.interimResults = true;
     rec.maxAlternatives = 1;
 
+    rec.onstart = () => {
+      activoRef.current = true;
+      setListening(true);
+      setAviso('');
+    };
     rec.onresult = (e: any) => {
       let parcial = '';
-      let final = '';
+      let completo = '';
       for (let i = e.resultIndex; i < e.results.length; i += 1) {
         const texto = e.results[i][0].transcript;
-        if (e.results[i].isFinal) final += texto;
+        if (e.results[i].isFinal) completo += texto;
         else parcial += texto;
       }
-      if (parcial) setTranscript(parcial);
-      if (final) {
-        setTranscript(final);
-        finalRef.current(final.trim());
-      }
+      setTranscript((completo || parcial).trim());
+      if (completo) finalRef.current(completo.trim());
     };
     rec.onerror = (e: any) => {
+      activoRef.current = false;
       setListening(false);
       if (e?.error === 'not-allowed' || e?.error === 'service-not-allowed') {
-        setAviso('El navegador bloqueó el micrófono. Actívalo en el candado de la barra de direcciones.');
+        setAviso(
+          'El navegador bloqueó el micrófono. Ábrelo en el candado de la barra de direcciones o usa el modo escribir.',
+        );
       } else if (e?.error === 'no-speech') {
-        setAviso('No escuché nada. Acércate al micrófono y prueba otra vez.');
+        setAviso('No escuché nada. Acércate al micrófono y prueba otra vez, o escribe tu respuesta.');
       } else if (e?.error !== 'aborted') {
-        setAviso('Hubo un problema con el micrófono. Inténtalo de nuevo.');
+        setAviso('Hubo un problema con el micrófono. Puedes escribir tu respuesta.');
       }
     };
-    rec.onend = () => setListening(false);
+    rec.onend = () => {
+      activoRef.current = false;
+      setListening(false);
+    };
     recRef.current = rec;
     return () => {
       try {
@@ -342,38 +561,73 @@ export default function EnglishTutor() {
 
   const escucharAhora = useCallback((texto: string) => hablar(texto), [hablar]);
 
-  const empezarAEscuchar = useCallback(() => {
-    const rec = recRef.current;
-    if (!rec) return;
-    setAviso('');
-    setResult(null);
-    setTranscript('');
-    try {
-      rec.start();
-      setListening(true);
-    } catch {
-      /* ya estaba escuchando */
+  const limpiarTiempo = () => {
+    if (tiempoRef.current !== null) {
+      window.clearTimeout(tiempoRef.current);
+      tiempoRef.current = null;
     }
-  }, []);
+  };
 
   const pararDeEscuchar = useCallback(() => {
+    limpiarTiempo();
     try {
       recRef.current?.stop();
     } catch {
       /* nada */
     }
+    activoRef.current = false;
     setListening(false);
   }, []);
 
-  // Al detectar la frase completa: evaluar y dar retroalimentación
-  useEffect(() => {
-    finalRef.current = (texto: string) => {
-      const r = evaluar(texto, turn);
+  /** Un toque empieza a escuchar; otro toque termina. */
+  const alternarMicrofono = useCallback(() => {
+    const rec = recRef.current;
+    if (!rec) {
+      setAviso('Este navegador no permite el reconocimiento de voz. Usa el modo escribir.');
+      return;
+    }
+    if (listening || activoRef.current) {
+      pararDeEscuchar();
+      return;
+    }
+    setAviso('');
+    setResult(null);
+    setTranscript('');
+    try {
+      rec.start();
+      activoRef.current = true;
+      setListening(true);
+      // Si no dice nada en 8 s, cerramos con un aviso amable
+      limpiarTiempo();
+      tiempoRef.current = window.setTimeout(() => {
+        setAviso('No escuché nada. Toca el botón otra vez y habla un poco más cerca.');
+        try {
+          rec.stop();
+        } catch {
+          /* nada */
+        }
+        setListening(false);
+      }, 8000);
+    } catch {
+      activoRef.current = false;
+      setListening(false);
+      setAviso('No se pudo activar el micrófono. Vuelve a intentarlo o escribe tu respuesta.');
+    }
+  }, [listening, pararDeEscuchar]);
+
+  const comprobar = useCallback(
+    (dicho: string) => {
+      const r = evaluar(dicho, turn);
       setResult(r);
       setListening(false);
-      const puntos = estrellas(r.pct);
-      if (puntos === 3) hablar('Excellent! Well done.', undefined);
-    };
+      limpiarTiempo();
+      if (r.ok && r.pct >= 80) hablar('Excellent! Well done.');
+    },
+    [turn, hablar],
+  );
+
+  useEffect(() => {
+    finalRef.current = (texto: string) => comprobar(texto);
   });
 
   // El tutor habla solo al empezar cada turno (modo conversación)
@@ -383,6 +637,8 @@ export default function EnglishTutor() {
     return () => window.clearTimeout(id);
   }, [consent, supported, autoMode, turn, hablar]);
 
+  useEffect(() => () => limpiarTiempo(), []);
+
   function aceptarMicrofono() {
     try {
       window.localStorage.setItem(MIC_CONSENT_KEY, 'si');
@@ -390,6 +646,7 @@ export default function EnglishTutor() {
       /* nada */
     }
     setConsent(true);
+    setAviso('');
     // Calentamos el motor de voz en el mismo gesto del usuario (primera frase sin retardo)
     try {
       const u = new SpeechSynthesisUtterance(' ');
@@ -398,46 +655,48 @@ export default function EnglishTutor() {
     } catch {
       /* nada */
     }
-    // Pedimos el permiso del micrófono de inmediato, así luego es instantáneo
-    navigator.mediaDevices
-      ?.getUserMedia({ audio: true })
-      .then((s) => s.getTracks().forEach((t) => t.stop()))
-      .catch(() => setAviso('No diste permiso al micrófono: puedes practicar en modo "solo escuchar".'));
-  }
-
-  function seguirSinMicrofono() {
-    setConsent(false);
-  }
-
-  function cambiarEleccion() {
-    try {
-      window.localStorage.removeItem(MIC_CONSENT_KEY);
-    } catch {
-      /* nada */
+    // Permiso del micrófono desde ya, así al pulsar el botón es instantáneo
+    if (navigator.mediaDevices?.getUserMedia) {
+      navigator.mediaDevices
+        .getUserMedia({ audio: true })
+        .then((s) => s.getTracks().forEach((t) => t.stop()))
+        .catch(() =>
+          setAviso(
+            'No diste permiso al micrófono. Puedes activarlo en el candado del navegador o practicar escribiendo.',
+          ),
+        );
     }
-    setConsent(false);
   }
 
   function siguienteTurno() {
     setResult(null);
     setTranscript('');
+    setTextoEscrito('');
     setAviso('');
-    if (turnIndex < scenario.turns.length - 1) {
-      setTurnIndex(turnIndex + 1);
-    } else {
-      setTurnIndex(0);
-    }
+    setTurnIndex(turnIndex < practica.turns.length - 1 ? turnIndex + 1 : 0);
   }
 
-  function elegirEscenario(id: string) {
-    setScenarioId(id);
+  function elegirModulo(i: number) {
+    setModuloIdx(i);
+    setPracticaIdx(0);
     setTurnIndex(0);
     setResult(null);
     setTranscript('');
+    setTextoEscrito('');
     setAviso('');
   }
 
-  const progreso = Math.round(((turnIndex + 1) / scenario.turns.length) * 100);
+  function elegirPractica(i: number) {
+    setPracticaIdx(i);
+    setTurnIndex(0);
+    setResult(null);
+    setTranscript('');
+    setTextoEscrito('');
+    setAviso('');
+  }
+
+  const progreso = Math.round(((turnIndex + 1) / practica.turns.length) * 100);
+  const puedeMicrofono = consent === true && supported;
 
   return (
     <div className="flex flex-col gap-6">
@@ -452,14 +711,17 @@ export default function EnglishTutor() {
             <p>
               Para practicar conversación necesitamos escuchar tu voz. El reconocimiento de voz lo
               hace <strong>Web Speech API</strong>, una función de tu navegador, y{' '}
-              <strong>el audio se envía y se procesa en los servidores del proveedor de tu navegador</strong>{' '}
+              <strong>
+                el audio se envía y se procesa en los servidores del proveedor de tu navegador
+              </strong>{' '}
               (por ejemplo, Google si usas Chrome o Android, Microsoft si usas Edge, o Apple si usas
               Safari), según las políticas de privacidad de ese proveedor.
             </p>
             <p>
               Edúcate Comas <strong>no recibe, no escucha ni guarda</strong> tu voz: solo vemos el
               texto que tu propio navegador nos devuelve para decirte si la frase está bien. Puedes
-              practicar sin micrófono en el <strong>modo solo escuchar</strong>.
+              practicar sin micrófono en el <strong>modo solo escuchar</strong> o escribiendo tus
+              respuestas.
             </p>
             <p className="rounded-xl bg-sky-50 px-4 py-3 text-sky-800">
               <Info className="mr-1.5 inline h-4 w-4" />
@@ -481,7 +743,7 @@ export default function EnglishTutor() {
             </button>
             <button
               type="button"
-              onClick={seguirSinMicrofono}
+              onClick={() => setConsent(false)}
               className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-3 font-semibold text-slate-600 transition hover:bg-slate-100"
             >
               <MicOff className="h-4 w-4" />
@@ -491,50 +753,71 @@ export default function EnglishTutor() {
         </section>
       )}
 
-      {!supported && consent === true && (
-        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
-          Tu navegador no permite el reconocimiento de voz. Puedes practicar en{' '}
-          <strong>modo solo escuchar</strong> y repetir las frases en voz alta. Si quieres usar el
-          micrófono, abre la web en Chrome, Edge o Safari.
-        </div>
+      {/* ---------------- Módulos del curso ---------------- */}
+      {!moduloFijo && (
+        <section className="flex flex-col gap-3">
+          <div>
+            <h2 className="text-lg font-semibold text-slate-900">1 · Elige el módulo</h2>
+            <p className="text-sm text-slate-600">
+              Practica justo lo que estudiaste en cada módulo del curso de Inglés Básico.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {MODULOS.map((m, i) => {
+              const activo = i === moduloIdx;
+              return (
+                <button
+                  key={m.slug}
+                  type="button"
+                  onClick={() => elegirModulo(i)}
+                  className={`flex items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold transition ${
+                    activo
+                      ? 'border-sky-400 bg-sky-50 text-sky-800 shadow-sm'
+                      : 'border-slate-200 bg-white text-slate-600 hover:border-sky-300 hover:bg-sky-50'
+                  }`}
+                >
+                  <span aria-hidden>{m.emoji}</span>
+                  <span>
+                    {m.num <= 7 ? `Módulo ${m.num}` : 'Repaso'} · {m.titulo}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </section>
       )}
 
-      {/* ---------------- Escenarios ---------------- */}
-      <section className="flex flex-col gap-3">
-        <h2 className="text-lg font-semibold text-slate-900">Elige una situación</h2>
-        <div className="flex flex-wrap gap-2">
-          {SCENARIOS.map((s) => {
-            const activo = s.id === scenarioId;
-            return (
-              <button
-                key={s.id}
-                type="button"
-                onClick={() => elegirEscenario(s.id)}
-                className={`flex items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold transition ${
-                  activo
-                    ? 'border-sky-400 bg-sky-50 text-sky-800 shadow-sm'
-                    : 'border-slate-200 bg-white text-slate-600 hover:border-sky-300 hover:bg-sky-50'
-                }`}
-              >
-                <span aria-hidden>{s.emoji}</span>
-                {s.title}
-                <span className="rounded-full bg-white/70 px-2 py-0.5 text-[11px] font-medium text-slate-500">
-                  {s.level}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      </section>
+      {/* ---------------- Prácticas del módulo ---------------- */}
+      {modulo.practicas.length > 1 && (
+        <section className="flex flex-wrap items-center gap-2">
+          <span className="text-sm font-semibold text-slate-700">Práctica:</span>
+          {modulo.practicas.map((p, i) => (
+            <button
+              key={p.id}
+              type="button"
+              onClick={() => elegirPractica(i)}
+              className={`rounded-lg border px-3 py-1.5 text-sm font-medium transition ${
+                i === practicaIdx
+                  ? 'border-sky-400 bg-sky-50 text-sky-800'
+                  : 'border-slate-200 bg-white text-slate-600 hover:bg-sky-50'
+              }`}
+            >
+              {p.titulo}
+            </button>
+          ))}
+        </section>
+      )}
 
       {/* ---------------- Conversación ---------------- */}
       <section className="flex flex-col gap-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <span className="rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-700">
-              Turno {turnIndex + 1} de {scenario.turns.length}
+              Turno {turnIndex + 1} de {practica.turns.length}
             </span>
-            <span className="text-xs text-slate-500">{scenario.emoji} {scenario.title}</span>
+            <span className="text-xs text-slate-500">
+              {modulo.emoji} {modulo.num <= 7 ? `Módulo ${modulo.num}` : 'Repaso'} · {modulo.titulo}
+            </span>
           </div>
           <label className="flex cursor-pointer items-center gap-2 text-xs font-medium text-slate-600">
             <input
@@ -571,26 +854,28 @@ export default function EnglishTutor() {
                 Escuchar otra vez
               </button>
               <span className="text-xs text-slate-500">
-                {speaking ? 'El tutor está hablando…' : vozLocal ? 'Voz del dispositivo (sin retardo)' : 'Voz del navegador'}
+                {speaking
+                  ? 'El tutor está hablando…'
+                  : vozLocal
+                    ? 'Voz del dispositivo (sin retardo)'
+                    : 'Voz del navegador'}
               </span>
             </div>
           </div>
         </div>
 
         {/* Micrófono */}
-        {consent === true && supported && (
+        {puedeMicrofono && !modoTexto && (
           <div className="flex flex-col items-center gap-3 rounded-2xl bg-slate-50 p-5">
             <button
               type="button"
-              onPointerDown={empezarAEscuchar}
-              onPointerUp={pararDeEscuchar}
-              onPointerLeave={() => listening && pararDeEscuchar()}
+              onClick={alternarMicrofono}
               className={`relative flex h-20 w-20 items-center justify-center rounded-full text-white shadow-lg transition active:scale-95 ${
                 listening
                   ? 'bg-gradient-to-br from-rose-400 to-rose-600'
                   : 'bg-gradient-to-br from-sky-400 to-indigo-500 hover:brightness-105'
               }`}
-              aria-label={listening ? 'Escuchando…' : 'Mantén pulsado para hablar'}
+              aria-label={listening ? 'Toca para terminar' : 'Toca para hablar'}
             >
               {listening && (
                 <span className="absolute inset-0 animate-ping rounded-full bg-rose-400/40" />
@@ -598,34 +883,89 @@ export default function EnglishTutor() {
               <Mic className="relative h-8 w-8" />
             </button>
             <p className="text-sm font-semibold text-slate-700">
-              {listening ? 'Te estoy escuchando…' : 'Mantén pulsado y responde en inglés'}
+              {listening ? 'Te estoy escuchando… toca para terminar' : '🎤 Toca el botón y responde en inglés'}
             </p>
-            <p className="h-6 text-base italic text-slate-600">{transcript || '\u00A0'}</p>
-            <button
-              type="button"
-              onClick={cambiarEleccion}
-              className="text-xs text-slate-400 underline transition hover:text-slate-600"
-            >
-              Desactivar el micrófono
-            </button>
+            <p className="min-h-6 text-center text-base italic text-slate-600">
+              {transcript || 'Tu frase aparecerá aquí mientras hablas'}
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  pararDeEscuchar();
+                  setModoTexto(true);
+                }}
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-700 underline"
+              >
+                <Keyboard className="h-3.5 w-3.5" />
+                Prefiero escribir mi respuesta
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  try {
+                    window.localStorage.removeItem(MIC_CONSENT_KEY);
+                  } catch {
+                    /* nada */
+                  }
+                  setConsent(false);
+                }}
+                className="text-xs text-slate-400 underline transition hover:text-slate-600"
+              >
+                Desactivar el micrófono
+              </button>
+            </div>
           </div>
         )}
 
-        {consent === false && (
-          <div className="flex flex-col items-center gap-2 rounded-2xl bg-slate-50 p-5 text-center">
-            <MicOff className="h-6 w-6 text-slate-400" />
-            <p className="text-sm text-slate-600">
-              Estás en <strong>modo solo escuchar</strong>. Repite la frase en voz alta y compara con
-              la respuesta modelo.
-            </p>
-            <button
-              type="button"
-              onClick={aceptarMicrofono}
-              className="mt-1 inline-flex items-center gap-2 rounded-xl border border-sky-300 bg-white px-4 py-2 text-sm font-semibold text-sky-700 transition hover:bg-sky-50"
+        {/* Modo escribir (siempre disponible como respaldo) */}
+        {(modoTexto || !puedeMicrofono) && (
+          <div className="flex flex-col gap-3 rounded-2xl bg-slate-50 p-5">
+            {!puedeMicrofono && (
+              <p className="text-xs text-slate-500">
+                {supported
+                  ? 'Modo solo escuchar: repite la frase en voz alta y escribe lo que dirías.'
+                  : 'Tu navegador no permite el reconocimiento de voz, pero puedes practicar escribiendo.'}
+              </p>
+            )}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (textoEscrito.trim()) comprobar(textoEscrito.trim());
+              }}
+              className="flex flex-col gap-2 sm:flex-row"
             >
-              <Mic className="h-4 w-4" />
-              Activar el micrófono
-            </button>
+              <input
+                value={textoEscrito}
+                onChange={(e) => setTextoEscrito(e.target.value)}
+                placeholder="Escribe tu respuesta en inglés…"
+                className="flex-1 rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-100"
+              />
+              <button
+                type="submit"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-accent to-accent-cyan px-5 py-3 text-sm font-semibold text-white shadow-glow transition hover:brightness-105"
+              >
+                <Send className="h-4 w-4" />
+                Comprobar
+              </button>
+            </form>
+            <div className="flex flex-wrap items-center gap-3">
+              {supported && (
+                <button
+                  type="button"
+                  onClick={() => setModoTexto(false)}
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-700 underline"
+                >
+                  <Mic className="h-3.5 w-3.5" />
+                  Volver a hablar con el micrófono
+                </button>
+              )}
+              {!supported && (
+                <span className="text-xs text-slate-500">
+                  Consejo: para usar el micrófono abre la web en Chrome, Edge o Safari.
+                </span>
+              )}
+            </div>
           </div>
         )}
 
@@ -644,13 +984,17 @@ export default function EnglishTutor() {
                   <Star
                     key={n}
                     className={`h-6 w-6 ${
-                      n < estrellas(result.pct) ? 'fill-amber-400 text-amber-400' : 'text-slate-300'
+                      n < estrellas(result.pct, result.ok)
+                        ? 'fill-amber-400 text-amber-400'
+                        : 'text-slate-300'
                     }`}
                   />
                 ))}
                 <span className="ml-2 text-sm font-semibold text-slate-700">{result.pct}%</span>
               </div>
-              <p className="text-sm font-semibold text-slate-700">{mensaje(result.pct)}</p>
+              <p className="text-sm font-semibold text-slate-700">
+                {mensaje(result.pct, result.ok)}
+              </p>
             </div>
 
             <div className="flex flex-wrap gap-2 text-xs">
@@ -669,7 +1013,7 @@ export default function EnglishTutor() {
                   className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-3 py-1 font-medium text-amber-700"
                 >
                   <Sparkles className="h-3 w-3" />
-                  falta: {w}
+                  opción: {w}
                 </span>
               ))}
             </div>
@@ -699,7 +1043,8 @@ export default function EnglishTutor() {
                 onClick={() => {
                   setResult(null);
                   setTranscript('');
-                  empezarAEscuchar();
+                  setTextoEscrito('');
+                  setModoTexto(false);
                 }}
                 className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100"
               >
