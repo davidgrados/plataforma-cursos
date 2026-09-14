@@ -440,6 +440,7 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
   const [modoTexto, setModoTexto] = useState(false);
   const [textoEscrito, setTextoEscrito] = useState('');
   const [estado, setEstado] = useState<'inactivo' | 'escuchando' | 'voz' | 'procesando'>('inactivo');
+  const [detalle, setDetalle] = useState('');
 
   const recRef = useRef<any>(null);
   const activoRef = useRef(false);
@@ -533,14 +534,13 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
       setEstado('inactivo');
       const teniaTexto = Boolean(transcriptRef.current.trim());
       const err = e?.error;
+      setDetalle(err ? `Detalle: ${err}` : '');
       if (err === 'not-allowed' || err === 'service-not-allowed') {
         setAviso(
-          'Tu navegador tiene el micrófono bloqueado para esta web. Actívalo en el candado de la barra de direcciones. Mientras tanto puedes practicar escribiendo. ⌨️',
+          'Tu navegador tiene el micrófono bloqueado para esta web. Toca el candado 🔒 junto a la dirección, permite el micrófono y vuelve a intentarlo. También puedes escribir tu respuesta. ⌨️',
         );
-        setModoTexto(true);
       } else if (err === 'audio-capture') {
         setAviso('No encuentro ningún micrófono conectado. Revisa tu equipo o practica escribiendo. ⌨️');
-        setModoTexto(true);
       } else if (err === 'network') {
         setAviso('El servicio de voz del navegador no respondió. Prueba otra vez o practica escribiendo. ⌨️');
       } else if (err === 'no-speech' && !teniaTexto) {
@@ -624,57 +624,39 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
   }, []);
 
   /**
-   * Arranca la escucha de forma robusta:
-   * 1) comprueba permiso y micrófono, 2) usa una instancia nueva y 3) reintenta una vez.
-   * Si no es posible, pasa al modo escribir para que la práctica nunca se bloquee.
+   * Arranca la escucha SIN await (para no perder el gesto del usuario, que es
+   * lo que exigen algunos navegadores como Safari), con instancia nueva y
+   * reintento inmediato. Si el navegador lo rechaza, mostramos el motivo real.
    */
-  const arrancarEscucha = useCallback(async () => {
+  const arrancarEscucha = useCallback(() => {
     setAviso('');
+    setDetalle('');
     setResult(null);
     setTranscript('');
     transcriptRef.current = '';
     limpiarTiempo();
 
-    // 1) Verificamos que exista micrófono y que tengamos permiso (solo la primera vez)
-    if (!micListoRef.current) {
-      try {
-        if (navigator.mediaDevices?.getUserMedia) {
-          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-          stream.getTracks().forEach((t) => t.stop());
-        }
-        micListoRef.current = true;
-      } catch (err: any) {
-        const nombre = String(err?.name ?? '');
-        if (nombre === 'NotAllowedError' || nombre === 'SecurityError') {
-          setAviso(
-            'Tu navegador no dio permiso al micrófono. Actívalo en el candado 🔒 de la barra de direcciones y vuelve a intentarlo. Mientras tanto puedes escribir tu respuesta. ⌨️',
-          );
-        } else if (nombre === 'NotFoundError' || nombre === 'OverconstrainedError') {
-          setAviso('No encuentro ningún micrófono conectado en este dispositivo. Puedes practicar escribiendo. ⌨️');
-        } else {
-          setAviso('No pude acceder al micrófono en este dispositivo. Puedes practicar escribiendo. ⌨️');
-        }
-        setModoTexto(true);
-        setEstado('inactivo');
-        return;
-      }
-    }
-
-    // 2) Instancia nueva en cada intento: evita el error de "reconocimiento ya activo"
+    // Liberamos cualquier reconocedor anterior que haya quedado vivo
     try {
       recRef.current?.abort();
     } catch {
       /* nada */
     }
 
-    const intentar = () => {
+    const intentar = (): boolean => {
       const rec = crearReconocedor();
-      if (!rec) return false;
+      if (!rec) {
+        setSupported(false);
+        setDetalle('El navegador no tiene SpeechRecognition');
+        return false;
+      }
       recRef.current = rec;
       try {
         rec.start();
+        activoRef.current = true;
         return true;
-      } catch {
+      } catch (err: any) {
+        setDetalle(`Detalle: ${String(err?.name || err?.message || err)}`);
         try {
           rec.abort();
         } catch {
@@ -684,17 +666,14 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
       }
     };
 
+    // Feedback inmediato al tocar
+    setListening(true);
+    setEstado('escuchando');
+
     let ok = intentar();
-    if (!ok) {
-      // Un respiro y un segundo intento con instancia limpia
-      await new Promise((r) => window.setTimeout(r, 300));
-      ok = intentar();
-    }
+    if (!ok) ok = intentar(); // segundo intento con instancia limpia
 
     if (ok) {
-      activoRef.current = true;
-      setListening(true);
-      setEstado('escuchando');
       // Red de seguridad: si el motor se queda colgado, avisamos sin cortar en seco
       tiempoRef.current = window.setTimeout(() => {
         if (!transcriptRef.current.trim()) {
@@ -706,14 +685,13 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
       return;
     }
 
-    // 3) Si el navegador no deja usar el micrófono, seguimos con el teclado
+    // No se pudo: dejamos el botón listo para reintentar y ofrecemos el teclado
     activoRef.current = false;
     setListening(false);
     setEstado('inactivo');
     setAviso(
-      'El micrófono no respondió en este navegador. Te dejo el modo escribir para que puedas practicar igual. ⌨️',
+      'No pude activar el micrófono con este navegador. Toca el botón otra vez para reintentar, o practica escribiendo tu respuesta. ⌨️',
     );
-    setModoTexto(true);
   }, [crearReconocedor]);
 
   /** Un toque empieza a escuchar; otro toque termina y corrige. */
@@ -726,7 +704,6 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
     }
     void arrancarEscucha();
   }, [listening, pararDeEscuchar, comprobar, arrancarEscucha]);
-
   useEffect(() => {
     finalRef.current = (texto: string) => comprobar(texto);
   });
@@ -975,71 +952,80 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
           </div>
         </div>
 
-        {/* Micrófono */}
+        {/* Micrófono: TODA la zona es clicable para que sea imposible fallar el toque */}
         {puedeMicrofono && !modoTexto && (
           <div className="flex flex-col items-center gap-3 rounded-2xl bg-slate-50 p-5">
             <button
               type="button"
               onClick={alternarMicrofono}
-              className={`relative flex h-20 w-20 items-center justify-center rounded-full text-white shadow-lg transition active:scale-95 ${
-                listening
-                  ? 'bg-gradient-to-br from-rose-400 to-rose-600'
-                  : 'bg-gradient-to-br from-sky-400 to-indigo-500 hover:brightness-105'
-              }`}
+              className="group flex w-full cursor-pointer flex-col items-center gap-3 rounded-2xl border-2 border-dashed border-rose-200 bg-white/60 px-4 py-5 transition hover:border-rose-400 hover:bg-rose-50/60 active:scale-[0.99]"
               aria-label={listening ? 'Toca para terminar' : 'Toca para hablar'}
             >
-              {listening && (
-                <>
-                  <span className="absolute inset-0 animate-ping rounded-full bg-rose-400/40" />
-                  <span className="absolute -inset-3 animate-pulse rounded-full border-4 border-rose-300/50" />
-                </>
+              <span
+                className={`relative flex h-20 w-20 items-center justify-center rounded-full text-white shadow-lg transition ${
+                  listening
+                    ? 'bg-gradient-to-br from-rose-400 to-rose-600'
+                    : 'bg-gradient-to-br from-sky-400 to-indigo-500 group-hover:brightness-105'
+                }`}
+              >
+                {listening && (
+                  <>
+                    <span className="absolute inset-0 animate-ping rounded-full bg-rose-400/40" />
+                    <span className="absolute -inset-3 animate-pulse rounded-full border-4 border-rose-300/50" />
+                  </>
+                )}
+                <Mic className="relative h-8 w-8" />
+              </span>
+
+              {/* Indicador de escucha: barras que se mueven mientras el micrófono está activo */}
+              <span className="flex items-end gap-1" aria-hidden>
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <span
+                    key={i}
+                    className={`w-1.5 rounded-full transition-all ${
+                      estado === 'voz'
+                        ? 'animate-bounce bg-rose-500'
+                        : estado === 'escuchando'
+                          ? 'animate-pulse bg-rose-400'
+                          : estado === 'procesando'
+                            ? 'bg-sky-400'
+                            : 'bg-slate-300'
+                    }`}
+                    style={{
+                      height: estado === 'inactivo' ? '8px' : `${14 + (i % 3) * 8}px`,
+                      animationDelay: `${i * 120}ms`,
+                      animationDuration: estado === 'voz' ? '600ms' : '1100ms',
+                    }}
+                  />
+                ))}
+              </span>
+
+              <span className="text-sm font-semibold text-slate-700">
+                {estado === 'voz'
+                  ? '¡Te escucho! Sigue hablando…'
+                  : estado === 'procesando'
+                    ? 'Listo, estoy entendiendo tu frase…'
+                    : listening
+                      ? 'Micrófono activo · toca aquí para terminar'
+                      : '🎤 Toca aquí para hablar en inglés'}
+              </span>
+
+              {listening ? (
+                <span className="flex items-center gap-2 rounded-full bg-rose-50 px-3 py-1 text-xs font-semibold text-rose-700">
+                  <span className="h-2 w-2 animate-pulse rounded-full bg-rose-500" />
+                  ESCUCHANDO
+                </span>
+              ) : (
+                <span className="rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-700">
+                  Toca para empezar
+                </span>
               )}
-              <Mic className="relative h-8 w-8" />
+
+              <span className="min-h-6 text-center text-base italic text-slate-600">
+                {transcript || 'Tu frase aparecerá aquí mientras hablas'}
+              </span>
             </button>
 
-            {/* Indicador de escucha: barras que se mueven mientras el micrófono está activo */}
-            <div className="flex items-end gap-1" aria-hidden>
-              {[0, 1, 2, 3, 4].map((i) => (
-                <span
-                  key={i}
-                  className={`w-1.5 rounded-full transition-all ${
-                    estado === 'voz'
-                      ? 'animate-bounce bg-rose-500'
-                      : estado === 'escuchando'
-                        ? 'animate-pulse bg-rose-400'
-                        : estado === 'procesando'
-                          ? 'bg-sky-400'
-                          : 'bg-slate-300'
-                  }`}
-                  style={{
-                    height: estado === 'inactivo' ? '8px' : `${14 + (i % 3) * 8}px`,
-                    animationDelay: `${i * 120}ms`,
-                    animationDuration: estado === 'voz' ? '600ms' : '1100ms',
-                  }}
-                />
-              ))}
-            </div>
-
-            <p className="text-sm font-semibold text-slate-700">
-              {estado === 'voz'
-                ? '¡Te escucho! Sigue hablando…'
-                : estado === 'procesando'
-                  ? 'Listo, estoy entendiendo tu frase…'
-                  : listening
-                    ? 'Micrófono activo · toca el botón para terminar'
-                    : '🎤 Toca el botón y responde en inglés'}
-            </p>
-
-            {listening && (
-              <span className="flex items-center gap-2 rounded-full bg-rose-50 px-3 py-1 text-xs font-semibold text-rose-700">
-                <span className="h-2 w-2 animate-pulse rounded-full bg-rose-500" />
-                ESCUCHANDO
-              </span>
-            )}
-
-            <p className="min-h-6 text-center text-base italic text-slate-600">
-              {transcript || 'Tu frase aparecerá aquí mientras hablas'}
-            </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
               <button
                 type="button"
@@ -1127,9 +1113,20 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
         )}
 
         {aviso && (
-          <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-            {aviso}
-          </p>
+          <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+            <p>{aviso}</p>
+            {detalle && <p className="mt-1 text-xs text-amber-600">{detalle}</p>}
+            {puedeMicrofono && !modoTexto && (
+              <button
+                type="button"
+                onClick={arrancarEscucha}
+                className="mt-2 inline-flex items-center gap-1.5 rounded-lg border border-amber-300 bg-white px-3 py-1.5 text-xs font-semibold text-amber-800 transition hover:bg-amber-100"
+              >
+                <Mic className="h-3.5 w-3.5" />
+                Reintentar micrófono
+              </button>
+            )}
+          </div>
         )}
 
         {/* Resultado */}
