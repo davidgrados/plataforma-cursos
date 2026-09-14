@@ -445,6 +445,7 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
   const activoRef = useRef(false);
   const tiempoRef = useRef<number | null>(null);
   const transcriptRef = useRef('');
+  const micListoRef = useRef(false);
   const voiceRef = useRef<SpeechSynthesisVoice | null>(null);
   const finalRef = useRef<(t: string) => void>(() => {});
 
@@ -484,14 +485,17 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
     return () => synth.removeEventListener?.('voiceschanged', cargar);
   }, []);
 
-  // --- Reconocimiento: una sola instancia reutilizada (menos latencia) ---
+  // --- Reconocimiento: se detecta el soporte y se crea una instancia nueva en cada intento ---
   useEffect(() => {
     const w = window as any;
+    if (!(w.SpeechRecognition || w.webkitSpeechRecognition)) setSupported(false);
+  }, []);
+
+  /** Crea un reconocedor nuevo, ya configurado y con sus eventos conectados. */
+  const crearReconocedor = useCallback(() => {
+    const w = window as any;
     const Ctor = w.SpeechRecognition || w.webkitSpeechRecognition;
-    if (!Ctor) {
-      setSupported(false);
-      return;
-    }
+    if (!Ctor) return null;
     const rec = new Ctor();
     rec.lang = 'en-US';
     rec.continuous = false;
@@ -528,14 +532,21 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
       setListening(false);
       setEstado('inactivo');
       const teniaTexto = Boolean(transcriptRef.current.trim());
-      if (e?.error === 'not-allowed' || e?.error === 'service-not-allowed') {
+      const err = e?.error;
+      if (err === 'not-allowed' || err === 'service-not-allowed') {
         setAviso(
-          'Tu navegador tiene el micrófono bloqueado para esta web. Actívalo en el candado de la barra de direcciones, o practica con el modo escribir.',
+          'Tu navegador tiene el micrófono bloqueado para esta web. Actívalo en el candado de la barra de direcciones. Mientras tanto puedes practicar escribiendo. ⌨️',
         );
-      } else if (e?.error === 'no-speech' && !teniaTexto) {
+        setModoTexto(true);
+      } else if (err === 'audio-capture') {
+        setAviso('No encuentro ningún micrófono conectado. Revisa tu equipo o practica escribiendo. ⌨️');
+        setModoTexto(true);
+      } else if (err === 'network') {
+        setAviso('El servicio de voz del navegador no respondió. Prueba otra vez o practica escribiendo. ⌨️');
+      } else if (err === 'no-speech' && !teniaTexto) {
         setAviso('No te escuché esta vez. Toca el botón y habla un poco más cerca del micrófono. 🎤');
-      } else if (e?.error !== 'aborted' && e?.error !== 'no-speech') {
-        setAviso('Hubo un problema con el micrófono. Puedes intentarlo otra vez o escribir tu respuesta.');
+      } else if (err !== 'aborted' && err !== 'no-speech') {
+        setAviso('Hubo un problema con el micrófono. Inténtalo otra vez o escribe tu respuesta. ⌨️');
       }
     };
     rec.onend = () => {
@@ -543,16 +554,21 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
       setListening(false);
       setEstado('inactivo');
     };
-    recRef.current = rec;
-    return () => {
+    return rec;
+  }, []);
+
+  // Al desmontar, liberamos el micrófono
+  useEffect(
+    () => () => {
       try {
-        rec.abort();
+        recRef.current?.abort();
       } catch {
         /* nada */
       }
       recRef.current = null;
-    };
-  }, []);
+    },
+    [],
+  );
 
   // --- Voz del tutor ---
   const hablar = useCallback((texto: string, alTerminar?: () => void) => {
@@ -607,31 +623,79 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
     setEstado('procesando');
   }, []);
 
-  /** Un toque empieza a escuchar; otro toque termina y corrige. */
-  const alternarMicrofono = useCallback(() => {
-    const rec = recRef.current;
-    if (!rec) {
-      setAviso('Este navegador no permite el reconocimiento de voz. Usa el modo escribir.');
-      return;
-    }
-    if (listening || activoRef.current) {
-      // Segundo toque: cerramos y corregimos lo que se haya entendido
-      const dicho = transcriptRef.current.trim();
-      pararDeEscuchar();
-      if (dicho) comprobar(dicho);
-      return;
-    }
+  /**
+   * Arranca la escucha de forma robusta:
+   * 1) comprueba permiso y micrófono, 2) usa una instancia nueva y 3) reintenta una vez.
+   * Si no es posible, pasa al modo escribir para que la práctica nunca se bloquee.
+   */
+  const arrancarEscucha = useCallback(async () => {
     setAviso('');
     setResult(null);
     setTranscript('');
     transcriptRef.current = '';
+    limpiarTiempo();
+
+    // 1) Verificamos que exista micrófono y que tengamos permiso (solo la primera vez)
+    if (!micListoRef.current) {
+      try {
+        if (navigator.mediaDevices?.getUserMedia) {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          stream.getTracks().forEach((t) => t.stop());
+        }
+        micListoRef.current = true;
+      } catch (err: any) {
+        const nombre = String(err?.name ?? '');
+        if (nombre === 'NotAllowedError' || nombre === 'SecurityError') {
+          setAviso(
+            'Tu navegador no dio permiso al micrófono. Actívalo en el candado 🔒 de la barra de direcciones y vuelve a intentarlo. Mientras tanto puedes escribir tu respuesta. ⌨️',
+          );
+        } else if (nombre === 'NotFoundError' || nombre === 'OverconstrainedError') {
+          setAviso('No encuentro ningún micrófono conectado en este dispositivo. Puedes practicar escribiendo. ⌨️');
+        } else {
+          setAviso('No pude acceder al micrófono en este dispositivo. Puedes practicar escribiendo. ⌨️');
+        }
+        setModoTexto(true);
+        setEstado('inactivo');
+        return;
+      }
+    }
+
+    // 2) Instancia nueva en cada intento: evita el error de "reconocimiento ya activo"
     try {
-      rec.start();
+      recRef.current?.abort();
+    } catch {
+      /* nada */
+    }
+
+    const intentar = () => {
+      const rec = crearReconocedor();
+      if (!rec) return false;
+      recRef.current = rec;
+      try {
+        rec.start();
+        return true;
+      } catch {
+        try {
+          rec.abort();
+        } catch {
+          /* nada */
+        }
+        return false;
+      }
+    };
+
+    let ok = intentar();
+    if (!ok) {
+      // Un respiro y un segundo intento con instancia limpia
+      await new Promise((r) => window.setTimeout(r, 300));
+      ok = intentar();
+    }
+
+    if (ok) {
       activoRef.current = true;
       setListening(true);
       setEstado('escuchando');
       // Red de seguridad: si el motor se queda colgado, avisamos sin cortar en seco
-      limpiarTiempo();
       tiempoRef.current = window.setTimeout(() => {
         if (!transcriptRef.current.trim()) {
           setAviso(
@@ -639,13 +703,29 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
           );
         }
       }, 12000);
-    } catch {
-      activoRef.current = false;
-      setListening(false);
-      setEstado('inactivo');
-      setAviso('No se pudo activar el micrófono. Vuelve a intentarlo o escribe tu respuesta.');
+      return;
     }
-  }, [listening, pararDeEscuchar, comprobar]);
+
+    // 3) Si el navegador no deja usar el micrófono, seguimos con el teclado
+    activoRef.current = false;
+    setListening(false);
+    setEstado('inactivo');
+    setAviso(
+      'El micrófono no respondió en este navegador. Te dejo el modo escribir para que puedas practicar igual. ⌨️',
+    );
+    setModoTexto(true);
+  }, [crearReconocedor]);
+
+  /** Un toque empieza a escuchar; otro toque termina y corrige. */
+  const alternarMicrofono = useCallback(() => {
+    if (listening || activoRef.current) {
+      const dicho = transcriptRef.current.trim();
+      pararDeEscuchar();
+      if (dicho) comprobar(dicho);
+      return;
+    }
+    void arrancarEscucha();
+  }, [listening, pararDeEscuchar, comprobar, arrancarEscucha]);
 
   useEffect(() => {
     finalRef.current = (texto: string) => comprobar(texto);
@@ -680,12 +760,16 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
     if (navigator.mediaDevices?.getUserMedia) {
       navigator.mediaDevices
         .getUserMedia({ audio: true })
-        .then((s) => s.getTracks().forEach((t) => t.stop()))
-        .catch(() =>
+        .then((s) => {
+          s.getTracks().forEach((t) => t.stop());
+          micListoRef.current = true;
+        })
+        .catch(() => {
+          micListoRef.current = false;
           setAviso(
-            'No diste permiso al micrófono. Puedes activarlo en el candado del navegador o practicar escribiendo.',
-          ),
-        );
+            'No diste permiso al micrófono. Actívalo en el candado 🔒 de la barra de direcciones y toca el botón; si no, puedes escribir tus respuestas. ⌨️',
+          );
+        });
     }
   }
 
@@ -1022,7 +1106,11 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
               {supported && (
                 <button
                   type="button"
-                  onClick={() => setModoTexto(false)}
+                  onClick={() => {
+                    micListoRef.current = false;
+                    setModoTexto(false);
+                    setAviso('');
+                  }}
                   className="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-700 underline"
                 >
                   <Mic className="h-3.5 w-3.5" />
