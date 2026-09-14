@@ -3,6 +3,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { Toaster } from 'sonner';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import CookieBanner from '@/components/CookieBanner';
 import ScrollToTop from '@/components/ScrollToTop';
 import { ClerkAuthBridge, PreviewAuthProvider } from '@/lib/auth-context';
 import './globals.css';
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Navbar />
         <main className="mx-auto w-full max-w-6xl px-4 pb-16 pt-8 sm:px-6">{children}</main>
         <Footer />
+        <CookieBanner />
         <Toaster theme="light" position="top-right" richColors closeButton />
       </body>
     </html>
