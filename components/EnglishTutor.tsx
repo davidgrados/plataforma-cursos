@@ -449,6 +449,12 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
   const micListoRef = useRef(false);
   const voiceRef = useRef<SpeechSynthesisVoice | null>(null);
   const finalRef = useRef<(t: string) => void>(() => {});
+  /** true mientras el estudiante quiere que el micrófono siga escuchando. */
+  const quererRef = useRef(false);
+  /** Reinicios automáticos ya usados (para no quedar en bucle). */
+  const reiniciosRef = useRef(0);
+  /** Función para volver a arrancar la escucha sin que el usuario haga nada. */
+  const reanudarRef = useRef<() => void>(() => {});
 
   const modulo = MODULOS[moduloIdx] ?? MODULOS[0];
   const practica = modulo.practicas[practicaIdx] ?? modulo.practicas[0];
@@ -499,7 +505,8 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
     if (!Ctor) return null;
     const rec = new Ctor();
     rec.lang = 'en-US';
-    rec.continuous = false;
+    // Continuo: no se corta solo en la primera pausa (evita que "desaparezca" la escucha)
+    rec.continuous = true;
     rec.interimResults = true;
     rec.maxAlternatives = 1;
 
@@ -529,19 +536,28 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
       if (completo) finalRef.current(completo.trim());
     };
     rec.onerror = (e: any) => {
+      const err = e?.error;
+      const teniaTexto = Boolean(transcriptRef.current.trim());
+      setDetalle(err ? `Detalle: ${err}` : '');
+
+      // Mientras el estudiante quiera seguir hablando, los cortes por silencio
+      // no deben apagar la escucha: se reanuda sola en onend.
+      if (quererRef.current && (err === 'no-speech' || err === 'aborted')) return;
+
       activoRef.current = false;
       setListening(false);
       setEstado('inactivo');
-      const teniaTexto = Boolean(transcriptRef.current.trim());
-      const err = e?.error;
-      setDetalle(err ? `Detalle: ${err}` : '');
+
       if (err === 'not-allowed' || err === 'service-not-allowed') {
+        quererRef.current = false;
         setAviso(
           'Tu navegador tiene el micrófono bloqueado para esta web. Toca el candado 🔒 junto a la dirección, permite el micrófono y vuelve a intentarlo. También puedes escribir tu respuesta. ⌨️',
         );
       } else if (err === 'audio-capture') {
+        quererRef.current = false;
         setAviso('No encuentro ningún micrófono conectado. Revisa tu equipo o practica escribiendo. ⌨️');
       } else if (err === 'network') {
+        quererRef.current = false;
         setAviso('El servicio de voz del navegador no respondió. Prueba otra vez o practica escribiendo. ⌨️');
       } else if (err === 'no-speech' && !teniaTexto) {
         setAviso('No te escuché esta vez. Toca el botón y habla un poco más cerca del micrófono. 🎤');
@@ -551,6 +567,22 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
     };
     rec.onend = () => {
       activoRef.current = false;
+
+      // Si el estudiante sigue queriendo hablar, reanudamos sin apagar la interfaz
+      if (quererRef.current && reiniciosRef.current < 6) {
+        reiniciosRef.current += 1;
+        setEstado('escuchando');
+        setListening(true);
+        window.setTimeout(() => {
+          if (quererRef.current) reanudarRef.current();
+        }, 200);
+        return;
+      }
+
+      if (quererRef.current) {
+        quererRef.current = false;
+        setAviso('No te escuché durante un rato. Toca el botón cuando quieras volver a hablar. 🎤');
+      }
       setListening(false);
       setEstado('inactivo');
     };
@@ -601,6 +633,12 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
   /** Corrige la frase que se haya entendido. */
   const comprobar = useCallback(
     (dicho: string) => {
+      quererRef.current = false; // el turno terminó: no reanudamos la escucha
+      try {
+        recRef.current?.stop();
+      } catch {
+        /* nada */
+      }
       const r = evaluar(dicho, turn);
       setResult(r);
       setListening(false);
@@ -612,6 +650,7 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
   );
 
   const pararDeEscuchar = useCallback(() => {
+    quererRef.current = false; // el estudiante decide parar
     limpiarTiempo();
     try {
       recRef.current?.stop();
@@ -622,6 +661,22 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
     setListening(false);
     setEstado('procesando');
   }, []);
+
+  /** Reanuda la escucha de forma silenciosa, sin reiniciar el turno. */
+  useEffect(() => {
+    reanudarRef.current = () => {
+      const rec = crearReconocedor();
+      if (!rec) return;
+      recRef.current = rec;
+      try {
+        rec.start();
+        activoRef.current = true;
+        setListening(true);
+      } catch {
+        /* si falla, onend/onerror se encargan */
+      }
+    };
+  });
 
   /**
    * Arranca la escucha SIN await (para no perder el gesto del usuario, que es
@@ -635,6 +690,10 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
     setTranscript('');
     transcriptRef.current = '';
     limpiarTiempo();
+
+    // El estudiante quiere escuchar: la sesión se mantiene hasta que él pare
+    quererRef.current = true;
+    reiniciosRef.current = 0;
 
     // Liberamos cualquier reconocedor anterior que haya quedado vivo
     try {
@@ -686,6 +745,7 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
     }
 
     // No se pudo: dejamos el botón listo para reintentar y ofrecemos el teclado
+    quererRef.current = false;
     activoRef.current = false;
     setListening(false);
     setEstado('inactivo');
