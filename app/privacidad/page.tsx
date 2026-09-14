@@ -9,7 +9,8 @@ export const metadata: Metadata = {
 };
 
 const ACTUALIZADO = 'Enero de 2026';
-const CONTACTO = 'contacto@educatecomas.com';
+const CONTACTO = 'davidgradosa@hotmail.com';
+const RESPONSABLE = 'David Grados';
 
 export default function PrivacidadPage() {
   return (
@@ -48,9 +49,9 @@ export default function PrivacidadPage() {
       <div className="prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-a:text-sky-700">
         <h2>1. Quién es el responsable</h2>
         <p>
-          El responsable del tratamiento de los datos es <strong>Edúcate Comas</strong>, iniciativa
-          educativa para la comunidad de Comas. Para cualquier consulta sobre esta política o sobre
-          tus datos personales puedes escribirnos a{' '}
+          El responsable del tratamiento de los datos es <strong>{RESPONSABLE}</strong>, de la
+          iniciativa educativa <strong>Edúcate Comas</strong> (Comas, Perú). Para cualquier consulta
+          sobre esta política o sobre tus datos personales puedes escribirnos a{' '}
           <a href={`mailto:${CONTACTO}`}>{CONTACTO}</a>.
         </p>
 
@@ -187,7 +188,8 @@ export default function PrivacidadPage() {
 
         <h2>12. Contacto</h2>
         <p>
-          Si tienes dudas sobre esta política o sobre cómo tratamos tus datos, escríbenos a{' '}
+          Si tienes dudas sobre esta política o sobre cómo tratamos tus datos, escribe a{' '}
+          <strong>{RESPONSABLE}</strong>:{' '}
           <a href={`mailto:${CONTACTO}`}>{CONTACTO}</a>.
         </p>
       </div>
