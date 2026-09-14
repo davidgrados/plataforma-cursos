@@ -57,6 +57,23 @@ pre code.hljs {
   @apply font-mono text-sm leading-relaxed;
 }
 
+/* Botones amigables: sin menú de "copiar texto" al mantener pulsado (móvil y PC) */
+button,
+[role='button'] {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+/* Zona táctil grande y sin selección accidental */
+.tap-area {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+}
+
 /* Editor EasyMDE en tema oscuro */
 .EasyMDEContainer .CodeMirror {
   background: #0e1424 !important;

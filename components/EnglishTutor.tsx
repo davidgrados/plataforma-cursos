@@ -958,7 +958,7 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
             <button
               type="button"
               onClick={alternarMicrofono}
-              className="group flex w-full cursor-pointer flex-col items-center gap-3 rounded-2xl border-2 border-dashed border-rose-200 bg-white/60 px-4 py-5 transition hover:border-rose-400 hover:bg-rose-50/60 active:scale-[0.99]"
+              className="tap-area group flex w-full cursor-pointer flex-col items-center gap-3 rounded-2xl border-2 border-dashed border-rose-200 bg-white/60 px-4 py-5 transition hover:border-rose-400 hover:bg-rose-50/60 active:scale-[0.99]"
               aria-label={listening ? 'Toca para terminar' : 'Toca para hablar'}
             >
               <span
@@ -1057,60 +1057,68 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
           </div>
         )}
 
-        {/* Modo escribir (siempre disponible como respaldo) */}
-        {(modoTexto || !puedeMicrofono) && (
-          <div className="flex flex-col gap-3 rounded-2xl bg-slate-50 p-5">
-            {!puedeMicrofono && (
-              <p className="text-xs text-slate-500">
-                {supported
-                  ? 'Modo solo escuchar: repite la frase en voz alta y escribe lo que dirías.'
-                  : 'Tu navegador no permite el reconocimiento de voz, pero puedes practicar escribiendo.'}
-              </p>
-            )}
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (textoEscrito.trim()) comprobar(textoEscrito.trim());
-              }}
-              className="flex flex-col gap-2 sm:flex-row"
+        {/* Modo escribir: SIEMPRE disponible, para que la práctica nunca se bloquee */}
+        <div className="flex flex-col gap-3 rounded-2xl bg-slate-50 p-5">
+          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+            ⌨️ {puedeMicrofono && !modoTexto ? 'O escribe tu respuesta' : 'Escribe tu respuesta'}
+          </p>
+          {!puedeMicrofono && (
+            <p className="text-xs text-slate-500">
+              {supported
+                ? 'Modo solo escuchar: repite la frase en voz alta y escribe lo que dirías.'
+                : 'Tu navegador no permite el reconocimiento de voz, pero puedes practicar escribiendo.'}
+            </p>
+          )}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const escrito = textoEscrito.trim();
+              if (!escrito) {
+                setAviso('Escribe tu respuesta en inglés y después toca «Comprobar». ✍️');
+                return;
+              }
+              setAviso('');
+              comprobar(escrito);
+            }}
+            className="flex flex-col gap-2 sm:flex-row"
+          >
+            <input
+              value={textoEscrito}
+              onChange={(e) => setTextoEscrito(e.target.value)}
+              placeholder="Escribe tu respuesta en inglés…"
+              className="flex-1 rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-100"
+            />
+            <button
+              type="submit"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-accent to-accent-cyan px-5 py-3 text-sm font-semibold text-white shadow-glow transition hover:brightness-105"
             >
-              <input
-                value={textoEscrito}
-                onChange={(e) => setTextoEscrito(e.target.value)}
-                placeholder="Escribe tu respuesta en inglés…"
-                className="flex-1 rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-100"
-              />
+              <Send className="h-4 w-4" />
+              Comprobar
+            </button>
+          </form>
+          <p className="text-xs text-slate-500">💡 {turn.tip}</p>
+          <div className="flex flex-wrap items-center gap-3">
+            {supported && modoTexto && (
               <button
-                type="submit"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-accent to-accent-cyan px-5 py-3 text-sm font-semibold text-white shadow-glow transition hover:brightness-105"
+                type="button"
+                onClick={() => {
+                  micListoRef.current = false;
+                  setModoTexto(false);
+                  setAviso('');
+                }}
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-700 underline"
               >
-                <Send className="h-4 w-4" />
-                Comprobar
+                <Mic className="h-3.5 w-3.5" />
+                Volver a hablar con el micrófono
               </button>
-            </form>
-            <div className="flex flex-wrap items-center gap-3">
-              {supported && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    micListoRef.current = false;
-                    setModoTexto(false);
-                    setAviso('');
-                  }}
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-700 underline"
-                >
-                  <Mic className="h-3.5 w-3.5" />
-                  Volver a hablar con el micrófono
-                </button>
-              )}
-              {!supported && (
-                <span className="text-xs text-slate-500">
-                  Consejo: para usar el micrófono abre la web en Chrome, Edge o Safari.
-                </span>
-              )}
-            </div>
+            )}
+            {!supported && (
+              <span className="text-xs text-slate-500">
+                Consejo: para usar el micrófono abre la web en Chrome, Edge o Safari.
+              </span>
+            )}
           </div>
-        )}
+        </div>
 
         {aviso && (
           <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
@@ -1239,7 +1247,7 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
         <Link href="/privacidad#voz" className="font-semibold text-sky-700 underline">
           Política de Privacidad
         </Link>
-        .
+        . <span className="text-slate-400">versión 3</span>
       </p>
     </div>
   );
