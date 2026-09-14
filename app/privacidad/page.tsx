@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Cookie, Lock, Mail, ShieldCheck } from 'lucide-react';
+import CookieSettings from '@/components/CookieSettings';
 
 export const metadata: Metadata = {
   title: 'Política de Privacidad y Cookies | Edúcate Comas',
@@ -123,9 +124,16 @@ export default function PrivacidadPage() {
           de terceros con fines comerciales.
         </p>
         <p>
-          Puedes bloquear o eliminar las cookies desde la configuración de tu navegador. Ten en
-          cuenta que, si desactivas las cookies necesarias, es posible que no puedas iniciar sesión
-          ni guardar tu progreso.
+          <strong>Puedes aceptar o rechazar:</strong> el aviso que ves al entrar tiene las dos
+          opciones. Como únicamente empleamos cookies necesarias, tu decisión no limita el uso del
+          sitio: si rechazas, seguiremos usando solo las cookies imprescindibles para la sesión y la
+          seguridad, y no activaremos ninguna cookie de análisis, publicidad o seguimiento. Tu
+          elección queda guardada en tu navegador y puedes cambiarla cuando quieras.
+        </p>
+        <p>
+          También puedes bloquear o eliminar las cookies desde la configuración de tu navegador. Ten
+          en cuenta que, si desactivas las cookies necesarias, es posible que no puedas iniciar
+          sesión ni guardar tu progreso.
         </p>
 
         <h2>6. Con quién compartimos la información</h2>
@@ -193,6 +201,14 @@ export default function PrivacidadPage() {
           <a href={`mailto:${CONTACTO}`}>{CONTACTO}</a>.
         </p>
       </div>
+
+      <section className="flex flex-col items-start gap-3 rounded-2xl border border-sky-200 bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+        <p className="flex items-center gap-2 text-sm text-slate-600">
+          <Cookie className="h-4 w-4 text-sky-600" />
+          ¿Ya elegiste antes y quieres cambiar de opinión sobre las cookies?
+        </p>
+        <CookieSettings />
+      </section>
 
       <section className="flex flex-col items-start gap-3 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
         <p className="flex items-center gap-2 text-sm text-slate-600">

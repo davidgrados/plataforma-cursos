@@ -1,31 +1,49 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Cookie } from 'lucide-react';
 
-const STORAGE_KEY = 'educatecomas-cookies-aceptadas';
+/** Clave donde se guarda la elección del visitante. */
+export const CONSENT_KEY = 'educatecomas-cookies-consent';
+/** Clave antigua (solo aceptar) para no volver a preguntar a quien ya aceptó. */
+const LEGACY_KEY = 'educatecomas-cookies-aceptadas';
+/** Evento para reabrir el aviso (por ejemplo desde "Cambiar mi elección"). */
+export const CONSENT_EVENT = 'cookie-consent-change';
+
+type Consent = 'aceptadas' | 'rechazadas';
 
 /**
- * Aviso de cookies. Solo aparecen cookies necesarias (sesión de usuario),
- * por eso basta con el aviso y el botón de aceptar.
+ * Aviso de cookies con opción de aceptar o rechazar.
+ * La plataforma solo usa cookies necesarias, así que rechazar no limita el uso
+ * del sitio: únicamente deja constancia de que no se autorizan cookies no esenciales.
  */
 export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
 
-  useEffect(() => {
-    let accepted = true;
+  const sync = useCallback(() => {
+    let stored: string | null = null;
     try {
-      accepted = Boolean(window.localStorage.getItem(STORAGE_KEY));
+      stored = window.localStorage.getItem(CONSENT_KEY);
+      if (!stored && window.localStorage.getItem(LEGACY_KEY)) stored = 'aceptadas';
     } catch {
-      accepted = false;
+      stored = null;
     }
-    if (!accepted) setVisible(true);
+    setVisible(!stored);
   }, []);
 
-  function aceptar() {
+  useEffect(() => {
+    sync();
+    window.addEventListener(CONSENT_EVENT, sync);
+    return () => window.removeEventListener(CONSENT_EVENT, sync);
+  }, [sync]);
+
+  function decidir(valor: Consent) {
     try {
-      window.localStorage.setItem(STORAGE_KEY, new Date().toISOString());
+      window.localStorage.setItem(
+        CONSENT_KEY,
+        JSON.stringify({ value: valor, date: new Date().toISOString() }),
+      );
     } catch {
       /* si el navegador bloquea el almacenamiento, solo ocultamos el aviso */
     }
@@ -54,7 +72,7 @@ export default function CookieBanner() {
           </p>
         </div>
 
-        <div className="flex shrink-0 items-center justify-end gap-2">
+        <div className="flex shrink-0 flex-wrap items-center justify-end gap-2">
           <Link
             href="/privacidad#cookies"
             className="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
@@ -63,7 +81,14 @@ export default function CookieBanner() {
           </Link>
           <button
             type="button"
-            onClick={aceptar}
+            onClick={() => decidir('rechazadas')}
+            className="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100"
+          >
+            Rechazar
+          </button>
+          <button
+            type="button"
+            onClick={() => decidir('aceptadas')}
             className="rounded-xl bg-gradient-to-r from-accent to-accent-cyan px-5 py-2.5 text-sm font-semibold text-white shadow-glow transition hover:brightness-105"
           >
             Aceptar
