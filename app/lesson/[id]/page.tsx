@@ -23,14 +23,6 @@ const TerminalEmbed = dynamic(() => import('@/components/TerminalEmbed'), {
   ),
 });
 
-// El tutor de inglés usa Web Speech API, disponible solo en el navegador.
-const EnglishTutorEmbed = dynamic(() => import('@/components/EnglishTutor'), {
-  ssr: false,
-  loading: () => (
-    <div className="h-72 animate-pulse rounded-2xl border border-slate-200 bg-slate-100" />
-  ),
-});
-
 export default function LessonPage() {
   const { id } = useParams<{ id: string }>();
   const { userId, isLoaded } = useAuthUser();
@@ -131,23 +123,6 @@ export default function LessonPage() {
           />
         )}
       </article>
-
-      {lesson.course?.slug === 'ingles-basico' && (
-        <section className="flex flex-col gap-4">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="flex items-center gap-2 text-lg font-semibold text-slate-900">
-              🎙️ Practica este módulo hablando
-            </h2>
-            <Link
-              href="/ingles/tutor"
-              className="text-sm font-semibold text-sky-700 hover:underline"
-            >
-              Ver todas las prácticas
-            </Link>
-          </div>
-          <EnglishTutorEmbed moduloInicial={lesson.slug} />
-        </section>
-      )}
 
       {showTerminal && (
         <section className="flex flex-col gap-3">

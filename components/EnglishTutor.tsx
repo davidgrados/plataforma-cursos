@@ -439,10 +439,12 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
   const [supported, setSupported] = useState(true);
   const [modoTexto, setModoTexto] = useState(false);
   const [textoEscrito, setTextoEscrito] = useState('');
+  const [estado, setEstado] = useState<'inactivo' | 'escuchando' | 'voz' | 'procesando'>('inactivo');
 
   const recRef = useRef<any>(null);
   const activoRef = useRef(false);
   const tiempoRef = useRef<number | null>(null);
+  const transcriptRef = useRef('');
   const voiceRef = useRef<SpeechSynthesisVoice | null>(null);
   const finalRef = useRef<(t: string) => void>(() => {});
 
@@ -499,8 +501,15 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
     rec.onstart = () => {
       activoRef.current = true;
       setListening(true);
+      setEstado('escuchando');
       setAviso('');
     };
+    // Eventos reales del micrófono: sirven para mostrar que SÍ está escuchando
+    rec.onaudiostart = () => setEstado('escuchando');
+    rec.onsoundstart = () => setEstado('voz');
+    rec.onspeechstart = () => setEstado('voz');
+    rec.onspeechend = () => setEstado('procesando');
+    rec.onaudioend = () => setEstado('procesando');
     rec.onresult = (e: any) => {
       let parcial = '';
       let completo = '';
@@ -510,24 +519,29 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
         else parcial += texto;
       }
       setTranscript((completo || parcial).trim());
+      transcriptRef.current = (completo || parcial).trim();
+      if (parcial && !completo) setEstado('voz');
       if (completo) finalRef.current(completo.trim());
     };
     rec.onerror = (e: any) => {
       activoRef.current = false;
       setListening(false);
+      setEstado('inactivo');
+      const teniaTexto = Boolean(transcriptRef.current.trim());
       if (e?.error === 'not-allowed' || e?.error === 'service-not-allowed') {
         setAviso(
-          'El navegador bloqueó el micrófono. Ábrelo en el candado de la barra de direcciones o usa el modo escribir.',
+          'Tu navegador tiene el micrófono bloqueado para esta web. Actívalo en el candado de la barra de direcciones, o practica con el modo escribir.',
         );
-      } else if (e?.error === 'no-speech') {
-        setAviso('No escuché nada. Acércate al micrófono y prueba otra vez, o escribe tu respuesta.');
-      } else if (e?.error !== 'aborted') {
-        setAviso('Hubo un problema con el micrófono. Puedes escribir tu respuesta.');
+      } else if (e?.error === 'no-speech' && !teniaTexto) {
+        setAviso('No te escuché esta vez. Toca el botón y habla un poco más cerca del micrófono. 🎤');
+      } else if (e?.error !== 'aborted' && e?.error !== 'no-speech') {
+        setAviso('Hubo un problema con el micrófono. Puedes intentarlo otra vez o escribir tu respuesta.');
       }
     };
     rec.onend = () => {
       activoRef.current = false;
       setListening(false);
+      setEstado('inactivo');
     };
     recRef.current = rec;
     return () => {
@@ -568,6 +582,19 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
     }
   };
 
+  /** Corrige la frase que se haya entendido. */
+  const comprobar = useCallback(
+    (dicho: string) => {
+      const r = evaluar(dicho, turn);
+      setResult(r);
+      setListening(false);
+      setEstado('inactivo');
+      limpiarTiempo();
+      if (r.ok && r.pct >= 80) hablar('Excellent! Well done.');
+    },
+    [turn, hablar],
+  );
+
   const pararDeEscuchar = useCallback(() => {
     limpiarTiempo();
     try {
@@ -577,9 +604,10 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
     }
     activoRef.current = false;
     setListening(false);
+    setEstado('procesando');
   }, []);
 
-  /** Un toque empieza a escuchar; otro toque termina. */
+  /** Un toque empieza a escuchar; otro toque termina y corrige. */
   const alternarMicrofono = useCallback(() => {
     const rec = recRef.current;
     if (!rec) {
@@ -587,44 +615,37 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
       return;
     }
     if (listening || activoRef.current) {
+      // Segundo toque: cerramos y corregimos lo que se haya entendido
+      const dicho = transcriptRef.current.trim();
       pararDeEscuchar();
+      if (dicho) comprobar(dicho);
       return;
     }
     setAviso('');
     setResult(null);
     setTranscript('');
+    transcriptRef.current = '';
     try {
       rec.start();
       activoRef.current = true;
       setListening(true);
-      // Si no dice nada en 8 s, cerramos con un aviso amable
+      setEstado('escuchando');
+      // Red de seguridad: si el motor se queda colgado, avisamos sin cortar en seco
       limpiarTiempo();
       tiempoRef.current = window.setTimeout(() => {
-        setAviso('No escuché nada. Toca el botón otra vez y habla un poco más cerca.');
-        try {
-          rec.stop();
-        } catch {
-          /* nada */
+        if (!transcriptRef.current.trim()) {
+          setAviso(
+            'Sigo escuchando… habla un poco más cerca del micrófono, o toca el botón para terminar.',
+          );
         }
-        setListening(false);
-      }, 8000);
+      }, 12000);
     } catch {
       activoRef.current = false;
       setListening(false);
+      setEstado('inactivo');
       setAviso('No se pudo activar el micrófono. Vuelve a intentarlo o escribe tu respuesta.');
     }
-  }, [listening, pararDeEscuchar]);
-
-  const comprobar = useCallback(
-    (dicho: string) => {
-      const r = evaluar(dicho, turn);
-      setResult(r);
-      setListening(false);
-      limpiarTiempo();
-      if (r.ok && r.pct >= 80) hablar('Excellent! Well done.');
-    },
-    [turn, hablar],
-  );
+  }, [listening, pararDeEscuchar, comprobar]);
 
   useEffect(() => {
     finalRef.current = (texto: string) => comprobar(texto);
@@ -671,8 +692,10 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
   function siguienteTurno() {
     setResult(null);
     setTranscript('');
+    transcriptRef.current = '';
     setTextoEscrito('');
     setAviso('');
+    setEstado('inactivo');
     setTurnIndex(turnIndex < practica.turns.length - 1 ? turnIndex + 1 : 0);
   }
 
@@ -682,8 +705,10 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
     setTurnIndex(0);
     setResult(null);
     setTranscript('');
+    transcriptRef.current = '';
     setTextoEscrito('');
     setAviso('');
+    setEstado('inactivo');
   }
 
   function elegirPractica(i: number) {
@@ -691,8 +716,10 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
     setTurnIndex(0);
     setResult(null);
     setTranscript('');
+    transcriptRef.current = '';
     setTextoEscrito('');
     setAviso('');
+    setEstado('inactivo');
   }
 
   const progreso = Math.round(((turnIndex + 1) / practica.turns.length) * 100);
@@ -878,13 +905,54 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
               aria-label={listening ? 'Toca para terminar' : 'Toca para hablar'}
             >
               {listening && (
-                <span className="absolute inset-0 animate-ping rounded-full bg-rose-400/40" />
+                <>
+                  <span className="absolute inset-0 animate-ping rounded-full bg-rose-400/40" />
+                  <span className="absolute -inset-3 animate-pulse rounded-full border-4 border-rose-300/50" />
+                </>
               )}
               <Mic className="relative h-8 w-8" />
             </button>
+
+            {/* Indicador de escucha: barras que se mueven mientras el micrófono está activo */}
+            <div className="flex items-end gap-1" aria-hidden>
+              {[0, 1, 2, 3, 4].map((i) => (
+                <span
+                  key={i}
+                  className={`w-1.5 rounded-full transition-all ${
+                    estado === 'voz'
+                      ? 'animate-bounce bg-rose-500'
+                      : estado === 'escuchando'
+                        ? 'animate-pulse bg-rose-400'
+                        : estado === 'procesando'
+                          ? 'bg-sky-400'
+                          : 'bg-slate-300'
+                  }`}
+                  style={{
+                    height: estado === 'inactivo' ? '8px' : `${14 + (i % 3) * 8}px`,
+                    animationDelay: `${i * 120}ms`,
+                    animationDuration: estado === 'voz' ? '600ms' : '1100ms',
+                  }}
+                />
+              ))}
+            </div>
+
             <p className="text-sm font-semibold text-slate-700">
-              {listening ? 'Te estoy escuchando… toca para terminar' : '🎤 Toca el botón y responde en inglés'}
+              {estado === 'voz'
+                ? '¡Te escucho! Sigue hablando…'
+                : estado === 'procesando'
+                  ? 'Listo, estoy entendiendo tu frase…'
+                  : listening
+                    ? 'Micrófono activo · toca el botón para terminar'
+                    : '🎤 Toca el botón y responde en inglés'}
             </p>
+
+            {listening && (
+              <span className="flex items-center gap-2 rounded-full bg-rose-50 px-3 py-1 text-xs font-semibold text-rose-700">
+                <span className="h-2 w-2 animate-pulse rounded-full bg-rose-500" />
+                ESCUCHANDO
+              </span>
+            )}
+
             <p className="min-h-6 text-center text-base italic text-slate-600">
               {transcript || 'Tu frase aparecerá aquí mientras hablas'}
             </p>
@@ -893,6 +961,7 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
                 type="button"
                 onClick={() => {
                   pararDeEscuchar();
+                  transcriptRef.current = '';
                   setModoTexto(true);
                 }}
                 className="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-700 underline"
@@ -1043,8 +1112,10 @@ export default function EnglishTutor({ moduloInicial }: { moduloInicial?: string
                 onClick={() => {
                   setResult(null);
                   setTranscript('');
+                  transcriptRef.current = '';
                   setTextoEscrito('');
                   setModoTexto(false);
+                  setEstado('inactivo');
                 }}
                 className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100"
               >

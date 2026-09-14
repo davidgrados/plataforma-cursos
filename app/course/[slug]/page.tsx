@@ -66,10 +66,11 @@ export default function CoursePage() {
               🎙️
             </span>
             <div>
-              <h2 className="font-semibold text-slate-900">Nuevo: tutor de conversación</h2>
+              <h2 className="font-semibold text-slate-900">🎙️ Practica hablando, módulo a módulo</h2>
               <p className="text-sm text-slate-600">
-                Practica speaking con un tutor virtual: escucha, responde en voz alta y recibe
-                correcciones al instante. Sin exámenes, solo conversación.
+                Antes de empezar: elige el módulo, escucha al tutor y responde en voz alta. Te dice
+                al instante qué dijiste bien y cómo mejorar tu pronunciación. También puedes
+                escribir tus respuestas.
               </p>
             </div>
           </div>
@@ -77,7 +78,7 @@ export default function CoursePage() {
             href="/ingles/tutor"
             className="shrink-0 rounded-xl bg-gradient-to-r from-accent to-accent-cyan px-5 py-3 font-semibold text-white shadow-glow transition hover:brightness-105"
           >
-            Practicar speaking
+            Empezar a practicar
           </Link>
         </section>
       )}
