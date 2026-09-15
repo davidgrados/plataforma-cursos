@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { SignInButton } from '@clerk/nextjs';
-import { AlertTriangle, ArrowLeft, ArrowRight, Loader2, Lock } from 'lucide-react';
+import { AlertTriangle, ArrowLeft, ArrowRight, Info, Loader2, Lock } from 'lucide-react';
 import { useAuthUser } from '@/lib/auth-context';
 import dynamic from 'next/dynamic';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -152,7 +152,18 @@ export default function LessonPage() {
               </SignInButton>
             </div>
           ) : (
-            <TerminalEmbed lessonId={lesson.id} verify={lesson.type === 'practice'} />
+            <>
+              <div className="flex items-start gap-2 rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-sky-900">
+                <Info className="mt-0.5 h-4 w-4 shrink-0 text-sky-600" />
+                <p>
+                  Tu laboratorio <strong>guarda lo que haces</strong>, así que si ya habías hecho esta
+                  práctica verás tus archivos anteriores. En ese caso el trabajo ya está hecho: pulsa{' '}
+                  <strong>«Verificar ejercicio»</strong>. Si quieres empezar de cero, pulsa{' '}
+                  <strong>«Reiniciar»</strong> (borra tus archivos de esta práctica).
+                </p>
+              </div>
+              <TerminalEmbed lessonId={lesson.id} verify={lesson.type === 'practice'} />
+            </>
           )}
         </section>
       )}

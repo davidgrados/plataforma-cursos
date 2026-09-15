@@ -177,12 +177,17 @@ export default function TerminalEmbed({ lessonId, verify = false }: Props) {
 
   const handleReset = useCallback(async () => {
     if (!userId) return;
+    const confirmado = window.confirm(
+      '¿Reiniciar el laboratorio?\n\nSe borrarán los archivos y carpetas que creaste en esta práctica y volverás al estado inicial.',
+    );
+    if (!confirmado) return;
     setBusy(true);
     try {
       const res = await api.terminal({ lesson_id: lessonId, action: 'reset' }, userId);
+      termRef.current?.clear();
       termRef.current?.write('\r\n' + (res.output || '') + '\r\n');
       cwdRef.current = res.current_path || HOME;
-      toast.info('Sesión reiniciada.');
+      toast.success('Laboratorio reiniciado. ¡Empieza de nuevo!');
     } catch (e) {
       toast.error((e as Error).message);
     } finally {
