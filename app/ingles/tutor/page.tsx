@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { GraduationCap, Mic, Volume2 } from 'lucide-react';
+import { GraduationCap, Mic, Sparkles, Volume2 } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import EnglishTutor from '@/components/EnglishTutor';
+import TutorAI from '@/components/TutorAI';
 
 export const metadata: Metadata = {
-  title: 'Tutor de conversación en inglés | Edúcate Comas',
+  title: 'Tutora de inglés con IA | Edúcate Comas',
   description:
-    'Practica inglés hablando con un tutor virtual: escucha, responde en voz alta y recibe correcciones al instante. Usa el micrófono solo si lo autorizas.',
+    'Habla en inglés con Coti, tu tutora de IA: te escucha, te corrige con cariño y conversa contigo. Usa el micrófono solo si lo autorizas.',
 };
 
 export default function TutorInglesPage() {
@@ -19,16 +19,16 @@ export default function TutorInglesPage() {
 
       <header className="flex flex-col gap-3">
         <span className="flex w-fit items-center gap-2 rounded-full border border-sky-200 bg-white px-4 py-1.5 text-sm font-medium text-sky-700">
-          <Mic className="h-4 w-4" />
-          Habla y practica como en una conversación real
+          <Sparkles className="h-4 w-4" />
+          Con inteligencia artificial · habla y te responde
         </span>
         <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl">
-          Tutor de conversación en inglés
+          Coti, tu tutora de inglés con IA
         </h1>
         <p className="text-slate-600">
-          Elige el <strong>módulo</strong> que estás estudiando, escucha al tutor y responde{' '}
-          <strong>en voz alta</strong>. Te diremos al instante qué palabras dijiste bien y cuáles
-          puedes mejorar, sin exámenes y sin prisas. Ideal para perder el miedo a hablar.
+          Elige el <strong>módulo</strong> que estás estudiando, toca el orbe y habla{' '}
+          <strong>en voz alta</strong>. Coti te escucha, te responde y te corrige con cariño al
+          instante, como en una conversación real. Sin exámenes y sin prisas.
         </p>
         <div className="flex flex-wrap gap-2 text-xs text-slate-500">
           <span className="flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 shadow-sm">
@@ -39,10 +39,14 @@ export default function TutorInglesPage() {
             <GraduationCap className="h-3.5 w-3.5 text-sky-600" />
             De principiante a intermedio
           </span>
+          <span className="flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 shadow-sm">
+            <Mic className="h-3.5 w-3.5 text-sky-600" />
+            También puedes escribir tus respuestas
+          </span>
         </div>
       </header>
 
-      <EnglishTutor />
+      <TutorAI />
 
       <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <h2 className="mb-2 font-semibold text-slate-900">Consejos para aprovecharlo</h2>

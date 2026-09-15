@@ -25,6 +25,10 @@
       "database_id": "ad91bb43-1566-43bc-b6d0-229abaeff62a"
     }
   ],
+  // Workers AI: transcripción de voz (Whisper) y tutor conversacional (LLM)
+  "ai": {
+    "binding": "AI"
+  },
   // R2 (cache/ISR + subida de imágenes): descomenta cuando habilites R2 y crees el bucket.
   "r2_buckets": [
     // { "binding": "NEXT_INC_CACHE_R2_BUCKET", "bucket_name": "plataforma-cursos-images" },

@@ -43,7 +43,7 @@ export default function PrivacidadPage() {
           <li>• <strong>No vendemos ni alquilamos</strong> tus datos a nadie.</li>
           <li>• <strong>No usamos publicidad</strong> ni seguimiento con fines comerciales.</li>
           <li>• Las cookies que utilizamos son <strong>necesarias</strong> para el funcionamiento del sitio.</li>
-          <li>• El <strong>tutor de inglés</strong> solo usa el micrófono si lo autorizas: tu voz la procesa tu navegador, no nosotros.</li>
+          <li>• La <strong>tutora de inglés con IA</strong> solo usa el micrófono si lo autorizas: tu voz se transcribe en Cloudflare y <strong>no se guarda</strong>.</li>
           <li>• Puedes pedir acceso, corrección o borrado de tus datos escribiéndonos.</li>
         </ul>
       </section>
@@ -137,70 +137,63 @@ export default function PrivacidadPage() {
           sesión ni guardar tu progreso.
         </p>
 
-        <h2 id="voz">6. Tutor de inglés, micrófono y voz (Web Speech API)</h2>
+        <h2 id="voz">6. Tutora de inglés con IA: micrófono, voz y transcripción</h2>
         <p>
-          En el curso de inglés ofrecemos un <strong>tutor de conversación</strong> que funciona con
-          la <strong>Web Speech API</strong>, una tecnología del propio navegador. Si aceptas usar el
-          micrófono, tu navegador capta tu voz y <strong>la envía a los servidores del proveedor de
-          ese navegador para convertirla en texto</strong>. Es decir, el audio se procesa fuera de
-          Edúcate Comas, en los servidores de:
+          En el curso de inglés ofrecemos a <strong>Coti</strong>, una tutora con inteligencia
+          artificial. Para conversar contigo necesita escuchar tu voz, y lo hace así:
         </p>
         <ul>
           <li>
-            <strong>Google</strong>, si usas Chrome o Chrome en Android (y en algunos casos Edge).
+            Cuando tocas el orbe, tu navegador te pide permiso y graba un <strong>fragmento corto de
+            audio</strong> (unos segundos).
           </li>
           <li>
-            <strong>Microsoft</strong>, si usas Microsoft Edge.
+            Ese audio viaja <strong>cifrado (HTTPS)</strong> hasta nuestra API, que se ejecuta en{' '}
+            <strong>Cloudflare Workers AI</strong>, donde el modelo <strong>Whisper</strong> lo
+            convierte en texto.
           </li>
           <li>
-            <strong>Apple</strong>, si usas Safari en iPhone, iPad o Mac.
+            Ese texto se procesa con un <strong>modelo de lenguaje</strong> (también en Cloudflare
+            Workers AI) que redacta la respuesta de la tutora.
+          </li>
+          <li>
+            La respuesta se lee en voz alta con la <strong>voz del propio navegador</strong> de tu
+            dispositivo.
           </li>
         </ul>
         <p>
-          Ese tratamiento se rige por las políticas de privacidad de cada proveedor, que puedes
-          consultar aquí:{' '}
-          <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
-            Google
-          </a>
-          ,{' '}
-          <a
-            href="https://privacy.microsoft.com/privacystatement"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Microsoft
-          </a>{' '}
-          y{' '}
-          <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener noreferrer">
-            Apple
-          </a>
-          .
-        </p>
-        <p>
-          <strong>Qué hacemos y qué no hacemos con tu voz:</strong>
+          <strong>Qué NO hacemos con tu voz:</strong>
         </p>
         <ul>
           <li>
-            Edúcate Comas <strong>no recibe, no escucha ni almacena tu audio</strong> en ningún
-            momento.
+            <strong>No grabamos ni almacenamos tu audio</strong>: se procesa al momento y se
+            descarta.
           </li>
-          <li>No grabamos conversaciones ni guardamos tus transcripciones en nuestros servidores.</li>
+          <li>No guardamos tu transcripción en nuestros servidores ni la asociamos a tu cuenta.</li>
+          <li>No usamos tu voz para publicidad ni para entrenar modelos de inteligencia artificial.</li>
           <li>
-            El texto que devuelve tu navegador se usa <strong>solo en tu pantalla</strong>, para
-            mostrarte tu puntuación y tus correcciones mientras practicas, y desaparece al salir de
-            la página.
-          </li>
-          <li>
-            Para que el tutor hable usamos la voz del propio navegador: tampoco se envía audio a
-            nuestros servidores.
+            No cedemos tu audio a terceros distintos del proveedor que lo procesa (Cloudflare), que
+            actúa como encargado del tratamiento según su{' '}
+            <a
+              href="https://www.cloudflare.com/privacypolicy/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              política de privacidad
+            </a>
+            .
           </li>
         </ul>
         <p>
-          <strong>Tu consentimiento:</strong> el micrófono solo se activa cuando tú pulsas el botón
-          de hablar y después de aceptar el aviso que aparece la primera vez. Puedes retirar el
-          permiso cuando quieras con el enlace «Desactivar el micrófono» del propio tutor y seguir
-          practicando en <strong>modo solo escuchar</strong>. También puedes bloquear el micrófono
-          desde tu navegador.
+          <strong>Tu consentimiento:</strong> el micrófono solo se activa cuando tú tocas el orbe y
+          después de aceptar el aviso que aparece la primera vez. Puedes retirar el permiso cuando
+          quieras desde el candado 🔒 de tu navegador. Si prefieres no usar el micrófono, puedes{' '}
+          <strong>escribir tus respuestas</strong>: la tutora con IA funciona igual.
+        </p>
+        <p>
+          Como el audio no se almacena, no conservamos ningún dato biométrico ni grabación tuya. La
+          única información que queda guardada es tu avance en el curso, tal como se explica en los
+          apartados anteriores.
         </p>
 
         <h2>7. Con quién compartimos la información</h2>

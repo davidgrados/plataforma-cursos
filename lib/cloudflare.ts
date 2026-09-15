@@ -14,6 +14,10 @@ export interface Env {
     put: (key: string, value: ArrayBuffer, opts?: { httpMetadata?: { contentType?: string } }) => Promise<unknown>;
   };
   PUBLIC_R2_URL?: string;
+  /** Workers AI: transcripción de voz (Whisper) y tutor conversacional (LLM). */
+  AI?: {
+    run: (model: string, input: Record<string, unknown>) => Promise<any>;
+  };
 }
 
 /** Devuelve el entorno (bindings) actual del worker. */
