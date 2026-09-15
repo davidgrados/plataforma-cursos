@@ -2,15 +2,26 @@
 //  Cliente HTTP para consumir la API desde el navegador.
 //  Usa rutas relativas a /api (mismo origen en Cloudflare Pages).
 //  Para desarrollo local apunta a NEXT_PUBLIC_API_BASE.
+//
+//  SEGURIDAD: cada petición viaja con el token de sesión de Clerk
+//  (Authorization: Bearer ...), que el servidor verifica.
 // ============================================================
 
 import type { Course, CourseDetail, Lesson, Module, TerminalResponse } from './types';
+import { getAuthToken } from './auth-context';
 
 const BASE = process.env.NEXT_PUBLIC_API_BASE || '/api';
+
+/** Cabeceras de autenticación (token de sesión verificado en el servidor). */
+async function authHeaders(): Promise<Record<string, string>> {
+  const token = await getAuthToken();
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
 
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
+    ...(await authHeaders()),
     ...(options.headers as Record<string, string> | undefined),
   };
   const res = await fetch(`${BASE}${path}`, { ...options, headers });
@@ -28,6 +39,7 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   return (await res.json()) as T;
 }
 
+/** Identificador de usuario (solo para el modo vista previa local). */
 function clerkHeaders(clerkId?: string) {
   return clerkId ? ({ 'x-clerk-user-id': clerkId } as Record<string, string>) : undefined;
 }
@@ -112,20 +124,20 @@ export const api = {
         method: 'DELETE',
         headers: clerkHeaders(clerkId),
       }),
-    uploadImage: (file: File, clerkId?: string): Promise<{ url: string }> => {
+    uploadImage: async (file: File, clerkId?: string): Promise<{ url: string }> => {
       const fd = new FormData();
       fd.append('file', file);
-      return fetch(`${BASE}/admin/upload`, {
+      const auth = await authHeaders();
+      const res = await fetch(`${BASE}/admin/upload`, {
         method: 'POST',
         body: fd,
-        headers: clerkId ? { 'x-clerk-user-id': clerkId } : undefined,
-      }).then(async (res) => {
-        if (!res.ok) {
-          const err: any = await res.json().catch(() => ({}));
-          throw new Error(err?.error || `Error ${res.status}`);
-        }
-        return res.json();
+        headers: { ...auth, ...(clerkHeaders(clerkId) ?? {}) },
       });
+      if (!res.ok) {
+        const err: any = await res.json().catch(() => ({}));
+        throw new Error(err?.error || `Error ${res.status}`);
+      }
+      return res.json();
     },
   },
 };

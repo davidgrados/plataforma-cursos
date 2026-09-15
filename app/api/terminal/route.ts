@@ -1,4 +1,4 @@
-﻿import { error, getClerkId, getEnv, json, readJson, type Env } from '@/lib/cloudflare';
+import { error, getClerkId, getEnv, json, readJson, type Env } from '@/lib/cloudflare';
 import { ensureUser, markCompleted, saveSession } from '@/lib/d1';
 import { executeCommand, runCheckLogic } from '@/lib/terminal';
 
@@ -32,7 +32,7 @@ async function loadState(env: Env, clerkId: string, lessonId: number) {
 
 export async function GET(request: Request) {
   const env = await getEnv();
-  const clerkId = getClerkId(request);
+  const clerkId = await getClerkId(request, env);
   if (!clerkId) return error('No autenticado', 401);
   await ensureUser(env, clerkId);
 
@@ -46,7 +46,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const env = await getEnv();
-  const clerkId = getClerkId(request);
+  const clerkId = await getClerkId(request, env);
   if (!clerkId) return error('No autenticado', 401);
   await ensureUser(env, clerkId);
 

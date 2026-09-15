@@ -12,7 +12,7 @@
 //  El audio NO se guarda: se procesa y se descarta.
 // ============================================================
 
-import { error, getEnv, json, readJson } from '@/lib/cloudflare';
+import { error, getClientIp, getEnv, json, readJson, type Env } from '@/lib/cloudflare';
 
 const MODELOS_VOZ = ['@cf/openai/whisper-large-v3-turbo', '@cf/openai/whisper'];
 // Varios modelos en orden: si uno se deprecia o falla, se prueba el siguiente.
@@ -67,11 +67,64 @@ function personalidad(modulo: string, ejemplo: string, turno: string): string {
     .join('\n');
 }
 
+/** Límites anti-abuso (protegen el consumo de Workers AI). */
+const LIMITE_POR_IP = 200; // peticiones por IP y día
+const LIMITE_GLOBAL = 2500; // peticiones totales por día (cortafuegos)
+
+/** Comprueba que la petición venga de nuestra propia web. */
+function origenPermitido(request: Request): boolean {
+  const origen = request.headers.get('origin') || request.headers.get('referer') || '';
+  if (!origen) return true; // peticiones sin origen (curl, apps): las controla el límite por IP
+  return (
+    origen.includes('educatecomas.com') ||
+    origen.includes('localhost') ||
+    origen.includes('127.0.0.1')
+  );
+}
+
+/**
+ * Control de uso diario. Devuelve un mensaje de error si se pasa del límite.
+ * Si algo falla al consultar, deja pasar (nunca rompe la práctica).
+ */
+async function comprobarLimite(env: Env, request: Request): Promise<string | null> {
+  const ip = getClientIp(request);
+  const dia = new Date().toISOString().slice(0, 10);
+  try {
+    const fila = await env.DB.prepare('SELECT n FROM ai_usage WHERE ip = ? AND day = ?')
+      .bind(ip, dia)
+      .first();
+    if (Number(fila?.n ?? 0) >= LIMITE_POR_IP) {
+      return 'Has practicado muchísimo hoy 🙂 Vuelve mañana y seguimos con la conversación.';
+    }
+    const total = await env.DB.prepare('SELECT SUM(n) AS t FROM ai_usage WHERE day = ?')
+      .bind(dia)
+      .first();
+    if (Number(total?.t ?? 0) >= LIMITE_GLOBAL) {
+      return 'La tutora está muy solicitada hoy. Inténtalo de nuevo mañana, por favor. 🙏';
+    }
+    await env.DB.prepare(
+      'INSERT INTO ai_usage (ip, day, n) VALUES (?, ?, 1) ON CONFLICT(ip, day) DO UPDATE SET n = n + 1',
+    )
+      .bind(ip, dia)
+      .run();
+  } catch {
+    return null; // sin control disponible: no bloqueamos al estudiante
+  }
+  return null;
+}
+
 export async function POST(request: Request) {
   const env = await getEnv();
   if (!env.AI) {
     return error('La IA no está disponible en este momento. Inténtalo más tarde.', 503);
   }
+
+  if (!origenPermitido(request)) {
+    return error('Origen no permitido.', 403);
+  }
+
+  const limite = await comprobarLimite(env, request);
+  if (limite) return error(limite, 429);
 
   const tipo = request.headers.get('content-type') ?? '';
   let texto = '';

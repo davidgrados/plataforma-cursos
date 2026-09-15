@@ -21,6 +21,12 @@ const nextConfig = {
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(self), geolocation=()' },
           { key: 'X-XSS-Protection', value: '0' },
           { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' },
+          // CSP mínima y segura: no restringe scripts (no rompe Next/Clerk)
+          // pero bloquea clickjacking, plugins incrustados y secuestro del <base>.
+          {
+            key: 'Content-Security-Policy',
+            value: "frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'",
+          },
         ],
       },
     ];

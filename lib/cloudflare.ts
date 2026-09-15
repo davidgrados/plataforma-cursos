@@ -2,7 +2,11 @@
 //  Helpers específicos de Cloudflare para las route handlers.
 //
 //  Con el adaptador OpenNext (@opennextjs/cloudflare) los bindings
-//  (D1/R2) se obtienen con getCloudflareContext({ async: true }).
+//  (D1/R2/AI) se obtienen con getCloudflareContext({ async: true }).
+//
+//  SEGURIDAD: la identidad del usuario se obtiene verificando el token
+//  de sesión de Clerk (Authorization: Bearer <jwt>) con la clave secreta.
+//  Nunca se confía en datos que el navegador envíe por su cuenta.
 // ============================================================
 
 import { getCloudflareContext } from '@opennextjs/cloudflare';
@@ -18,6 +22,8 @@ export interface Env {
   AI?: {
     run: (model: string, input: Record<string, unknown>) => Promise<any>;
   };
+  /** Clave secreta de Clerk (Worker secret). Necesaria para verificar sesiones. */
+  CLERK_SECRET_KEY?: string;
 }
 
 /** Devuelve el entorno (bindings) actual del worker. */
@@ -37,9 +43,56 @@ export function error(message: string, status = 400): Response {
   return json({ error: message }, status);
 }
 
-/** Lee el clerk_id desde el header `x-clerk-user-id`. */
-export function getClerkId(request: Request): string | null {
-  return request.headers.get('x-clerk-user-id')?.trim() || null;
+/** Extrae el token Bearer de la cabecera Authorization. */
+function bearerToken(request: Request): string | null {
+  const cabecera = request.headers.get('authorization') ?? '';
+  const m = cabecera.match(/^Bearer\s+(.+)$/i);
+  return m ? m[1].trim() : null;
+}
+
+/**
+ * Devuelve el clerk_id del usuario autenticado, verificando el token de
+ * sesión de Clerk contra la clave secreta (firma + caducidad + emisor).
+ *
+ * Si el token no es válido o no existe, devuelve null (y las rutas que
+ * necesitan usuario responden 401).
+ */
+export async function getClerkId(request: Request, env?: Env): Promise<string | null> {
+  const entorno = env ?? (await getEnv());
+  const secretKey = entorno.CLERK_SECRET_KEY;
+
+  // Sin clave secreta configurada (desarrollo local): se mantiene el modo
+  // vista previa con el identificador indicado por el cliente.
+  if (!secretKey) {
+    return request.headers.get('x-clerk-user-id')?.trim() || null;
+  }
+
+  const token = bearerToken(request);
+  if (!token) return null;
+
+  try {
+    const { verifyToken } = await import('@clerk/backend');
+    const payload = await verifyToken(token, { secretKey });
+    const sub = typeof payload?.sub === 'string' ? payload.sub : null;
+    return sub || null;
+  } catch {
+    // Token caducado, manipulado o de otra aplicación.
+    return null;
+  }
+}
+
+/** Comprueba que el usuario autenticado exista y tenga rol admin. */
+export async function requireAdmin(env: Env, request: Request) {
+  const clerkId = await getClerkId(request, env);
+  if (!clerkId) return { response: error('No autenticado', 401) };
+
+  const user = await env.DB.prepare('SELECT * FROM users WHERE clerk_id = ?')
+    .bind(clerkId)
+    .first();
+  if (!user || user.role !== 'admin') {
+    return { response: error('Acceso denegado: se requiere rol de administrador', 403) };
+  }
+  return { clerkId };
 }
 
 /** Lee y parsea el cuerpo JSON de la petición (devuelve {} si falla). */
@@ -51,19 +104,11 @@ export async function readJson(request: Request): Promise<Record<string, any>> {
   }
 }
 
-/**
- * Comprueba que el usuario autenticado exista y tenga rol admin.
- * Devuelve una Response de error si no está autorizado.
- */
-export async function requireAdmin(env: Env, request: Request) {
-  const clerkId = getClerkId(request);
-  if (!clerkId) return { response: error('No autenticado', 401) };
-
-  const user = await env.DB.prepare('SELECT * FROM users WHERE clerk_id = ?')
-    .bind(clerkId)
-    .first();
-  if (!user || user.role !== 'admin') {
-    return { response: error('Acceso denegado: se requiere rol de administrador', 403) };
-  }
-  return { clerkId };
+/** IP del visitante (Cloudflare la añade en cf-connecting-ip). */
+export function getClientIp(request: Request): string {
+  return (
+    request.headers.get('cf-connecting-ip') ||
+    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    'desconocida'
+  );
 }
