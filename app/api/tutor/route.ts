@@ -14,8 +14,14 @@
 
 import { error, getEnv, json, readJson } from '@/lib/cloudflare';
 
-const MODELO_VOZ = '@cf/openai/whisper-large-v3-turbo';
-const MODELO_CHAT = '@cf/meta/llama-3.1-8b-instruct';
+const MODELOS_VOZ = ['@cf/openai/whisper-large-v3-turbo', '@cf/openai/whisper'];
+// Varios modelos en orden: si uno se deprecia o falla, se prueba el siguiente.
+const MODELOS_CHAT = [
+  '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
+  '@cf/meta/llama-3.1-8b-instruct-fp8',
+  '@cf/meta/llama-4-scout-17b-16e-instruct',
+  '@cf/meta/llama-3.2-3b-instruct',
+];
 
 /** Convierte bytes a base64 (en trozos, para no desbordar la pila). */
 function aBase64(bytes: Uint8Array): string {
@@ -84,31 +90,50 @@ export async function POST(request: Request) {
   // ---- 1. Voz -> texto ----
   let transcripcion = texto;
   if (!transcripcion && audioBase64) {
-    try {
-      const stt: any = await env.AI.run(MODELO_VOZ, { audio: audioBase64 });
-      transcripcion = String(stt?.text ?? '').trim();
-    } catch (e: any) {
-      return error(`No pude entender el audio (${e?.message ?? 'error'}). Prueba otra vez.`, 502);
+    let ultimoError = '';
+    for (const modelo of MODELOS_VOZ) {
+      try {
+        const stt: any = await env.AI.run(modelo, { audio: audioBase64 });
+        transcripcion = String(stt?.text ?? '').trim();
+        if (transcripcion) break;
+      } catch (e: any) {
+        ultimoError = e?.message ?? 'error';
+      }
+    }
+    if (!transcripcion && ultimoError) {
+      return error(`No pude entender el audio (${ultimoError}). Prueba otra vez.`, 502);
     }
   }
 
   if (!transcripcion) {
-    return json({ transcript: '', reply: "I didn't hear you. Can you say it again, please? (No te escuché, ¿lo repites?)" });
+    return json({
+      transcript: '',
+      reply: "I didn't hear you. Can you say it again, please? (No te escuché, ¿lo repites?)",
+    });
   }
 
   // ---- 2. Texto -> respuesta de la tutora ----
-  try {
-    const chat: any = await env.AI.run(MODELO_CHAT, {
-      messages: [
-        { role: 'system', content: personalidad(modulo, ejemplo, turno) },
-        { role: 'user', content: transcripcion },
-      ],
-      max_tokens: 180,
-      temperature: 0.5,
-    });
-    const respuesta = String(chat?.response ?? '').trim();
-    return json({ transcript: transcripcion, reply: respuesta });
-  } catch (e: any) {
-    return error(`La tutora no pudo responder (${e?.message ?? 'error'}). Inténtalo otra vez.`, 502);
+  let respuesta = '';
+  let ultimoError = '';
+  for (const modelo of MODELOS_CHAT) {
+    try {
+      const chat: any = await env.AI.run(modelo, {
+        messages: [
+          { role: 'system', content: personalidad(modulo, ejemplo, turno) },
+          { role: 'user', content: transcripcion },
+        ],
+        max_tokens: 180,
+        temperature: 0.5,
+      });
+      respuesta = String(chat?.response ?? '').trim();
+      if (respuesta) break;
+    } catch (e: any) {
+      ultimoError = e?.message ?? 'error';
+    }
   }
+
+  if (!respuesta) {
+    return error(`La tutora no pudo responder (${ultimoError}). Inténtalo otra vez.`, 502);
+  }
+  return json({ transcript: transcripcion, reply: respuesta });
 }
