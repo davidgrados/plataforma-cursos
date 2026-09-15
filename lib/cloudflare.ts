@@ -81,20 +81,6 @@ export async function getClerkId(request: Request, env?: Env): Promise<string | 
   }
 }
 
-/** Comprueba que el usuario autenticado exista y tenga rol admin. */
-export async function requireAdmin(env: Env, request: Request) {
-  const clerkId = await getClerkId(request, env);
-  if (!clerkId) return { response: error('No autenticado', 401) };
-
-  const user = await env.DB.prepare('SELECT * FROM users WHERE clerk_id = ?')
-    .bind(clerkId)
-    .first();
-  if (!user || user.role !== 'admin') {
-    return { response: error('Acceso denegado: se requiere rol de administrador', 403) };
-  }
-  return { clerkId };
-}
-
 /** Lee y parsea el cuerpo JSON de la petición (devuelve {} si falla). */
 export async function readJson(request: Request): Promise<Record<string, any>> {
   try {
