@@ -16,11 +16,11 @@ import { error, getEnv, json, readJson } from '@/lib/cloudflare';
 
 const MODELOS_VOZ = ['@cf/openai/whisper-large-v3-turbo', '@cf/openai/whisper'];
 // Varios modelos en orden: si uno se deprecia o falla, se prueba el siguiente.
+// El primero es el ligero (3B): ~6 veces más barato y suficiente para nivel A1-A2.
 const MODELOS_CHAT = [
-  '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
-  '@cf/meta/llama-3.1-8b-instruct-fp8',
-  '@cf/meta/llama-4-scout-17b-16e-instruct',
   '@cf/meta/llama-3.2-3b-instruct',
+  '@cf/meta/llama-3.1-8b-instruct-fp8',
+  '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
 ];
 
 /** Convierte bytes a base64 (en trozos, para no desbordar la pila). */
