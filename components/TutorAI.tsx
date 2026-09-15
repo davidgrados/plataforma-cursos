@@ -484,9 +484,9 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
             aria-label="Toca para hablar"
             className="tap-area relative flex h-48 w-48 items-center justify-center rounded-full outline-none"
           >
-            {/* halo exterior que respira con tu voz */}
+            {/* halo exterior que respira con tu voz y sigue la forma orgánica */}
             <span
-              className="absolute inset-0 rounded-full blur-2xl transition-all duration-500"
+              className="orb-halo absolute inset-0 blur-2xl transition-all duration-500"
               style={{
                 background: `radial-gradient(circle, ${paleta[0]}66, transparent 70%)`,
                 transform: `scale(${1.12 + nivel * 0.3})`,
@@ -497,13 +497,15 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
               <span className="absolute -inset-2 animate-ping rounded-full border border-white/50" />
             )}
 
-            {/* esfera viva: el nivel del micro la hace crecer */}
+            {/* esfera viva: forma líquida + el nivel del micro la hace crecer */}
             <span
               className="relative h-40 w-40"
               style={{ transform: `scale(${1 + nivel * 0.14})`, transition: 'transform 120ms linear' }}
             >
               <span
-                className={`orb orb-latir ${estado === 'grabando' ? 'orb-latir--rapido' : ''} block h-full w-full`}
+                className={`orb ${
+                  estado === 'grabando' || estado === 'hablando' ? 'orb--activo' : ''
+                } block h-full w-full`}
               >
                 {/* capas de color que se funden y giran (efecto Apple Intelligence) */}
                 <span className="orb-giro">

@@ -76,11 +76,10 @@ button,
 
 /* ============================================================
    Orbe animado de la tutora (estilo Apple Intelligence)
-   Capas de color que se funden y giran dentro de la esfera.
+   Forma orgánica que se deforma + capas de color que fluyen.
    ============================================================ */
 .orb {
   position: relative;
-  border-radius: 9999px;
   overflow: hidden;
   isolation: isolate;
   background: radial-gradient(circle at 50% 55%, #1b1436 0%, #0d0a1c 72%);
@@ -88,12 +87,37 @@ button,
     0 0 45px rgba(139, 92, 246, 0.4),
     0 0 90px rgba(56, 189, 248, 0.22),
     inset 0 0 40px rgba(255, 255, 255, 0.06);
+  /* forma líquida + latido */
+  animation:
+    orb-blob 11s ease-in-out infinite,
+    orb-latir 3.4s ease-in-out infinite;
+}
+
+/* Cuando Coti te escucha o te habla, se mueve más vivo */
+.orb--activo {
+  animation:
+    orb-blob 6.5s ease-in-out infinite,
+    orb-latir 1.7s ease-in-out infinite;
+}
+
+/* Forma orgánica: nunca es un círculo perfecto */
+@keyframes orb-blob {
+  0%, 100% { border-radius: 42% 58% 63% 37% / 45% 42% 58% 55%; }
+  25%      { border-radius: 58% 42% 38% 62% / 55% 60% 40% 45%; }
+  50%      { border-radius: 38% 62% 55% 45% / 40% 45% 55% 60%; }
+  75%      { border-radius: 62% 38% 45% 55% / 60% 55% 45% 40%; }
+}
+
+/* El halo acompaña la forma con un pequeño retraso */
+.orb-halo {
+  animation: orb-blob 11s ease-in-out infinite;
+  animation-delay: -1.6s;
 }
 
 .orb-giro {
   position: absolute;
   inset: 0;
-  border-radius: 9999px;
+  border-radius: inherit;
   animation: orb-girar 26s linear infinite;
 }
 
@@ -141,14 +165,15 @@ button,
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.045); }
 }
-.orb-latir { animation: orb-latir 3.2s ease-in-out infinite; }
-.orb-latir--rapido { animation-duration: 1.6s; }
 
 @media (prefers-reduced-motion: reduce) {
+  .orb,
+  .orb--activo,
+  .orb-halo,
   .orb-capa,
-  .orb-giro,
-  .orb-latir {
+  .orb-giro {
     animation: none;
+    border-radius: 50% 50% 46% 54% / 52% 46% 54% 48%;
   }
 }
 
