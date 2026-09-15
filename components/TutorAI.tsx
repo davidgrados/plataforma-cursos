@@ -197,6 +197,10 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
       setEstado('pensando');
       setAviso('');
       setDetalle('');
+      // Memoria de la conversación: los últimos 6 mensajes (solo la parte en inglés)
+      const historial = chat
+        .slice(-6)
+        .map((m) => ({ role: m.rol === 'coti' ? 'assistant' : 'user', content: m.texto }));
       try {
         let res: Response;
         if (opciones.audio) {
@@ -207,6 +211,7 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
           form.append('modulo', `${modulo.num <= 7 ? `Módulo ${modulo.num}` : 'Repaso'}: ${modulo.titulo}`);
           form.append('ejemplo', turn.example);
           form.append('turno', String(turnIndex + 1));
+          form.append('historial', JSON.stringify(historial));
           res = await fetch('/api/tutor', { method: 'POST', body: form });
         } else {
           res = await fetch('/api/tutor', {
@@ -217,6 +222,7 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
               modulo: `${modulo.num <= 7 ? `Módulo ${modulo.num}` : 'Repaso'}: ${modulo.titulo}`,
               ejemplo: turn.example,
               turno: String(turnIndex + 1),
+              historial,
             }),
           });
         }
@@ -246,7 +252,7 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
         setDetalle(e?.message ? `Detalle: ${e.message}` : '');
       }
     },
-    [modulo, turn, turnIndex, hablar],
+    [modulo, turn, turnIndex, hablar, chat],
   );
 
   // --- Empezar / detener grabación ---

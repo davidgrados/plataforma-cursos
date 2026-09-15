@@ -54,8 +54,10 @@ function personalidad(modulo: string, ejemplo: string, turno: string): string {
     '- Máximo 45 palabras en total. Sin listas, sin explicaciones largas.',
     '- Nunca digas tu nombre ni te presentes. No seas repetitiva.',
     '- NUNCA preguntes algo que el estudiante ya respondió en su frase.',
+    '- NUNCA repitas una pregunta que ya hiciste antes en la conversación.',
     '- Tus preguntas deben ser sencillas y sobre él mismo (edad, gustos, familia, rutina, ciudad), nunca sobre otras personas.',
     '- Si la frase está bien, felicítalo y pregunta algo nuevo y sencillo.',
+    '- Tienes memoria de la conversación: aprovecha lo que ya te contó para conversar con naturalidad.',
     modulo ? `Módulo que practica: "${modulo}".` : '',
     ejemplo ? `Frase objetivo de este turno: "${ejemplo}".` : '',
     turno ? `Turno ${turno} de la práctica.` : '',
@@ -76,6 +78,24 @@ export async function POST(request: Request) {
   let modulo = '';
   let ejemplo = '';
   let turno = '';
+  let historial: { role: string; content: string }[] = [];
+
+  /** Normaliza el historial que llega del navegador. */
+  const leerHistorial = (valor: unknown): { role: string; content: string }[] => {
+    try {
+      const lista = typeof valor === 'string' ? JSON.parse(valor) : valor;
+      if (!Array.isArray(lista)) return [];
+      return lista
+        .slice(-6)
+        .map((m: any) => ({
+          role: m?.role === 'assistant' ? 'assistant' : 'user',
+          content: String(m?.content ?? '').slice(0, 200),
+        }))
+        .filter((m) => m.content.length > 0);
+    } catch {
+      return [];
+    }
+  };
 
   try {
     if (tipo.includes('multipart/form-data')) {
@@ -83,6 +103,7 @@ export async function POST(request: Request) {
       modulo = String(form.get('modulo') ?? '');
       ejemplo = String(form.get('ejemplo') ?? '');
       turno = String(form.get('turno') ?? '');
+      historial = leerHistorial(form.get('historial'));
       const audio = form.get('audio');
       if (audio && typeof audio !== 'string') {
         const bytes = new Uint8Array(await (audio as File).arrayBuffer());
@@ -95,6 +116,7 @@ export async function POST(request: Request) {
       modulo = String(body.modulo ?? '');
       ejemplo = String(body.ejemplo ?? '');
       turno = String(body.turno ?? '');
+      historial = leerHistorial(body.historial);
     }
   } catch {
     return error('No pude leer lo que enviaste.', 400);
@@ -133,6 +155,7 @@ export async function POST(request: Request) {
       const chat: any = await env.AI.run(modelo, {
         messages: [
           { role: 'system', content: personalidad(modulo, ejemplo, turno) },
+          ...historial,
           { role: 'user', content: transcripcion },
         ],
         max_tokens: 180,
