@@ -14,13 +14,13 @@ export default function TutorInglesPage() {
   return (
     <div className="animate-fade-up mx-auto flex max-w-3xl flex-col gap-6">
       <Breadcrumbs
-        items={[{ label: 'Inglés Básico', href: '/course/ingles-basico' }, { label: 'Tutor de conversación' }]}
+        items={[{ label: 'Inglés Básico', href: '/course/ingles-basico' }, { label: 'Práctica de conversación' }]}
       />
 
       <header className="flex flex-col gap-3">
-        <span className="flex w-fit items-center gap-2 rounded-full border border-sky-200 bg-white px-4 py-1.5 text-sm font-medium text-sky-700">
+        <span className="flex w-fit items-center gap-2 rounded-full border border-violet-200 bg-white px-4 py-1.5 text-sm font-medium text-violet-700">
           <Sparkles className="h-4 w-4" />
-          Con inteligencia artificial · habla y te responde
+          Práctica extra del curso · con inteligencia artificial
         </span>
         <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl">
           Coti, tu tutora de inglés con IA
@@ -29,6 +29,14 @@ export default function TutorInglesPage() {
           Elige el <strong>módulo</strong> que estás estudiando, toca el orbe y habla{' '}
           <strong>en voz alta</strong>. Coti te escucha, te responde y te corrige con cariño al
           instante, como en una conversación real. Sin exámenes y sin prisas.
+        </p>
+        <p className="rounded-xl bg-violet-50 px-4 py-3 text-sm text-violet-800">
+          📚 Esto es una <strong>práctica complementaria al final del curso</strong>: las lecciones y
+          el examen están en{' '}
+          <Link href="/course/ingles-basico" className="font-semibold underline">
+            Inglés Básico
+          </Link>
+          . Aquí solo practicas a hablar de lo que ya estudiaste.
         </p>
         <div className="flex flex-wrap gap-2 text-xs text-slate-500">
           <span className="flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 shadow-sm">

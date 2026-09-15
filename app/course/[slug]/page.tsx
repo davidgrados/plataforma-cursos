@@ -59,30 +59,6 @@ export default function CoursePage() {
         )}
       </header>
 
-      {course.slug === 'ingles-basico' && (
-        <section className="flex flex-col items-start gap-4 rounded-2xl border border-sky-200 bg-gradient-to-br from-sky-50 to-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-start gap-3">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-sky-400 to-indigo-500 text-lg">
-              🎙️
-            </span>
-            <div>
-              <h2 className="font-semibold text-slate-900">🎙️ Practica hablando, módulo a módulo</h2>
-              <p className="text-sm text-slate-600">
-                Antes de empezar: elige el módulo, escucha al tutor y responde en voz alta. Te dice
-                al instante qué dijiste bien y cómo mejorar tu pronunciación. También puedes
-                escribir tus respuestas.
-              </p>
-            </div>
-          </div>
-          <Link
-            href="/ingles/tutor"
-            className="shrink-0 rounded-xl bg-gradient-to-r from-accent to-accent-cyan px-5 py-3 font-semibold text-white shadow-glow transition hover:brightness-105"
-          >
-            Empezar a practicar
-          </Link>
-        </section>
-      )}
-
       {course.modules.length === 0 ? (
         <section className="flex flex-col items-center gap-4 rounded-2xl border border-sky-200 bg-white p-10 text-center shadow-sm">
           <span className="rounded-full border border-sky-200 bg-sky-50 px-4 py-1.5 text-sm font-semibold text-sky-700">
@@ -111,6 +87,36 @@ export default function CoursePage() {
             </span>
           </h2>
           <ModuleList modules={course.modules} />
+        </section>
+      )}
+
+      {course.slug === 'ingles-basico' && course.modules.length > 0 && (
+        <section className="mt-2 flex flex-col items-start gap-5 rounded-2xl border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-sky-50 p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-start gap-4">
+            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-400 to-indigo-600 text-2xl shadow-md">
+              🎙️
+            </span>
+            <div className="flex flex-col gap-1.5">
+              <span className="w-fit rounded-full bg-violet-100 px-3 py-0.5 text-[11px] font-bold uppercase tracking-wide text-violet-700">
+                Práctica extra · opcional
+              </span>
+              <h2 className="text-lg font-semibold text-slate-900">
+                ¿Terminaste el curso? Practica conversación con Coti
+              </h2>
+              <p className="max-w-2xl text-sm leading-relaxed text-slate-600">
+                El curso es el contenido de los {course.modules.length} módulos de arriba. Esto es una{' '}
+                <strong>práctica adicional para hablar</strong>: elige el módulo que estudiaste, toca
+                el orbe y responde en voz alta. Coti, la tutora con IA, te escucha, te corrige con
+                cariño y te contesta con voz. Si prefieres, también puedes escribir tus respuestas.
+              </p>
+            </div>
+          </div>
+          <Link
+            href="/ingles/tutor"
+            className="shrink-0 rounded-xl bg-gradient-to-r from-violet-500 to-indigo-600 px-6 py-3 font-semibold text-white shadow-glow transition hover:brightness-110"
+          >
+            Practicar conversación
+          </Link>
         </section>
       )}
     </div>
