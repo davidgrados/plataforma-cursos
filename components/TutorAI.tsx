@@ -697,7 +697,7 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
         <Link href="/privacidad#voz" className="font-semibold text-sky-700 underline">
           Política de Privacidad
         </Link>
-        . <span className="text-slate-400">versión 5 · con IA</span>
+        .
       </p>
     </div>
   );
