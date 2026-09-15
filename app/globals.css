@@ -74,6 +74,84 @@ button,
   touch-action: manipulation;
 }
 
+/* ============================================================
+   Orbe animado de la tutora (estilo Apple Intelligence)
+   Capas de color que se funden y giran dentro de la esfera.
+   ============================================================ */
+.orb {
+  position: relative;
+  border-radius: 9999px;
+  overflow: hidden;
+  isolation: isolate;
+  background: radial-gradient(circle at 50% 55%, #1b1436 0%, #0d0a1c 72%);
+  box-shadow:
+    0 0 45px rgba(139, 92, 246, 0.4),
+    0 0 90px rgba(56, 189, 248, 0.22),
+    inset 0 0 40px rgba(255, 255, 255, 0.06);
+}
+
+.orb-giro {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  animation: orb-girar 26s linear infinite;
+}
+
+.orb-capa {
+  position: absolute;
+  inset: -42%;
+  border-radius: 9999px;
+  filter: blur(20px);
+  mix-blend-mode: screen;
+  will-change: transform;
+  animation: orb-deriva 13s ease-in-out infinite;
+}
+.orb-capa--1 { animation-duration: 11s; animation-delay: -1s; }
+.orb-capa--2 { animation-duration: 15s; animation-delay: -5s; }
+.orb-capa--3 { animation-duration: 19s; animation-delay: -9s; }
+.orb-capa--4 { animation-duration: 23s; animation-delay: -13s; }
+
+/* Reflejo de cristal arriba */
+.orb-brillo {
+  position: absolute;
+  left: 16%;
+  top: 10%;
+  width: 46%;
+  height: 30%;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent 70%);
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+@keyframes orb-girar {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes orb-deriva {
+  0%   { transform: translate3d(-16%, -12%, 0) scale(1) rotate(0deg); }
+  25%  { transform: translate3d(12%, -18%, 0) scale(1.2) rotate(90deg); }
+  50%  { transform: translate3d(18%, 14%, 0) scale(0.92) rotate(180deg); }
+  75%  { transform: translate3d(-12%, 16%, 0) scale(1.15) rotate(270deg); }
+  100% { transform: translate3d(-16%, -12%, 0) scale(1) rotate(360deg); }
+}
+
+/* Latido suave de la esfera */
+@keyframes orb-latir {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.045); }
+}
+.orb-latir { animation: orb-latir 3.2s ease-in-out infinite; }
+.orb-latir--rapido { animation-duration: 1.6s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .orb-capa,
+  .orb-giro,
+  .orb-latir {
+    animation: none;
+  }
+}
+
 /* Editor EasyMDE en tema oscuro */
 .EasyMDEContainer .CodeMirror {
   background: #0e1424 !important;

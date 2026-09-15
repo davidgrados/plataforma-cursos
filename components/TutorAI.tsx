@@ -350,14 +350,15 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
 
   const progreso = Math.round(((turnIndex + 1) / practica.turns.length) * 100);
 
-  const orbeEstilo =
+  /** Colores del orbe según lo que está haciendo Coti. */
+  const paleta =
     estado === 'grabando'
-      ? 'from-rose-400 via-fuchsia-500 to-violet-600'
+      ? ['#fb7185', '#e879f9', '#a855f7', '#fb923c']
       : estado === 'pensando'
-        ? 'from-amber-300 via-fuchsia-500 to-violet-700'
+        ? ['#fbbf24', '#e879f9', '#8b5cf6', '#38bdf8']
         : estado === 'hablando'
-          ? 'from-sky-300 via-indigo-500 to-violet-700'
-          : 'from-violet-300 via-violet-500 to-indigo-800';
+          ? ['#38bdf8', '#6366f1', '#22d3ee', '#a855f7']
+          : ['#8b5cf6', '#6366f1', '#38bdf8', '#d946ef'];
 
   return (
     <div className="flex flex-col gap-6">
@@ -481,28 +482,48 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
             onClick={tocarOrbe}
             disabled={estado === 'pensando'}
             aria-label="Toca para hablar"
-            className="tap-area relative flex h-44 w-44 items-center justify-center rounded-full outline-none"
+            className="tap-area relative flex h-48 w-48 items-center justify-center rounded-full outline-none"
           >
-            {/* halos */}
+            {/* halo exterior que respira con tu voz */}
             <span
-              className={`absolute inset-0 rounded-full bg-violet-500/25 blur-xl transition-all duration-500 ${
-                estado === 'grabando' ? 'scale-125 opacity-100' : 'scale-100 opacity-60'
-              }`}
+              className="absolute inset-0 rounded-full blur-2xl transition-all duration-500"
+              style={{
+                background: `radial-gradient(circle, ${paleta[0]}66, transparent 70%)`,
+                transform: `scale(${1.12 + nivel * 0.3})`,
+                opacity: estado === 'grabando' ? 1 : 0.75,
+              }}
             />
             {(estado === 'grabando' || estado === 'hablando') && (
-              <span className="absolute -inset-4 animate-ping rounded-full border border-violet-300/50" />
+              <span className="absolute -inset-2 animate-ping rounded-full border border-white/50" />
             )}
-            {/* orbe */}
+
+            {/* esfera viva: el nivel del micro la hace crecer */}
             <span
-              className={`relative h-36 w-36 rounded-full bg-gradient-to-br ${orbeEstilo} shadow-[0_10px_40px_rgba(109,40,217,0.45)] transition-transform duration-200`}
-              style={{ transform: `scale(${1 + nivel * 0.12})` }}
+              className="relative h-40 w-40"
+              style={{ transform: `scale(${1 + nivel * 0.14})`, transition: 'transform 120ms linear' }}
             >
-              <span className="absolute left-6 top-5 h-10 w-14 rounded-full bg-white/35 blur-md" />
-              {estado === 'pensando' && (
-                <span className="absolute inset-0 flex items-center justify-center">
-                  <Loader2 className="h-9 w-9 animate-spin text-white/90" />
+              <span
+                className={`orb orb-latir ${estado === 'grabando' ? 'orb-latir--rapido' : ''} block h-full w-full`}
+              >
+                {/* capas de color que se funden y giran (efecto Apple Intelligence) */}
+                <span className="orb-giro">
+                  {paleta.map((color, i) => (
+                    <span
+                      key={color + i}
+                      className={`orb-capa orb-capa--${i + 1}`}
+                      style={{
+                        background: `radial-gradient(circle at ${28 + i * 13}% ${22 + i * 16}%, ${color}, transparent 62%)`,
+                      }}
+                    />
+                  ))}
                 </span>
-              )}
+                <span className="orb-brillo" />
+                {estado === 'pensando' && (
+                  <span className="absolute inset-0 z-10 flex items-center justify-center">
+                    <Loader2 className="h-9 w-9 animate-spin text-white/90" />
+                  </span>
+                )}
+              </span>
             </span>
           </button>
 
