@@ -53,6 +53,8 @@ function personalidad(modulo: string, ejemplo: string, turno: string): string {
     '- Si el estudiante comete un error, escribe la forma correcta después de "Try:".',
     '- Máximo 45 palabras en total. Sin listas, sin explicaciones largas.',
     '- Nunca digas tu nombre ni te presentes. No seas repetitiva.',
+    '- NUNCA preguntes algo que el estudiante ya respondió en su frase.',
+    '- Tus preguntas deben ser sencillas y sobre él mismo (edad, gustos, familia, rutina, ciudad), nunca sobre otras personas.',
     '- Si la frase está bien, felicítalo y pregunta algo nuevo y sencillo.',
     modulo ? `Módulo que practica: "${modulo}".` : '',
     ejemplo ? `Frase objetivo de este turno: "${ejemplo}".` : '',
