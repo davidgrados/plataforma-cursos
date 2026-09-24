@@ -78,9 +78,12 @@ El alfabeto inglés tiene 26 letras. Conocerlo te ayuda a deletrear.
 - Para deletrear se dicen las letras: A-N-A → \`ei - en - ei\`
 
 ## Sonidos clave
-- \`th\` → como en \`this\` (dis) y \`think\` (zínk) — no existe en español.
-- \`sh\` → como en \`she\` (shi).
-- \`ee\` → largo, como en \`see\` (sí).
+
+- \`th\` tiene **dos sonidos** y conviene distinguirlos:
+  - **sordo** /θ/, como en \`think\` (zínk). No existe en el español de América, pero **sí** en el de España: \`cena\`, \`zapato\`.
+  - **sonoro** /ð/, como en \`this\` (dis). **Sí existe en español**: es la \`d\` entre vocales, como en \`nada\`, \`todo\` o \`lado\`.
+- \`sh\` → como en \`she\` (shi): parecido a cuando pedimos silencio, "shhh".
+- \`ee\` → sonido largo, como en \`see\` (sí).
 
 ## Palabras de ejemplo
 - \`cat\` (kat) → gato
