@@ -41,6 +41,7 @@ seed-ciberseguridad.sql
 seed-ciberseguridad-update.sql
 seed-forense.sql
 seed-portadas.sql
+seed-ejemplos.sql
 
 # tipos
 *.tsbuildinfo
