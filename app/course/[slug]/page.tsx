@@ -101,12 +101,12 @@ export default function CoursePage() {
                 Práctica extra · opcional
               </span>
               <h2 className="text-lg font-semibold text-slate-900">
-                ¿Terminaste el curso? Practica conversación con Coti
+                ¿Terminaste el curso? Practica conversación con Colliq
               </h2>
               <p className="max-w-2xl text-sm leading-relaxed text-slate-600">
                 El curso es el contenido de los {course.modules.length} módulos de arriba. Esto es una{' '}
                 <strong>práctica adicional para hablar</strong>: elige el módulo que estudiaste, toca
-                el orbe y responde en voz alta. Coti, la tutora con IA, te escucha, te corrige con
+                el orbe y responde en voz alta. Colliq, tu asistente con IA, te escucha, te corrige con
                 cariño y te contesta con voz. Si prefieres, también puedes escribir tus respuestas.
               </p>
             </div>

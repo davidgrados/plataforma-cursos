@@ -171,6 +171,6 @@ Nadie domina todo. Lo que salva la conversación es saber decir:
 ### ✅ En tu día a día
 - Memoriza estas tres frases: "Can you repeat, please?", "Can you speak slowly?", "What does it mean?".
 - Pregúntate cómo se dice en inglés un objeto que veas cada día.
-- Practica con la tutora de IA: hazle preguntas reales, no solo respuestas.
+- Practica con Colliq, tu asistente de IA: hazle preguntas reales, no solo respuestas.
 `,
 };

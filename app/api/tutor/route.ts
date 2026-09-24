@@ -7,7 +7,7 @@
 //    Opcionales: modulo, ejemplo, turno
 //
 //  1) Transcribe la voz con Whisper (Workers AI)
-//  2) Responde como tutora con un LLM (Workers AI)
+//  2) Responde como asistente con un LLM (Workers AI)
 //
 //  El audio NO se guarda: se procesa y se descarta.
 // ============================================================
@@ -33,10 +33,10 @@ function aBase64(bytes: Uint8Array): string {
   return btoa(binario);
 }
 
-/** Personalidad de la tutora. */
+/** Personalidad de Colliq. */
 function personalidad(modulo: string, ejemplo: string, turno: string): string {
   return [
-    'Eres "Coti", tutora de inglés para estudiantes peruanos de secundaria. Nivel A1-A2.',
+    'Eres "Colliq", el asistente de inglés para estudiantes peruanos de secundaria. Nivel A1-A2.',
     '',
     'FORMATO OBLIGATORIO de cada respuesta (máximo 3 líneas):',
     '1) Una frase corta en INGLÉS (felicitar o corregir).',
@@ -100,7 +100,7 @@ async function comprobarLimite(env: Env, request: Request): Promise<string | nul
       .bind(dia)
       .first();
     if (Number(total?.t ?? 0) >= LIMITE_GLOBAL) {
-      return 'La tutora está muy solicitada hoy. Inténtalo de nuevo mañana, por favor. 🙏';
+      return 'Colliq está muy solicitado hoy. Inténtalo de nuevo mañana, por favor. 🙏';
     }
     await env.DB.prepare(
       'INSERT INTO ai_usage (ip, day, n) VALUES (?, ?, 1) ON CONFLICT(ip, day) DO UPDATE SET n = n + 1',
@@ -201,7 +201,7 @@ export async function POST(request: Request) {
     });
   }
 
-  // ---- 2. Texto -> respuesta de la tutora ----
+  // ---- 2. Texto -> respuesta de Colliq ----
   let respuesta = '';
   let ultimoError = '';
   for (const modelo of MODELOS_CHAT) {
@@ -223,7 +223,7 @@ export async function POST(request: Request) {
   }
 
   if (!respuesta) {
-    return error(`La tutora no pudo responder (${ultimoError}). Inténtalo otra vez.`, 502);
+    return error(`Colliq no pudo responder (${ultimoError}). Inténtalo otra vez.`, 502);
   }
   return json({ transcript: transcripcion, reply: respuesta });
 }

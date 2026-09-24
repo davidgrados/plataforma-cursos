@@ -25,7 +25,7 @@ const MIC_CONSENT_KEY = 'educatecomas-mic-consent';
 type EstadoOrbe = 'listo' | 'grabando' | 'pensando' | 'hablando';
 
 interface Mensaje {
-  rol: 'coti' | 'yo';
+  rol: 'colliq' | 'yo';
   texto: string;
   traduccion?: string;
 }
@@ -200,7 +200,7 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
       // Memoria de la conversación: los últimos 6 mensajes (solo la parte en inglés)
       const historial = chat
         .slice(-6)
-        .map((m) => ({ role: m.rol === 'coti' ? 'assistant' : 'user', content: m.texto }));
+        .map((m) => ({ role: m.rol === 'colliq' ? 'assistant' : 'user', content: m.texto }));
       try {
         let res: Response;
         if (opciones.audio) {
@@ -239,7 +239,7 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
         }
         if (respuesta) {
           const { ingles, ayuda } = partirRespuesta(respuesta);
-          setChat((c) => [...c, { rol: 'coti', texto: ingles, traduccion: ayuda }]);
+          setChat((c) => [...c, { rol: 'colliq', texto: ingles, traduccion: ayuda }]);
           hablar(ingles);
         } else {
           setEstado('listo');
@@ -247,7 +247,7 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
       } catch (e: any) {
         setEstado('listo');
         setAviso(
-          'No pude conectar con la tutora de IA. Revisa tu conexión e inténtalo otra vez: también puedes escribir tu respuesta. ⌨️',
+          'No pude conectar con Colliq. Revisa tu conexión e inténtalo otra vez: también puedes escribir tu respuesta. ⌨️',
         );
         setDetalle(e?.message ? `Detalle: ${e.message}` : '');
       }
@@ -340,7 +340,7 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
     setTurnIndex((i) => (i < practica.turns.length - 1 ? i + 1 : 0));
   }, [limpiarTurno, practica.turns.length]);
 
-  // La tutora presenta el turno (voz) cuando no está hablando el estudiante
+  // Colliq presenta el turno (voz) cuando no está hablando el estudiante
   useEffect(() => {
     if (consent !== true || modoTexto || estado === 'grabando') return;
     const id = window.setTimeout(() => hablar(turn.say), 250);
@@ -350,7 +350,7 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
 
   const progreso = Math.round(((turnIndex + 1) / practica.turns.length) * 100);
 
-  /** Colores del orbe según lo que está haciendo Coti. */
+  /** Colores del orbe según lo que está haciendo Colliq. */
   const paleta =
     estado === 'grabando'
       ? ['#fb7185', '#e879f9', '#a855f7', '#fb923c']
@@ -371,7 +371,7 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
           </h2>
           <div className="flex flex-col gap-3 text-sm leading-relaxed text-slate-600">
             <p>
-              Para conversar, la tutora necesita escuchar tu voz. Cuando tocas el orbe, tu navegador
+              Para conversar, Colliq necesita escuchar tu voz. Cuando tocas el orbe, tu navegador
               graba un fragmento corto y lo envía cifrado (HTTPS) a nuestra propia API en{' '}
               <strong>Cloudflare Workers AI</strong>, donde se convierte en texto con el modelo{' '}
               <strong>Whisper</strong> y se genera la respuesta con un modelo de lenguaje.
@@ -404,7 +404,7 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
               className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-accent to-accent-cyan px-5 py-3 font-semibold text-white shadow-glow transition hover:brightness-105"
             >
               <Mic className="h-4 w-4" />
-              Aceptar y hablar con la tutora
+              Aceptar y hablar con Colliq
             </button>
             <button
               type="button"
@@ -533,9 +533,9 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
             {estado === 'grabando'
               ? '🎧 Te escucho… habla con calma (toca para terminar)'
               : estado === 'pensando'
-                ? '✨ Coti está pensando su respuesta…'
+                ? '✨ Colliq está pensando su respuesta…'
                 : estado === 'hablando'
-                  ? '🔊 Coti te está hablando…'
+                  ? '🔊 Colliq te está hablando…'
                   : 'Toca el orbe y responde en inglés'}
           </p>
 
@@ -576,7 +576,16 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
                       : 'bg-white text-slate-800 shadow-sm'
                   }`}
                 >
-                  <span className="mr-1">{m.rol === 'yo' ? '🧑' : '🤖'}</span>
+                  {m.rol === 'yo' ? (
+                    <span className="mr-1">🧑</span>
+                  ) : (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src="/colliq.jpg"
+                      alt="Colliq"
+                      className="mr-1.5 inline-block h-5 w-5 rounded-full object-cover align-[-3px]"
+                    />
+                  )}
                   <span className="font-medium">{m.texto}</span>
                   {m.traduccion && (
                     <span className="mt-0.5 block text-xs text-slate-500">{m.traduccion}</span>

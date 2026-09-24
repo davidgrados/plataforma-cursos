@@ -73,7 +73,7 @@ async function avisarAlTutor(
         <p style="margin:0 0 12px;font-size:15px;">Hola <strong>${datos.tutorNombre}</strong>:</p>
         <p style="margin:0 0 12px;font-size:15px;line-height:1.6;">
           <strong>${datos.menorNombre}</strong> quiere usar <strong>Edúcate Comas</strong>, una plataforma
-          educativa <strong>gratuita</strong> con cursos interactivos (Linux, inglés con tutora de IA,
+          educativa <strong>gratuita</strong> con cursos interactivos (Linux, inglés con asistente de IA,
           ciberseguridad y más).
         </p>
         <p style="margin:0 0 16px;font-size:15px;line-height:1.6;">

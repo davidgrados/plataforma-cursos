@@ -121,7 +121,7 @@ export default function ConsentimientoPage() {
                   <strong>{solicitud.menor_nombre}</strong>
                   {solicitud.menor_edad ? ` (${solicitud.menor_edad} años)` : ''} quiere usar{' '}
                   <strong>Edúcate Comas</strong>, una plataforma educativa <strong>gratuita</strong> con
-                  cursos interactivos (Linux, inglés con tutora de IA, ciberseguridad y más).
+                  cursos interactivos (Linux, inglés con asistente de IA, ciberseguridad y más).
                 </p>
               </div>
 

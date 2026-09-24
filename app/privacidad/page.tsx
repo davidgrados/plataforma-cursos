@@ -48,7 +48,7 @@ export default function PrivacidadPage() {
           <li>• <strong>No vendemos ni alquilamos</strong> tus datos a nadie.</li>
           <li>• <strong>No usamos publicidad</strong> ni seguimiento con fines comerciales.</li>
           <li>• Las cookies que utilizamos son <strong>necesarias</strong> para el funcionamiento del sitio.</li>
-          <li>• La <strong>tutora de inglés con IA</strong> solo usa el micrófono si lo autorizas: tu voz se transcribe en Cloudflare y <strong>no se guarda</strong>.</li>
+          <li>• El <strong>asistente de inglés con IA (Colliq)</strong> solo usa el micrófono si lo autorizas: tu voz se transcribe en Cloudflare y <strong>no se guarda</strong>.</li>
           <li>• Puedes pedir acceso, corrección o borrado de tus datos escribiéndonos.</li>
           <li>• Si el estudiante es <strong>menor de 14 años</strong>, pedimos la autorización verificable de su madre, padre o tutor.</li>
         </ul>
@@ -143,9 +143,9 @@ export default function PrivacidadPage() {
           sesión ni guardar tu progreso.
         </p>
 
-        <h2 id="voz">6. Tutora de inglés con IA: micrófono, voz y transcripción</h2>
+        <h2 id="voz">6. Asistente de inglés con IA (Colliq): micrófono, voz y transcripción</h2>
         <p>
-          En el curso de inglés ofrecemos a <strong>Coti</strong>, una tutora con inteligencia
+          En el curso de inglés ofrecemos a <strong>Colliq</strong>, un asistente con inteligencia
           artificial. Para conversar contigo necesita escuchar tu voz, y lo hace así:
         </p>
         <ul>
@@ -160,7 +160,7 @@ export default function PrivacidadPage() {
           </li>
           <li>
             Ese texto se procesa con un <strong>modelo de lenguaje</strong> (también en Cloudflare
-            Workers AI) que redacta la respuesta de la tutora.
+            Workers AI) que redacta la respuesta de Colliq.
           </li>
           <li>
             La respuesta se lee en voz alta con la <strong>voz del propio navegador</strong> de tu
@@ -194,7 +194,7 @@ export default function PrivacidadPage() {
           <strong>Tu consentimiento:</strong> el micrófono solo se activa cuando tú tocas el orbe y
           después de aceptar el aviso que aparece la primera vez. Puedes retirar el permiso cuando
           quieras desde el candado 🔒 de tu navegador. Si prefieres no usar el micrófono, puedes{' '}
-          <strong>escribir tus respuestas</strong>: la tutora con IA funciona igual.
+          <strong>escribir tus respuestas</strong>: el asistente con IA funciona igual.
         </p>
         <p>
           Como el audio no se almacena, no conservamos ningún dato biométrico ni grabación tuya. La
