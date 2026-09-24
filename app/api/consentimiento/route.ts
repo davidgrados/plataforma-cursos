@@ -9,7 +9,9 @@
 import { error, getClerkId, getClientIp, getEnv, json, readJson, type Env } from '@/lib/cloudflare';
 import { ensureUser } from '@/lib/d1';
 
-export const EDAD_MINIMA_SIN_TUTOR = 14;
+// Edad mínima para usar la plataforma sin autorización de un adulto responsable.
+// (No se exporta: Next.js solo admite exports de funciones HTTP en route.ts)
+const EDAD_MINIMA_SIN_TUTOR = 14;
 
 /** Enlace que el tutor debe abrir para autorizar. */
 function enlaceVerificacion(request: Request, token: string): string {
