@@ -8,6 +8,19 @@ const nextConfig = {
     // Permitimos imágenes remotas (R2, etc.) sin dominio fijo.
     unoptimized: true,
   },
+  // Fuerza HTTPS: si alguien entra por http:// (Cloudflare indica el esquema
+  // original en x-forwarded-proto), lo mandamos a la versión segura.
+  // Refuerza la cabecera HSTS ya configurada.
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'header', key: 'x-forwarded-proto', value: 'http' }],
+        destination: 'https://educatecomas.com/:path*',
+        permanent: true,
+      },
+    ];
+  },
   // Cabeceras de seguridad.
   async headers() {
     return [
