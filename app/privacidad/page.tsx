@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     'Cómo Edúcate Comas trata tus datos personales y qué cookies utiliza la plataforma de cursos interactivos.',
 };
 
-const ACTUALIZADO = 'Enero de 2026';
+const ACTUALIZADO = 'Septiembre de 2026';
 const CONTACTO = 'davidgradosa@hotmail.com';
 const RESPONSABLE = 'David Grados';
 
@@ -30,6 +30,11 @@ export default function PrivacidadPage() {
           para qué.
         </p>
         <p className="text-sm text-slate-500">Última actualización: {ACTUALIZADO}</p>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800">
+            ✔ Banco de datos inscrito ante la ANPD · PN-2026-311
+          </span>
+        </div>
       </header>
 
       {/* Resumen amigable */}
@@ -337,11 +342,28 @@ export default function PrivacidadPage() {
           </li>
         </ul>
         <p>
-          Este banco de datos se encuentra <strong>en proceso de inscripción en el Registro Nacional de
-          Protección de Datos Personales (RNPD)</strong>, que administra la Autoridad Nacional de
-          Protección de Datos Personales a través del Sistema Integrado de Protección de Datos Personales
-          (SIPDP). Puedes consultar el estado del trámite escribiéndonos a nuestro correo de contacto.
+        <div className="not-prose rounded-2xl border border-emerald-200 bg-emerald-50 p-5">
+          <p className="text-sm font-bold text-emerald-900">
+            ✔ Banco de datos personales inscrito en el Registro Nacional de Protección de Datos
+            Personales (RNPD)
+          </p>
+          <p className="mt-2 text-sm leading-relaxed text-emerald-800">
+            Constancia de inscripción: <strong>INS-2026-5585</strong>
+            <br />
+            Código de banco de datos personales: <strong>PN-2026-311</strong>
+            <br />
+            Fecha de registro: <strong>24/09/2026</strong>
+            <br />
+            Autoridad: Autoridad Nacional de Protección de Datos Personales (ANPD) — Ministerio de
+            Justicia y Derechos Humanos del Perú
+          </p>
+        </div>
+        <p>
+          La inscripción se realizó a través del Sistema Integrado de Protección de Datos Personales
+          (SIPDP), conforme a la Ley N° 29733 y su Reglamento (D.S. N° 016-2024-JUS). Si necesitas
+          verificar esta constancia, escríbenos a nuestro correo de contacto.
         </p>
+
 
         <h2>13. Contacto</h2>
         <p>

@@ -1,16 +1,40 @@
 # Registro del Banco de Datos Personales ante la ANPD (SIPDP)
 
-> **Trámite obligatorio** por la Ley N° 29733 (Ley de Protección de Datos Personales) y su
-> Reglamento (D.S. N° 016-2024-JUS). El trámite es **gratuito y con aprobación automática**,
-> pero **inscribirlo es obligatorio**.
-> Multas por no hacerlo: de **0,5 a 5 UIT**.
+> ## ✅ TRÁMITE COMPLETADO
+>
+> | Dato | Valor |
+> |---|---|
+> | **Constancia de inscripción** | `INS-2026-5585` |
+> | **Código de banco de datos personales** | `PN-2026-311` |
+> | **Fecha de registro** | 24/09/2026 |
+> | **Autoridad** | Autoridad Nacional de Protección de Datos Personales (ANPD) — MINJUS |
+>
+> La Política de Privacidad (apartado 14) ya indica que el banco está **inscrito** con estos datos,
+> y la cabecera de la página muestra la insignia «Banco de datos inscrito ante la ANPD · PN-2026-311».
+>
+> **Pendiente opcional:** guardar el PDF de la constancia y, si cambia algún dato del banco
+> (nuevos encargados, nueva finalidad), **actualizar la inscripción** en el SIPDP.
 
-Este documento contiene **la ficha completa lista para copiar y pegar** en el formulario del
-SIPDP. Solo debes rellenar los campos marcados con `[COMPLETAR]`.
+> **Marco legal:** Ley N° 29733 (Ley de Protección de Datos Personales) y su Reglamento
+> (D.S. N° 016-2024-JUS). El trámite es **gratuito y con aprobación automática**, pero
+> **inscribirlo es obligatorio**. Multas por no hacerlo: de **0,5 a 5 UIT**.
+
+Este documento conserva **la ficha completa** que se usó en el formulario del SIPDP, útil para
+una futura actualización o para acreditar el contenido declarado.
 
 ---
 
-## 1. Pasos del trámite (≈15 minutos)
+## 0. Datos de la inscripción (para archivo)
+
+```
+CONSTANCIA DE INSCRIPCIÓN              : INS-2026-5585
+CÓDIGO DE BANCO DE DATOS PERSONALES    : PN-2026-311
+FECHA DE REGISTRO                      : 24/09/2026
+```
+
+---
+
+## 1. Pasos del trámite (≈15 minutos) — ✅ realizados
 
 1. Entra a **https://sipdp.minjus.gob.pe** (Sistema Integrado de Protección de Datos Personales
    del MINJUS).
