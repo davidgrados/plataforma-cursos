@@ -48,7 +48,7 @@ export default function PrivacidadPage() {
           <li>• <strong>No vendemos ni alquilamos</strong> tus datos a nadie.</li>
           <li>• <strong>No usamos publicidad</strong> ni seguimiento con fines comerciales.</li>
           <li>• Las cookies que utilizamos son <strong>necesarias</strong> para el funcionamiento del sitio.</li>
-          <li>• El <strong>asistente de inglés con IA (Colliq)</strong> solo usa el micrófono si lo autorizas: tu voz se transcribe en Cloudflare y <strong>no se guarda</strong>.</li>
+          <li>• El <strong>asistente de inglés con IA (Colliq)</strong> solo usa el micrófono si lo autorizas: tu voz se transcribe con un servicio de inteligencia artificial y <strong>no se guarda</strong>.</li>
           <li>• Puedes pedir acceso, corrección o borrado de tus datos escribiéndonos.</li>
           <li>• Si el estudiante es <strong>menor de 14 años</strong>, pedimos la autorización verificable de su madre, padre o tutor.</li>
         </ul>
@@ -115,11 +115,11 @@ export default function PrivacidadPage() {
           <li>
             <strong>Cookies de sesión (autenticación):</strong> permiten mantener tu sesión iniciada
             mientras navegas por los cursos. Sin ellas no podrías entrar en tu cuenta. Las gestiona
-            nuestro proveedor de identidad (Clerk).
+            nuestro proveedor de identidad.
           </li>
           <li>
             <strong>Cookies de seguridad:</strong> las utiliza nuestra red de distribución
-            (Cloudflare) para proteger el sitio frente a ataques y tráfico malicioso.
+            nuestro proveedor de infraestructura para proteger el sitio frente a ataques y tráfico malicioso.
           </li>
           <li>
             <strong>Preferencia del aviso de cookies:</strong> guardamos en tu navegador una marca
@@ -154,13 +154,13 @@ export default function PrivacidadPage() {
             audio</strong> (unos segundos).
           </li>
           <li>
-            Ese audio viaja <strong>cifrado (HTTPS)</strong> hasta nuestra API, que se ejecuta en{' '}
-            <strong>Cloudflare Workers AI</strong>, donde el modelo <strong>Whisper</strong> lo
-            convierte en texto.
+            Ese audio viaja <strong>cifrado (HTTPS)</strong> hasta nuestra propia API, que se ejecuta en
+            el servicio de infraestructura en la nube que contratamos, donde un{' '}
+            <strong>servicio de inteligencia artificial</strong> lo convierte en texto.
           </li>
           <li>
-            Ese texto se procesa con un <strong>modelo de lenguaje</strong> (también en Cloudflare
-            Workers AI) que redacta la respuesta de Colliq.
+            Ese texto se procesa con un <strong>modelo de lenguaje</strong> que redacta la respuesta de
+            Colliq.
           </li>
           <li>
             La respuesta se lee en voz alta con la <strong>voz del propio navegador</strong> de tu
@@ -178,16 +178,10 @@ export default function PrivacidadPage() {
           <li>No guardamos tu transcripción en nuestros servidores ni la asociamos a tu cuenta.</li>
           <li>No usamos tu voz para publicidad ni para entrenar modelos de inteligencia artificial.</li>
           <li>
-            No cedemos tu audio a terceros distintos del proveedor que lo procesa (Cloudflare), que
-            actúa como encargado del tratamiento según su{' '}
-            <a
-              href="https://www.cloudflare.com/privacypolicy/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              política de privacidad
-            </a>
-            .
+            No cedemos tu audio a terceros distintos de los <strong>proveedores tecnológicos que actúan
+            como encargados del tratamiento</strong> (servicios de infraestructura en la nube y de
+            inteligencia artificial), ubicados fuera del país, que solo pueden usarlo para prestarnos
+            el servicio y están sujetos a sus propias políticas de privacidad.
           </li>
         </ul>
         <p>
@@ -209,12 +203,13 @@ export default function PrivacidadPage() {
         </p>
         <ul>
           <li>
-            <strong>Clerk:</strong> gestiona el registro y el inicio de sesión, incluido el acceso
-            con Google.
+            <strong>Proveedor de autenticación:</strong> gestiona el registro y el inicio de sesión,
+            incluido el acceso con Google.
           </li>
           <li>
-            <strong>Cloudflare:</strong> aloja la web, la base de datos donde se guarda tu progreso
-            y los servicios de seguridad de la red.
+            <strong>Proveedor de infraestructura en la nube:</strong> aloja la web, la base de datos
+            donde se guarda tu progreso, los servicios de seguridad de la red y los servicios de
+            inteligencia artificial.
           </li>
         </ul>
         <p>
@@ -329,8 +324,11 @@ export default function PrivacidadPage() {
             de la autorización del adulto responsable.
           </li>
           <li>
-            <strong>Encargados del tratamiento:</strong> Clerk (autenticación) y Cloudflare (alojamiento,
-            base de datos y servicios de inteligencia artificial).
+            <strong>Encargados del tratamiento:</strong> proveedores de autenticación y de infraestructura
+            en la nube (alojamiento, base de datos y servicios de inteligencia artificial), ubicados
+            fuera del país. La identidad concreta de estos proveedores consta en la inscripción de
+            este banco de datos ante la ANPD (código PN-2026-311), que es de consulta pública, y
+            podemos facilitártela escribiendo a nuestro correo de contacto.
           </li>
           <li>
             <strong>Plazo de conservación:</strong> mientras la cuenta esté activa o hasta que se solicite
