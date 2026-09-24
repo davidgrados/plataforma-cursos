@@ -372,9 +372,9 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
           <div className="flex flex-col gap-3 text-sm leading-relaxed text-slate-600">
             <p>
               Para conversar, Colliq necesita escuchar tu voz. Cuando tocas el orbe, tu navegador
-              graba un fragmento corto y lo envía cifrado (HTTPS) a nuestra propia API en{' '}
-              <strong>Cloudflare Workers AI</strong>, donde se convierte en texto con el modelo{' '}
-              <strong>Whisper</strong> y se genera la respuesta con un modelo de lenguaje.
+              graba un fragmento corto y lo envía <strong>cifrado (HTTPS)</strong> a nuestra propia
+              API, que usa un <strong>servicio de inteligencia artificial</strong> (con servidores
+              fuera del país) para convertir tu voz en texto y redactar la respuesta.
             </p>
             <p>
               <strong>No guardamos tu audio</strong>: se procesa al momento y se descarta. Tampoco
@@ -727,16 +727,19 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
         )}
       </section>
 
-      <p className="flex items-start gap-2 rounded-2xl bg-white/70 p-4 text-xs leading-relaxed text-slate-500">
+      <div className="flex items-start gap-2.5 rounded-2xl bg-white/70 p-4 text-xs leading-relaxed text-slate-500">
         <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-sky-600" />
-        Tu voz se transcribe con Whisper en Cloudflare Workers AI y se descarta al momento: no
-        guardamos el audio. Las respuestas las genera un modelo de lenguaje. Puedes desactivar el
-        micrófono borrando el permiso en tu navegador o leer más en la{' '}
-        <Link href="/privacidad#voz" className="font-semibold text-sky-700 underline">
-          Política de Privacidad
-        </Link>
-        .
-      </p>
+        <span>
+          Tu voz se convierte en texto con el servicio de inteligencia artificial de nuestro
+          proveedor (servidores fuera del país) y se descarta al momento: <strong>no guardamos el
+          audio</strong>. Las respuestas las genera un modelo de lenguaje. Puedes desactivar el
+          micrófono borrando el permiso en tu navegador; el detalle de los proveedores está en la{' '}
+          <Link href="/privacidad#voz" className="font-semibold text-sky-700 underline">
+            Política de Privacidad
+          </Link>
+          .
+        </span>
+      </div>
     </div>
   );
 }
