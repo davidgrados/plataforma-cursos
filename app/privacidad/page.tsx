@@ -45,6 +45,7 @@ export default function PrivacidadPage() {
           <li>• Las cookies que utilizamos son <strong>necesarias</strong> para el funcionamiento del sitio.</li>
           <li>• La <strong>tutora de inglés con IA</strong> solo usa el micrófono si lo autorizas: tu voz se transcribe en Cloudflare y <strong>no se guarda</strong>.</li>
           <li>• Puedes pedir acceso, corrección o borrado de tus datos escribiéndonos.</li>
+          <li>• Si el estudiante es <strong>menor de 14 años</strong>, pedimos la autorización verificable de su madre, padre o tutor.</li>
         </ul>
       </section>
 
@@ -232,11 +233,58 @@ export default function PrivacidadPage() {
           máximo, en el plazo que exija la normativa aplicable.
         </p>
 
-        <h2>10. Menores de edad</h2>
         <p>
-          Edúcate Comas está pensada para toda la familia y su contenido es apto para niños, jóvenes
-          y adultos. Los menores de edad deben usar la plataforma con la supervisión de su madre,
-          padre o tutor, quienes son responsables de crear y gestionar la cuenta.
+          Estos derechos se conocen como <strong>ARCO</strong>: <strong>A</strong>cceso,
+          <strong>R</strong>ectificación, <strong>C</strong>ancelación (supresión) y
+          <strong>O</strong>posición, además de la limitación del tratamiento y la portabilidad.
+          Responderemos en un plazo máximo de <strong>diez (10) días hábiles</strong>.
+        </p>
+        <p>
+          Si no quedas conforme con nuestra respuesta, puedes reclamar ante la{" "}
+          <strong>Autoridad Nacional de Protección de Datos Personales (ANPD)</strong> del Ministerio de
+          Justicia y Derechos Humanos del Perú.
+        </p>
+
+        <h2 id="menores">10. Menores de edad y autorización de sus padres o tutores</h2>
+        <p>
+          Edúcate Comas es una plataforma para toda la familia y su contenido es apto para niños y
+          jóvenes. Aun así, la Ley N° 29733 y su Reglamento establecen una{" "}
+          <strong>protección reforzada para los datos personales de los menores de edad</strong>, y así
+          lo aplicamos:
+        </p>
+        <ul>
+          <li>Al entrar por primera vez pedimos la <strong>edad declarada</strong> del estudiante.</li>
+          <li>
+            Si tiene <strong>menos de 14 años</strong>, la plataforma{" "}
+            <strong>no le muestra ningún contenido del curso</strong> hasta que su madre, padre o tutor
+            legal <strong>autorice</strong> la creación y el uso de la cuenta.
+          </li>
+          <li>
+            Para autorizar, el adulto responsable debe proporcionar su <strong>nombre completo</strong>,
+            su <strong>correo electrónico</strong>, el <strong>parentesco</strong> y, de forma opcional,
+            su número de documento. Con esos datos generamos un{" "}
+            <strong>enlace personal e intransferible</strong> que solo el adulto puede abrir.
+          </li>
+          <li>
+            En esa página el tutor revisa qué datos tratamos, para qué y con quién, y decide con un clic
+            («Sí, autorizo» o «No autorizo»). Al autorizar registramos el consentimiento con{" "}
+            <strong>fecha, hora, dirección IP y navegador</strong> desde el que se confirmó, como prueba
+            verificable de la autorización.
+          </li>
+          <li>
+            Si el tutor <strong>rechaza</strong>, la cuenta permanece inactiva y no tratamos los datos del
+            menor más allá de los mínimos necesarios para gestionar esa negativa.
+          </li>
+          <li>
+            El adulto responsable puede <strong>retirar su autorización</strong> en cualquier momento
+            escribiendo a nuestro correo de contacto; en ese caso eliminamos la cuenta y los datos
+            asociados.
+          </li>
+        </ul>
+        <p>
+          Recomendamos que la cuenta se cree con un correo del adulto responsable y que los menores de
+          edad naveguen acompañados. Para los mayores de 14 años, el tratamiento se basa en su propio
+          consentimiento, informado al crear la cuenta.
         </p>
 
         <h2>11. Seguridad</h2>
@@ -252,6 +300,47 @@ export default function PrivacidadPage() {
           Podemos actualizar esta política para reflejar mejoras del servicio o cambios normativos.
           Publicaremos siempre la versión vigente en esta página, con la fecha de última
           actualización.
+        </p>
+
+        <h2>14. Banco de datos personales y su registro ante la ANPD</h2>
+        <p>
+          Los datos de las cuentas se organizan en un <strong>banco de datos personales</strong>
+          titularidad de <strong>David Grados</strong> (Edúcate Comas), tratado conforme a la Ley N° 29733
+          y su Reglamento aprobado por D.S. N° 016-2024-JUS.
+        </p>
+        <ul>
+          <li><strong>Nombre del banco de datos:</strong> «Estudiantes Edúcate Comas».</li>
+          <li>
+            <strong>Finalidad:</strong> gestión de cuentas, acceso a los cursos, seguimiento del progreso
+            académico y seguridad de la plataforma.
+          </li>
+          <li>
+            <strong>Titulares:</strong> personas que se registran voluntariamente y, en el caso de menores
+            de 14 años, sus padres, madres o tutores.
+          </li>
+          <li>
+            <strong>Datos tratados:</strong> nombre, correo electrónico, edad declarada, progreso de
+            aprendizaje y registros técnicos de seguridad. En menores de 14 años, también la constancia
+            de la autorización del adulto responsable.
+          </li>
+          <li>
+            <strong>Encargados del tratamiento:</strong> Clerk (autenticación) y Cloudflare (alojamiento,
+            base de datos y servicios de inteligencia artificial).
+          </li>
+          <li>
+            <strong>Plazo de conservación:</strong> mientras la cuenta esté activa o hasta que se solicite
+            su supresión.
+          </li>
+          <li>
+            <strong>Transferencias:</strong> no se realizan transferencias distintas de las necesarias
+            para prestar el servicio.
+          </li>
+        </ul>
+        <p>
+          Este banco de datos se encuentra <strong>en proceso de inscripción en el Registro Nacional de
+          Protección de Datos Personales (RNPD)</strong>, que administra la Autoridad Nacional de
+          Protección de Datos Personales a través del Sistema Integrado de Protección de Datos Personales
+          (SIPDP). Puedes consultar el estado del trámite escribiéndonos a nuestro correo de contacto.
         </p>
 
         <h2>13. Contacto</h2>

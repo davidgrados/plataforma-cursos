@@ -69,4 +69,34 @@ export const api = {
       headers: clerkHeaders(clerkId),
     }),
 
+  // ----- Protección de datos (Ley 29733): edad y consentimiento parental -----
+  consentimiento: {
+    estado: () =>
+      request<{
+        edad: number | null;
+        menor: boolean | null;
+        consentimiento: string;
+        solicitud: { tutor_nombre: string; tutor_email: string; estado: string; creado_en: string } | null;
+      }>('/consentimiento'),
+    declararEdad: (edad: number) =>
+      request<{ ok: boolean; menor: boolean; consentimiento: string }>('/consentimiento', {
+        method: 'POST',
+        body: JSON.stringify({ edad }),
+      }),
+    solicitar: (datos: {
+      tutorNombre: string;
+      tutorEmail: string;
+      tutorDocumento?: string;
+      parentesco: string;
+      menorNombre?: string;
+    }) =>
+      request<{
+        ok: boolean;
+        requiere: boolean;
+        enviado: boolean;
+        enlace: string;
+        mensaje: string;
+      }>('/consentimiento', { method: 'POST', body: JSON.stringify(datos) }),
+  },
+
 };
