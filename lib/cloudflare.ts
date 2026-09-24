@@ -24,6 +24,16 @@ export interface Env {
   };
   /** Clave secreta de Clerk (Worker secret). Necesaria para verificar sesiones. */
   CLERK_SECRET_KEY?: string;
+  /** Envío de correo (Cloudflare Email Service). Opcional. */
+  EMAIL?: {
+    send: (mensaje: {
+      to: string | { email: string; name?: string } | (string | { email: string; name?: string })[];
+      from: string | { email: string; name?: string };
+      subject: string;
+      html?: string;
+      text?: string;
+    }) => Promise<any>;
+  };
 }
 
 /** Devuelve el entorno (bindings) actual del worker. */

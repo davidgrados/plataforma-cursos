@@ -35,25 +35,91 @@ async function auditar(env: Env, clerkId: string | null, accion: string, detalle
 /** Intenta enviar el correo al tutor (si el envío está configurado). */
 async function avisarAlTutor(
   env: Env,
-  datos: { tutorEmail: string; tutorNombre: string; menorNombre: string; enlace: string },
+  datos: { tutorEmail: string; tutorNombre: string; menorNombre: string; enlace: string; parentesco?: string },
 ): Promise<boolean> {
-  const email = (env as any).EMAIL;
+  const email = env.EMAIL;
   if (!email?.send) return false;
+
+  const asunto = `Autoriza la cuenta de ${datos.menorNombre} en Edúcate Comas`;
+  const texto =
+    `Hola ${datos.tutorNombre}:\n\n` +
+    `${datos.menorNombre} quiere usar Edúcate Comas (https://educatecomas.com), una plataforma ` +
+    `educativa gratuita con cursos interactivos.\n\n` +
+    `Como es menor de 14 años, la Ley N° 29733 (Protección de Datos Personales del Perú) exige tu ` +
+    `autorización para tratar sus datos personales: nombre, correo electrónico, edad y progreso de ` +
+    `aprendizaje.\n\n` +
+    `Para AUTORIZAR o RECHAZAR, abre este enlace personal:\n${datos.enlace}\n\n` +
+    `El enlace es personal e intransferible: solo tú puedes usarlo. Si no autorizas, la cuenta del ` +
+    `menor quedará inactiva y no trataremos sus datos.\n\n` +
+    `Qué NO hacemos: no vendemos ni cedemos sus datos, no se usan para publicidad y no se usan para ` +
+    `entrenar modelos de inteligencia artificial. En la práctica de conversación en inglés, la voz se ` +
+    `transcribe y no se almacena.\n\n` +
+    `El banco de datos «Estudiantes Edúcate Comas» está inscrito ante la Autoridad Nacional de ` +
+    `Protección de Datos Personales (constancia INS-2026-5585 · código PN-2026-311).\n\n` +
+    `Puedes ejercer los derechos de acceso, rectificación, cancelación y oposición escribiendo a ` +
+    `privacidad@educatecomas.com.\n\n` +
+    `Política de Privacidad: https://educatecomas.com/privacidad\n\n` +
+    `Edúcate Comas · Comas, Lima (Perú)`;
+
+  const html = `<!doctype html>
+<html lang="es">
+  <body style="margin:0;padding:24px;background:#f1f5f9;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#0f172a;">
+    <div style="max-width:560px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #e2e8f0;">
+      <div style="background:linear-gradient(135deg,#0ea5e9,#4f46e5);padding:20px 24px;color:#ffffff;">
+        <p style="margin:0;font-size:18px;font-weight:700;">Edúcate Comas</p>
+        <p style="margin:4px 0 0;font-size:13px;opacity:.9;">Autorización de un adulto responsable</p>
+      </div>
+      <div style="padding:24px;">
+        <p style="margin:0 0 12px;font-size:15px;">Hola <strong>${datos.tutorNombre}</strong>:</p>
+        <p style="margin:0 0 12px;font-size:15px;line-height:1.6;">
+          <strong>${datos.menorNombre}</strong> quiere usar <strong>Edúcate Comas</strong>, una plataforma
+          educativa <strong>gratuita</strong> con cursos interactivos (Linux, inglés con tutora de IA,
+          ciberseguridad y más).
+        </p>
+        <p style="margin:0 0 16px;font-size:15px;line-height:1.6;">
+          Como es <strong>menor de 14 años</strong>, la Ley N° 29733 exige tu autorización para tratar sus
+          datos personales: nombre, correo electrónico, edad y progreso de aprendizaje.
+        </p>
+        <p style="margin:0 0 20px;text-align:center;">
+          <a href="${datos.enlace}"
+             style="display:inline-block;background:linear-gradient(135deg,#0ea5e9,#4f46e5);color:#ffffff;text-decoration:none;font-weight:700;padding:14px 26px;border-radius:12px;">
+            Revisar y autorizar
+          </a>
+        </p>
+        <p style="margin:0 0 16px;font-size:13px;color:#475569;line-height:1.6;">
+          El enlace es <strong>personal e intransferible</strong>. Si no autorizas, la cuenta quedará
+          inactiva y no trataremos sus datos.
+        </p>
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:14px;font-size:13px;color:#475569;line-height:1.6;">
+          <strong style="color:#0f172a;">Qué NO hacemos:</strong> no vendemos ni cedemos sus datos, no se
+          usan para publicidad y no se usan para entrenar modelos de IA. En la práctica de inglés, la voz
+          se transcribe y <strong>no se almacena</strong>.<br /><br />
+          El banco de datos «Estudiantes Edúcate Comas» está <strong>inscrito ante la ANPD</strong>
+          (INS-2026-5585 · PN-2026-311). Puedes ejercer tus derechos ARCO escribiendo a
+          <a href="mailto:privacidad@educatecomas.com" style="color:#0369a1;">privacidad@educatecomas.com</a>.
+        </div>
+        <p style="margin:16px 0 0;font-size:12px;color:#94a3b8;line-height:1.6;">
+          Si el botón no funciona, copia y pega este enlace en tu navegador:<br />
+          <span style="color:#0369a1;word-break:break-all;">${datos.enlace}</span>
+        </p>
+      </div>
+      <div style="padding:14px 24px;background:#f8fafc;border-top:1px solid #e2e8f0;font-size:11px;color:#64748b;">
+        Edúcate Comas · Comas, Lima (Perú) ·
+        <a href="https://educatecomas.com/privacidad" style="color:#0369a1;">Política de Privacidad</a>
+      </div>
+    </div>
+  </body>
+</html>`;
+
   try {
-    const texto =
-      `Hola ${datos.tutorNombre}:\n\n` +
-      `${datos.menorNombre} quiere usar Edúcate Comas (educatecomas.com), una plataforma educativa gratuita.\n` +
-      `Como es menor de 14 años, la ley peruana exige tu autorización para tratar sus datos personales ` +
-      `(nombre, correo electrónico y progreso de aprendizaje).\n\n` +
-      `Para autorizar o rechazar, abre este enlace:\n${datos.enlace}\n\n` +
-      `El enlace es personal: solo tú puedes usarlo. Si no autorizas, la cuenta no podrá usar la plataforma.\n\n` +
-      `Edúcate Comas · Política de Privacidad: https://educatecomas.com/privacidad`;
-    await email.send({
-      to: datos.tutorEmail,
+    const res: any = await email.send({
+      to: { email: datos.tutorEmail, name: datos.tutorNombre },
       from: { email: 'privacidad@educatecomas.com', name: 'Edúcate Comas' },
-      subject: `Autorización para que ${datos.menorNombre} use Edúcate Comas`,
+      subject: asunto,
       text: texto,
+      html,
     });
+    if (Array.isArray(res?.errors) && res.errors.length > 0) return false;
     return true;
   } catch {
     return false;

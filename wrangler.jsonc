@@ -29,6 +29,13 @@
   "ai": {
     "binding": "AI"
   },
+  // Envío de correo (Cloudflare Email Service): avisos al tutor para el
+  // consentimiento de menores. Requiere el dominio habilitado en Email Sending.
+  "send_email": [
+    {
+      "name": "EMAIL"
+    }
+  ],
   // R2 (cache/ISR + subida de imágenes): descomenta cuando habilites R2 y crees el bucket.
   "r2_buckets": [
     // { "binding": "NEXT_INC_CACHE_R2_BUCKET", "bucket_name": "plataforma-cursos-images" },
