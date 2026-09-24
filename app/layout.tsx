@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 import CookieBanner from '@/components/CookieBanner';
 import ConsentGate from '@/components/ConsentGate';
 import ScrollToTop from '@/components/ScrollToTop';
-import { ClerkAuthBridge, PreviewAuthProvider } from '@/lib/auth-context';
+import { AuthBridge, PreviewAuthProvider } from '@/lib/auth-context';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -47,7 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         variables: { colorPrimary: '#0ea5e9', colorBackground: '#ffffff', colorText: '#0f172a' },
       }}
     >
-      <ClerkAuthBridge>{content}</ClerkAuthBridge>
+      <AuthBridge>{content}</AuthBridge>
     </ClerkProvider>
   );
 }

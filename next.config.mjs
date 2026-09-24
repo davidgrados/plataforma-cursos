@@ -4,6 +4,8 @@ import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // No revelar el framework en la cabecera X-Powered-By.
+  poweredByHeader: false,
   images: {
     // Permitimos imágenes remotas (R2, etc.) sin dominio fijo.
     unoptimized: true,

@@ -47,7 +47,7 @@ export async function getAuthToken(): Promise<string | null> {
 }
 
 /** Puente que expone el estado de Clerk a través del contexto propio. */
-export function ClerkAuthBridge({ children }: { children: React.ReactNode }) {
+export function AuthBridge({ children }: { children: React.ReactNode }) {
   const { userId, isLoaded, getToken } = useAuth();
   const getTokenRef = useRef(getToken);
   getTokenRef.current = getToken;
