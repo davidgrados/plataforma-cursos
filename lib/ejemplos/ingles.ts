@@ -47,7 +47,7 @@ Estás en una llamada internacional y no entienden tu correo. Deletrear con clar
 **Qué enseña:** deletrear bien evita errores y hace que te tomen en serio.
 
 ### 🎧 Caso 2 · Las palabras que confunden a todos
-Algunas palabras cambian totalmente de significado con un sonido: *ship* (barco) y *sheep* (oveja); *three* (tres) y *tree* (árbol); *beach* (playa) y *bitch* (insulto). También hay letras mudas: la "k" de *know*, la "h" de *hour*.
+Algunas palabras cambian totalmente de significado con un sonido. Pares que conviene entrenar: *ship* (barco) y *sheep* (oveja); *three* (tres) y *tree* (árbol); *man* (hombre) y *men* (hombres); *hungry* (hambriento) y *angry* (enojado). También hay letras mudas: la "k" de *know*, la "h" de *hour*.
 
 **Qué enseña:** la pronunciación no es un detalle: puede cambiar el mensaje por completo. Escuchar y repetir en voz alta es el mejor entrenamiento.
 
