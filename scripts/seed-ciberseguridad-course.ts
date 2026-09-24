@@ -114,7 +114,12 @@ Un oleoducto que abastecía de combustible a buena parte del sureste de Estados 
 Un programa llamado Mirai infectó **cientos de miles de cámaras y routers** que venían con la contraseña de fábrica (admin/admin). Con ese ejército de dispositivos dejó sin servicio a Twitter, Netflix y Spotify durante horas.
 
 **Qué falló:** dispositivos conectados con credenciales por defecto que nadie cambió.
-**Qué aprendemos:** cambia la contraseña del router y de cualquier dispositivo antes de conectarlo. El atacante busca **lo más fácil**, no lo más grande.`;
+**Qué aprendemos:** cambia la contraseña del router y de cualquier dispositivo antes de conectarlo. El atacante busca **lo más fácil**, no lo más grande.
+
+### ✅ En tu día a día
+- Actualiza el celular, la computadora y el router: la mayoría de ataques usan fallos que ya tienen solución.
+- Cierra las cuentas que ya no usas (correos viejos, apps de prueba): son puertas olvidadas.
+- Desconfía de lo urgente: "hazlo ya" es la señal más usada por los atacantes.`;
 
 const M3 = `# Módulo 3 · Gestión de amenazas informáticas
 
@@ -159,7 +164,12 @@ La agencia de crédito Equifax sufrió el robo de datos de **147 millones de per
 Apareció un fallo crítico en Log4j, una librería usada por millones de aplicaciones. Las empresas que **sabían exactamente qué sistemas la usaban** reaccionaron en horas; las demás tardaron semanas buscando a ciegas.
 
 **Qué falló / qué funcionó:** aquí se vio el valor del inventario y del análisis de amenazas.
-**Qué aprendemos:** es lo mismo que hacen los equipos de seguridad cuando usan **SIEM**, **MITRE ATT&CK** y fuentes de inteligencia: identificar, priorizar y actuar.`;
+**Qué aprendemos:** es lo mismo que hacen los equipos de seguridad cuando usan **SIEM**, **MITRE ATT&CK** y fuentes de inteligencia: identificar, priorizar y actuar.
+
+### ✅ En tu día a día
+- Activa las **actualizaciones automáticas** en el celular y la computadora: es el análisis de riesgos más barato que existe.
+- Revisa de vez en cuando qué aplicaciones tienes instaladas y borra las que no uses.
+- Si aparece una alerta grave (como Log4Shell), actualiza **el mismo día**, no la próxima semana.`;
 
 const M4 = `# Módulo 4 · Ingeniería social y phishing
 
@@ -207,7 +217,12 @@ Es uno de los fraudes más caros del mundo: un correo que parece de la gerencia 
 Patrón frecuente: te llaman o escriben diciendo que son de tu banco o de una billetera digital, te asustan con un "cargo desconocido" y te piden tu **clave, el código SMS o el código de Yape/Plin**.
 
 **Qué falló:** alguien entregó el código por teléfono.
-**Qué aprendemos:** tu banco **nunca** pide claves ni códigos. Ante la duda, cuelga y llama tú al número oficial.`;
+**Qué aprendemos:** tu banco **nunca** pide claves ni códigos. Ante la duda, cuelga y llama tú al número oficial.
+
+### ✅ En tu día a día
+- Ante cualquier mensaje urgente, **verifica por otro canal**: llama tú al número que figura en la web o en la tarjeta.
+- Nunca compartas claves, códigos SMS ni códigos de Yape/Plin, ni por teléfono ni por chat.
+- Activa la verificación en dos pasos: aunque te roben la contraseña, no podrán entrar.`;
 
 const M5 = `# Módulo 5 · Identidad, autenticación y control de acceso
 
@@ -244,7 +259,12 @@ Se filtraron contraseñas de LinkedIn (primero 6,5 millones y después **117 mil
 El atacante convence a la operadora de que es la víctima y **duplica su chip**. Con eso recibe los SMS y supera la verificación en dos pasos por mensaje. Es el método favorito para robar cuentas de correo y criptomonedas.
 
 **Qué fallo:** depender solo del SMS.
-**Qué aprendemos:** mejor una **app de autenticación** o una **passkey**; el SMS es el eslabón más débil del 2FA.`;
+**Qué aprendemos:** mejor una **app de autenticación** o una **passkey**; el SMS es el eslabón más débil del 2FA.
+
+### ✅ En tu día a día
+- Usa un **gestor de contraseñas**: solo recuerdas una y las demás son únicas y largas.
+- Activa la verificación en dos pasos en el correo y en el banco: son las dos cuentas más importantes.
+- Revisa los dispositivos con sesión abierta en tu correo y cierra los que no reconozcas.`;
 
 const M6 = `# Módulo 6 · Seguridad de redes y comunicaciones
 
@@ -280,7 +300,12 @@ Es un clásico: se crea una red llamada **"Aeropuerto_WiFi_Gratis"** junto a la 
 Varios grupos de ransomware (como los que atacaron a empresas en 2020-2021) entraron por **dispositivos de VPN con vulnerabilidades conocidas** en sucursales y oficinas remotas. CISA y los CERT emitieron alertas urgentes para parchearlos.
 
 **Qué falló:** equipos de borde (VPN, firewall) sin actualizar.
-**Qué aprendemos:** el firewall y la VPN son la puerta de la casa: se actualizan primero y se revisan sus accesos.`;
+**Qué aprendemos:** el firewall y la VPN son la puerta de la casa: se actualizan primero y se revisan sus accesos.
+
+### ✅ En tu día a día
+- En Wi-Fi público (aeropuerto, cafetería, plaza): evita bancos y compras, o usa una **VPN**.
+- Cambia la contraseña del router y usa **WPA3** o WPA2; revisa la lista de dispositivos conectados.
+- Crea una red de invitados para las visitas y para los aparatos inteligentes (cámaras, TV).`;
 
 const M7 = `# Módulo 7 · Seguridad en la nube y en dispositivos
 
@@ -317,7 +342,12 @@ Uno de los errores más repetidos: dejar un **almacenamiento en la nube con acce
 Un teléfono **sin bloqueo y sin cifrado** es una caja fuerte abierta: correo, banca, fotos, redes sociales y las claves guardadas en el navegador. Es una de las formas más comunes de robo de identidad.
 
 **Qué falló:** no había PIN, ni cifrado, ni borrado remoto.
-**Qué aprendemos:** activa bloqueo por huella o PIN, cifrado del disco y "Buscar mi dispositivo" desde el primer día.`;
+**Qué aprendemos:** activa bloqueo por huella o PIN, cifrado del disco y "Buscar mi dispositivo" desde el primer día.
+
+### ✅ En tu día a día
+- Revisa **quién puede ver** tus archivos y fotos en la nube (Drive, iCloud, Dropbox) y quita lo público.
+- Activa PIN o huella + cifrado en el celular y la laptop, y "Buscar mi dispositivo" con borrado remoto.
+- Revisa los permisos de las apps: una linterna no necesita tus contactos ni tu ubicación.`;
 
 const M8 = `# Módulo 8 · Gestión de procesos de negocio y continuidad
 
@@ -357,7 +387,12 @@ El virus NotPetya entró por la actualización de un programa contable usado en 
 Cuando un hospital sufre ransomware, no puede ver historiales ni hacer análisis de laboratorio. Muchos activan protocolos **en papel** para seguir atendiendo: eso es exactamente un **BCP** (plan de continuidad de negocio) funcionando.
 
 **Qué funcionó:** tener procedimientos alternativos probados.
-**Qué aprendemos:** define tu **RTO** (cuánto puedes estar parado) y **RPO** (cuántos datos puedes perder) y **ensaya** el plan, no solo lo escribas.`;
+**Qué aprendemos:** define tu **RTO** (cuánto puedes estar parado) y **RPO** (cuántos datos puedes perder) y **ensaya** el plan, no solo lo escribas.
+
+### ✅ En tu día a día
+- Regla **3-2-1**: tres copias, en dos soportes distintos y **una desconectada** de internet.
+- **Prueba restaurar** una copia de vez en cuando: una copia que no se puede recuperar no sirve.
+- Si mañana no tuvieras acceso a tus archivos, ¿podrías seguir trabajando? Ese es tu plan de continuidad.`;
 
 const M9 = `# Módulo 9 · Normas y buenas prácticas
 
@@ -399,7 +434,12 @@ Muchas empresas y entidades públicas piden a sus proveedores estar **certificad
 Las autoridades europeas han impuesto sanciones de **cientos de millones de euros** por tratar datos personales sin base legal o sin medidas de seguridad (por ejemplo, la multa de 1.200 millones de euros a Meta en 2023). En el Perú, la ANPD también sanciona, y el registro del banco de datos es obligatorio.
 
 **Qué enseña:** cumplir la ley de datos personales no es opcional; es parte de la seguridad.
-**Qué aprendemos:** igual que la ISO, el **RGPD** o la **PCI DSS**, estas normas te dan un marco probado para no improvisar.`;
+**Qué aprendemos:** igual que la ISO, el **RGPD** o la **PCI DSS**, estas normas te dan un marco probado para no improvisar.
+
+### ✅ En tu día a día
+- Cumple lo básico aunque no seas empresa: contraseñas fuertes, copias de seguridad, actualizaciones y formación.
+- Si manejas datos de otras personas (clientes, alumnos, pacientes), infórmate de tus obligaciones legales.
+- Guarda evidencia de lo que haces (registros y documentos): demuestra diligencia si algo pasa.`;
 
 const M10 = `# Módulo 10 · Gestión de la ciberseguridad
 
@@ -448,7 +488,12 @@ Un grupo de atacantes modificó el software de monitorización de una empresa y 
 Una empresa pequeña nombró un **responsable de seguridad**, hizo un inventario de activos y un **análisis de riesgos**, y con eso decidió en qué gastar: primero las copias de seguridad y el MFA, después lo demás. En un año redujo sus incidentes sin comprar nada caro.
 
 **Qué funcionó:** el ciclo **PHVA** (planificar, hacer, verificar, actuar) y priorizar por riesgo.
-**Qué aprendemos:** la seguridad es un programa con responsables y métricas, no una compra puntual.`;
+**Qué aprendemos:** la seguridad es un programa con responsables y métricas, no una compra puntual.
+
+### ✅ En tu día a día
+- Que alguien tenga **nombre y apellido** como responsable de la seguridad, aunque sea a tiempo parcial.
+- Mide tres cosas sencillas: cuántos incidentes hay, qué porcentaje de equipos está actualizado y quién tiene MFA.
+- Forma a las personas cada año: es la inversión que más reduce el riesgo.`;
 
 const M11 = `# Módulo 11 · Respuesta a incidentes y forense básica
 
@@ -489,7 +534,12 @@ Una empresa con **plan de respuesta** y copias de seguridad **desconectadas** de
 ### 💰 Caso 2 · Pagar no garantiza nada (Colonial Pipeline, 2021)
 La empresa pagó unos **4,4 millones de dólares** en rescate; el FBI logró recuperar después buena parte del dinero. En muchos otros casos, pagar no devuelve los archivos y sí financia al delincuente (y a veces los datos se publican igual).
 
-**Qué aprendemos:** la mejor respuesta es prevenir; y si ocurre: **no pagar**, conservar la evidencia y denunciar.`;
+**Qué aprendemos:** la mejor respuesta es prevenir; y si ocurre: **no pagar**, conservar la evidencia y denunciar.
+
+### ✅ En tu día a día
+- Ten a mano los teléfonos y correos clave: banco, soporte, proveedor de internet, compañeros.
+- Si sospechas de un ataque: **desconecta** el equipo de la red y no lo apagues ni borres nada.
+- Cambia las contraseñas desde un dispositivo limpio, activa MFA y avisa a quien corresponda.`;
 
 const M12 = `# Módulo 12 · Ciberseguridad responsable y carrera
 
@@ -536,7 +586,12 @@ Cada año hay casos de jóvenes que entran en sistemas de su colegio, de una emp
 ### 🧭 Caso 3 · La carrera por dentro
 Los equipos de seguridad contratan perfiles como **analista SOC (blue team)**, **pentester (red team)**, **forense digital**, **gestor de riesgos** o **CISO**. Se entra con fundamentos sólidos (redes, sistemas, inglés), laboratorios legales y certificaciones como CompTIA Security+ o ISO 27001.
 
-**Qué enseña:** hay demanda real de profesionales, y todos empezaron entendiendo lo básico.`;
+**Qué enseña:** hay demanda real de profesionales, y todos empezaron entendiendo lo básico.
+
+### ✅ En tu día a día
+- Practica solo en **laboratorios legales**: máquinas virtuales propias, plataformas de retos (CTF) y entornos autorizados.
+- Si encuentras un fallo en un sistema ajeno, **repórtalo** al responsable; nunca lo aproveches.
+- Si haces pruebas a un cliente o a tu empresa, pide **autorización por escrito** con el alcance definido: es lo que separa al profesional del delincuente.`;
 
 const EXAM = `# Examen Final · Ciberseguridad Básica
 
