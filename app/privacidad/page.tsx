@@ -341,7 +341,6 @@ export default function PrivacidadPage() {
             para prestar el servicio.
           </li>
         </ul>
-        <p>
         <div className="not-prose rounded-2xl border border-emerald-200 bg-emerald-50 p-5">
           <p className="text-sm font-bold text-emerald-900">
             ✔ Banco de datos personales inscrito en el Registro Nacional de Protección de Datos
