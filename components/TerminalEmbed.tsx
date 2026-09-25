@@ -5,8 +5,10 @@ import { Terminal } from '@xterm/xterm';
 import { FitAddon } from '@xterm/addon-fit';
 import { useAuthUser } from '@/lib/auth-context';
 import { toast } from 'sonner';
-import { Check, Loader2, RefreshCw, TerminalSquare } from 'lucide-react';
+import { Check, Loader2, RefreshCw, TerminalSquare, UserPlus } from 'lucide-react';
 import { api } from '@/lib/api';
+import { executeCommand, runCheckLogic } from '@/lib/terminal';
+import type { FSDir } from '@/lib/types';
 import '@xterm/xterm/css/xterm.css';
 
 const HOME = '/home/student';
@@ -44,31 +46,75 @@ const THEME = {
 interface Props {
   lessonId: number;
   verify?: boolean;
+  /** Sistema de archivos inicial de la lección (modo invitado). */
+  initialFs?: string;
+  /** Reglas de validación del ejercicio (modo invitado). */
+  checkLogic?: string | null;
 }
 
-export default function TerminalEmbed({ lessonId, verify = false }: Props) {
+export default function TerminalEmbed({ lessonId, verify = false, initialFs, checkLogic }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const termRef = useRef<Terminal | null>(null);
   const fitRef = useRef<FitAddon | null>(null);
   const inputRef = useRef('');
   const cwdRef = useRef(HOME);
+  const localFsRef = useRef<FSDir | null>(null);
   const [busy, setBusy] = useState(false);
-  const { userId } = useAuthUser();
+  const { userId, isLoaded } = useAuthUser();
+
+  /** true cuando el alumno practica sin cuenta: todo se ejecuta en su navegador. */
+  const invitado = isLoaded && !userId;
+
+  /** Sistema de archivos inicial de la lección (para el modo invitado). */
+  const fsInicial = useCallback((): FSDir => {
+    try {
+      return initialFs ? (JSON.parse(initialFs) as FSDir) : { home: { student: {} } };
+    } catch {
+      return { home: { student: {} } };
+    }
+  }, [initialFs]);
 
   const prompt = useCallback(() => {
     const d = displayPath(cwdRef.current);
     return `\x1b[1;32mstudent@linux\x1b[0m:\x1b[1;34m${d}\x1b[0m$ `;
   }, []);
 
+  /** Ejecuta el comando en el navegador (modo invitado: no se guarda nada). */
+  const ejecutarLocal = useCallback(
+    (cmd: string): string => {
+      const actual: FSDir = localFsRef.current ?? fsInicial();
+      const res = executeCommand(actual, cwdRef.current, cmd);
+      localFsRef.current = res.fs;
+      cwdRef.current = res.cwd;
+      return res.output;
+    },
+    [fsInicial],
+  );
+
   const execute = useCallback(
     async (cmd: string) => {
       const t = termRef.current;
       if (!t) return;
-      if (!userId) {
-        t.write('\x1b[31mNo autenticado: inicia sesión para usar el terminal.\x1b[0m\r\n');
+
+      // --- Modo invitado: todo ocurre en el navegador ---
+      if (invitado) {
+        try {
+          const salida = ejecutarLocal(cmd);
+          if (cmd.trim() === 'clear') t.clear();
+          else if (salida) t.write(salida.replace(/\n/g, '\r\n') + '\r\n');
+        } catch {
+          t.write('\x1b[31mError al ejecutar el comando.\x1b[0m\r\n');
+        }
         t.write(prompt());
         return;
       }
+
+      if (!userId) {
+        t.write('\x1b[90m# Un momento: comprobando la sesión…\x1b[0m\r\n');
+        t.write(prompt());
+        return;
+      }
+
       setBusy(true);
       try {
         const res = await api.terminal({ lesson_id: lessonId, command: cmd, action: 'exec' }, userId);
@@ -85,7 +131,7 @@ export default function TerminalEmbed({ lessonId, verify = false }: Props) {
         t.write(prompt());
       }
     },
-    [lessonId, userId, prompt],
+    [lessonId, userId, prompt, invitado, ejecutarLocal],
   );
 
   const handleInput = useCallback(
@@ -136,31 +182,54 @@ export default function TerminalEmbed({ lessonId, verify = false }: Props) {
 
     termRef.current = t;
     fitRef.current = fit;
+
+    if (invitado) {
+      t.write('\x1b[90m# Modo invitado: puedes practicar sin crear una cuenta.\r\n');
+      t.write('# Ojo: tu progreso no se guardará al salir de la página.\x1b[0m\r\n');
+    }
     t.write(prompt());
 
     const sub = t.onData(handleInput);
     const onResize = () => fit.fit();
     window.addEventListener('resize', onResize);
 
-    api
-      .terminalSession(lessonId, userId || undefined)
-      .then((s) => {
-        if (s?.current_path) cwdRef.current = s.current_path;
-      })
-      .catch(() => {
-        /* la sesión aún no existe */
-      });
+    if (userId) {
+      api
+        .terminalSession(lessonId, userId)
+        .then((s) => {
+          if (s?.current_path) cwdRef.current = s.current_path;
+        })
+        .catch(() => {
+          /* la sesión aún no existe */
+        });
+    }
 
     return () => {
       sub.dispose();
       window.removeEventListener('resize', onResize);
       t.dispose();
     };
-  }, [lessonId]); // eslint-disable-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lessonId, userId]);
 
   const handleVerify = useCallback(async () => {
+    // --- Verificación en el navegador (modo invitado) ---
+    if (invitado) {
+      const actual: FSDir = localFsRef.current ?? fsInicial();
+      const res = runCheckLogic(actual, cwdRef.current, checkLogic);
+      if (res.passed) {
+        toast.success(res.message || '¡Ejercicio completado!');
+        termRef.current?.write(
+          '\x1b[1;32m✓ ¡Ejercicio correcto!\x1b[0m \x1b[90m(practicaste como invitado: tu progreso no se guardó)\x1b[0m\r\n',
+        );
+      } else {
+        toast.error(res.message || 'El ejercicio aún no está completo.');
+      }
+      return;
+    }
+
     if (!userId) {
-      toast.error('Inicia sesión para verificar tu ejercicio.');
+      toast.error('Un momento: comprobando la sesión…');
       return;
     }
     setBusy(true);
@@ -173,14 +242,24 @@ export default function TerminalEmbed({ lessonId, verify = false }: Props) {
     } finally {
       setBusy(false);
     }
-  }, [lessonId, userId]);
+  }, [lessonId, userId, invitado, fsInicial, checkLogic]);
 
   const handleReset = useCallback(async () => {
-    if (!userId) return;
     const confirmado = window.confirm(
       '¿Reiniciar el laboratorio?\n\nSe borrarán los archivos y carpetas que creaste en esta práctica y volverás al estado inicial.',
     );
     if (!confirmado) return;
+
+    if (invitado) {
+      localFsRef.current = fsInicial();
+      cwdRef.current = HOME;
+      termRef.current?.clear();
+      termRef.current?.write('\x1b[90m# Laboratorio reiniciado (modo invitado).\x1b[0m\r\n');
+      termRef.current?.write(prompt());
+      return;
+    }
+
+    if (!userId) return;
     setBusy(true);
     try {
       const res = await api.terminal({ lesson_id: lessonId, action: 'reset' }, userId);
@@ -194,7 +273,7 @@ export default function TerminalEmbed({ lessonId, verify = false }: Props) {
       setBusy(false);
       termRef.current?.write(prompt());
     }
-  }, [lessonId, userId, prompt]);
+  }, [lessonId, userId, invitado, fsInicial, prompt]);
 
   return (
     <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#1e1e1e] shadow-2xl">
@@ -208,6 +287,11 @@ export default function TerminalEmbed({ lessonId, verify = false }: Props) {
           <span className="ml-2 flex items-center gap-1.5 font-mono text-xs text-slate-400">
             <TerminalSquare className="h-3.5 w-3.5" /> bash — Linux (simulado)
           </span>
+          {invitado && (
+            <span className="ml-1 flex items-center gap-1 rounded-full bg-amber-400/15 px-2.5 py-0.5 text-[11px] font-semibold text-amber-300">
+              <UserPlus className="h-3 w-3" /> Modo invitado · sin guardar
+            </span>
+          )}
         </div>
 
         <div className="flex items-center gap-2">

@@ -35,6 +35,19 @@ export default function HomePage() {
             Ir a Linux Básico
           </Link>
         </div>
+
+        {/* Aclaración amigable: la cuenta es opcional */}
+        <div className="flex max-w-3xl flex-col items-center gap-2 rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-center text-sm text-emerald-900 sm:flex-row sm:text-left">
+          <GraduationCap className="h-5 w-5 shrink-0 text-emerald-600" />
+          <p className="leading-relaxed">
+            <strong>No necesitas crear una cuenta para aprender.</strong> Puedes entrar a cualquier
+            curso, leer las lecciones y practicar en el laboratorio ahora mismo.
+            <span className="mt-1 block text-emerald-800">
+              La cuenta es <strong>opcional</strong> y sirve solo para una cosa: guardar tu progreso y
+              seguir donde lo dejaste. Tú decides.
+            </span>
+          </p>
+        </div>
       </section>
 
       {/* Características */}

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { SignInButton } from '@clerk/nextjs';
-import { AlertTriangle, ArrowLeft, ArrowRight, Info, Loader2, Lock } from 'lucide-react';
+import { AlertTriangle, ArrowLeft, ArrowRight, Info, Loader2 } from 'lucide-react';
 import { useAuthUser } from '@/lib/auth-context';
 import dynamic from 'next/dynamic';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -140,17 +140,33 @@ export default function LessonPage() {
               <Loader2 className="h-5 w-5 animate-spin" /> Comprobando sesión…
             </div>
           ) : !userId ? (
-            <div className="flex flex-col items-center gap-4 rounded-2xl border border-slate-200 bg-white p-10 text-center shadow-sm">
-              <Lock className="h-8 w-8 text-slate-400" />
-              <p className="text-slate-600">
-                Inicia sesión para usar el laboratorio interactivo y guardar tu progreso.
-              </p>
-              <SignInButton mode="modal">
-                <button className="rounded-xl bg-gradient-to-r from-accent to-accent-cyan px-6 py-2.5 text-sm font-semibold text-white transition hover:brightness-105">
-                  Iniciar sesión con Google
-                </button>
-              </SignInButton>
-            </div>
+            <>
+              {/* Mensaje amigable: no hace falta cuenta para practicar */}
+              <div className="flex flex-col gap-3 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-4 text-sm text-amber-900 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-start gap-2.5">
+                  <Info className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />
+                  <p className="leading-relaxed">
+                    <strong>No necesitas cuenta para practicar aquí.</strong> Puedes escribir comandos
+                    en el terminal, hacer el ejercicio y verificar tu respuesta ahora mismo.
+                    <span className="mt-1 block text-amber-800">
+                      Lo único que no se guardará es tu progreso: si creas una cuenta (gratis), al
+                      volver seguirás justo donde lo dejaste.
+                    </span>
+                  </p>
+                </div>
+                <SignInButton mode="modal">
+                  <button className="shrink-0 rounded-xl bg-gradient-to-r from-accent to-accent-cyan px-5 py-2.5 text-sm font-semibold text-white shadow-glow transition hover:brightness-105">
+                    Guardar mi progreso
+                  </button>
+                </SignInButton>
+              </div>
+              <TerminalEmbed
+                lessonId={lesson.id}
+                verify={lesson.type === 'practice'}
+                initialFs={lesson.initial_fs}
+                checkLogic={lesson.check_logic}
+              />
+            </>
           ) : (
             <>
               <div className="flex items-start gap-2 rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-sky-900">
@@ -162,7 +178,12 @@ export default function LessonPage() {
                   <strong>«Reiniciar»</strong> (borra tus archivos de esta práctica).
                 </p>
               </div>
-              <TerminalEmbed lessonId={lesson.id} verify={lesson.type === 'practice'} />
+              <TerminalEmbed
+                lessonId={lesson.id}
+                verify={lesson.type === 'practice'}
+                initialFs={lesson.initial_fs}
+                checkLogic={lesson.check_logic}
+              />
             </>
           )}
         </section>
