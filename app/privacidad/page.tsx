@@ -48,6 +48,7 @@ export default function PrivacidadPage() {
           <li>• <strong>No vendemos ni alquilamos</strong> tus datos a nadie.</li>
           <li>• <strong>No usamos publicidad</strong> ni seguimiento con fines comerciales.</li>
           <li>• Las cookies que utilizamos son <strong>necesarias</strong> para el funcionamiento del sitio.</li>
+          <li>• Medimos las visitas con una herramienta <strong>sin cookies</strong> que no te identifica ni te sigue.</li>
           <li>• El <strong>asistente de inglés con IA (Colliq)</strong> solo usa el micrófono si lo autorizas: tu voz se transcribe con un servicio de inteligencia artificial y <strong>no se guarda</strong>.</li>
           <li>• Puedes pedir acceso, corrección o borrado de tus datos escribiéndonos.</li>
           <li>• Si el estudiante es <strong>menor de 14 años</strong>, pedimos la autorización verificable de su madre, padre o tutor.</li>
@@ -141,6 +142,23 @@ export default function PrivacidadPage() {
           También puedes bloquear o eliminar las cookies desde la configuración de tu navegador. Ten
           en cuenta que, si desactivas las cookies necesarias, es posible que no puedas iniciar
           sesión ni guardar tu progreso.
+        </p>
+
+        <h3>Medición de audiencia sin cookies</h3>
+        <p>
+          Para saber cuántas personas visitan la plataforma y qué cursos o páginas resultan más
+          útiles, utilizamos una herramienta de <strong>medición de audiencia sin cookies</strong>.
+          Esta medición:
+        </p>
+        <ul>
+          <li>No guarda nada en tu dispositivo ni utiliza cookies.</li>
+          <li>No te identifica, no crea perfiles y no te sigue por otros sitios web.</li>
+          <li>Nos muestra solo datos agregados: visitas, páginas vistas y país aproximado.</li>
+        </ul>
+        <p>
+          Como no almacena información en tu equipo, no requiere consentimiento previo; aun así lo
+          informamos por transparencia. Puedes bloquearla con un bloqueador de contenido sin que ello
+          afecte al funcionamiento de los cursos.
         </p>
 
         <h2 id="voz">6. Asistente de inglés con IA (Colliq): micrófono, voz y transcripción</h2>

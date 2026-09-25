@@ -1,2 +1,7 @@
 User-agent: *
 Allow: /
+
+# No es necesario indexar las rutas de consentimiento parental (llevan un token personal)
+Disallow: /consentimiento/
+
+Sitemap: https://educatecomas.com/sitemap.xml
