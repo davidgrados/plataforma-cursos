@@ -99,4 +99,23 @@ export const api = {
       }>('/consentimiento', { method: 'POST', body: JSON.stringify(datos) }),
   },
 
+  // ----- Mi cuenta: transparencia y derecho de supresión (Ley 29733) -----
+  cuenta: {
+    resumen: () =>
+      request<{
+        email: string;
+        name: string;
+        creado_en: string | null;
+        edad: number | null;
+        lecciones_completadas: number;
+        practicas_guardadas: number;
+        consentimientos: number;
+      }>('/cuenta'),
+    eliminar: () =>
+      request<{ ok: boolean; datos_borrados: boolean; identidad: string; mensaje: string }>(
+        '/cuenta',
+        { method: 'DELETE', body: JSON.stringify({ confirmar: 'ELIMINAR' }) },
+      ),
+  },
+
 };

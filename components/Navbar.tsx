@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { SignInButton, UserButton } from '@clerk/nextjs';
-import { Eye, Mic, TerminalSquare } from 'lucide-react';
+import { Eye, Mic, TerminalSquare, UserCog } from 'lucide-react';
 import { PREVIEW_MODE, useAuthUser } from '@/lib/auth-context';
 
 export default function Navbar() {
@@ -42,10 +42,19 @@ export default function Navbar() {
               Vista previa
             </span>
           ) : userId ? (
-            <UserButton
-              afterSignOutUrl="/"
-              appearance={{ elements: { avatarBox: 'h-9 w-9' } }}
-            />
+            <>
+              <Link
+                href="/cuenta"
+                className="hidden items-center gap-1.5 rounded-lg px-3 py-2 text-sm text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 sm:flex"
+              >
+                <UserCog className="h-4 w-4" />
+                Mi cuenta
+              </Link>
+              <UserButton
+                afterSignOutUrl="/"
+                appearance={{ elements: { avatarBox: 'h-9 w-9' } }}
+              />
+            </>
           ) : (
             <SignInButton mode="modal">
               <button className="rounded-lg bg-gradient-to-r from-accent to-accent-cyan px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90">

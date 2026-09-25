@@ -252,6 +252,14 @@ export default function PrivacidadPage() {
         </p>
 
         <p>
+          Además, el derecho de <strong>supresión</strong> (cancelación) lo puedes ejercer{' '}
+          <strong>tú mismo y al instante</strong>, sin dar explicaciones, desde la página{' '}
+          <Link href="/cuenta">Mi cuenta</Link>: ahí verás qué datos guardamos de ti y podrás
+          eliminar tu cuenta con todo su contenido. Si lo prefieres, escríbenos y lo hacemos
+          nosotros.
+        </p>
+
+        <p>
           Estos derechos se conocen como <strong>ARCO</strong>: <strong>A</strong>cceso,
           <strong>R</strong>ectificación, <strong>C</strong>ancelación (supresión) y
           <strong>O</strong>posición, además de la limitación del tratamiento y la portabilidad.

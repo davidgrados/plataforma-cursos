@@ -45,3 +45,6 @@ seed-ejemplos.sql
 
 # tipos
 *.tsbuildinfo
+
+# respaldos locales de datos (nunca se publican en el repositorio)
+/docs/backups/
