@@ -18,6 +18,29 @@ import { ensureUser } from '@/lib/d1';
 /** Palabra exacta que el usuario debe escribir para confirmar la baja. */
 const CONFIRMACION = 'ELIMINAR';
 
+/**
+ * Pide al proveedor de identidad el correo y el nombre reales.
+ *
+ * Al crear la cuenta solo conocíamos el identificador, así que se guardó un
+ * correo de relleno (terminado en "@preview.local"). Aquí se recupera el dato
+ * auténtico para mostrarlo bien en la página «Mi cuenta». Si falla, no pasa
+ * nada: se muestra lo que haya guardado.
+ */
+async function datosReales(env: { CLERK_SECRET_KEY?: string }, clerkId: string) {
+  const secretKey = env.CLERK_SECRET_KEY;
+  if (!secretKey) return null;
+  try {
+    const { createClerkClient } = await import('@clerk/backend');
+    const clerk = createClerkClient({ secretKey });
+    const usuario = await clerk.users.getUser(clerkId);
+    const email = usuario.emailAddresses?.[0]?.emailAddress ?? null;
+    const nombre = [usuario.firstName, usuario.lastName].filter(Boolean).join(' ').trim() || null;
+    return { email, nombre };
+  } catch {
+    return null;
+  }
+}
+
 // GET /api/cuenta -> resumen de lo que tenemos guardado de esta persona
 export async function GET(request: Request) {
   const env = await getEnv();
@@ -31,6 +54,33 @@ export async function GET(request: Request) {
   )
     .bind(clerkId)
     .first();
+
+  // Corrige el correo/nombre de relleno con los datos auténticos.
+  let email = usuario?.email ?? '';
+  let nombre = usuario?.name ?? '';
+  if (!email || email.endsWith('@preview.local') || !nombre) {
+    const real = await datosReales(env, clerkId);
+    if (real?.email && email !== real.email) {
+      email = real.email;
+      try {
+        await env.DB.prepare('UPDATE users SET email = ? WHERE clerk_id = ?')
+          .bind(real.email, clerkId)
+          .run();
+      } catch {
+        /* si el correo ya existe en otra fila, se muestra igualmente */
+      }
+    }
+    if (real?.nombre && !nombre) {
+      nombre = real.nombre;
+      try {
+        await env.DB.prepare('UPDATE users SET name = ? WHERE clerk_id = ?')
+          .bind(real.nombre, clerkId)
+          .run();
+      } catch {
+        /* sin importancia */
+      }
+    }
+  }
 
   const progreso = await env.DB.prepare(
     'SELECT COUNT(*) AS n FROM user_progress WHERE clerk_id = ? AND completed = 1',
@@ -51,8 +101,8 @@ export async function GET(request: Request) {
     .first();
 
   return json({
-    email: usuario?.email ?? '',
-    name: usuario?.name ?? '',
+    email,
+    name: nombre,
     creado_en: usuario?.created_at ?? null,
     edad: usuario?.edad ?? null,
     lecciones_completadas: progreso?.n ?? 0,
