@@ -11,6 +11,19 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
+  // Direcciones propias del sitio (se gestionan en el despliegue):
+  //  - educatecomas.com      → dominio oficial
+  //  - www.educatecomas.com  → el middleware lo redirige al dominio oficial
+  "routes": [
+    {
+      "pattern": "educatecomas.com",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.educatecomas.com",
+      "custom_domain": true
+    }
+  ],
   "services": [
     {
       "binding": "WORKER_SELF_REFERENCE",
