@@ -33,6 +33,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <CookieBanner />
         <ConsentGate />
         <Toaster theme="light" position="top-right" richColors closeButton />
+
+        {/*
+          Medición de audiencia de Cloudflare (Web Analytics).
+
+          Es SIN COOKIES y sin datos personales: solo cuenta visitas, páginas
+          vistas, país aproximado y tipo de dispositivo. Está declarada en la
+          Política de Privacidad (medición de audiencia), por lo que no depende
+          del aviso de cookies ni requiere consentimiento previo.
+
+          Se instala aquí a mano porque la inyección automática del panel de
+          Cloudflare NO se aplica a las webs servidas por un Worker
+          (comprobado el 25/09/2026: el medidor no llegaba al visitante).
+        */}
+        <script
+          type="module"
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={JSON.stringify({ token: '2173d4245cfd4c27b553d9e3126b58e4' })}
+        />
       </body>
     </html>
   );
