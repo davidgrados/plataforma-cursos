@@ -1,0 +1,502 @@
+# Data Processing Addendum
+
+Last updated: 2024-11-26
+
+## Parties And Background
+
+(A) Customer (“Customer”) has entered into an agreement with Clerk, Inc. (“Clerk”) (each a “Party” and collectively the “Parties”) under which Clerk has agreed to provide the Services in accordance with such agreement (the “Agreement”). This Data Processing Addendum (the “DPA”) is incorporated into and forms part of the Agreement and shall be effective on the effective date of the Agreement.
+
+(B) To the extent that Clerk processes any Customer Personal Data (as defined below) on behalf of the Customer (or where applicable, the Customer’s end user defined as “Customer End User”) in connection with the provision of the Services, the Parties have agreed that it shall do so on the terms of this DPA.
+
+Please note that the Clerk DPA has been modified to reflect Clerk’s [certification](https://www.dataprivacyframework.gov/list) under the EU-U.S. Data Privacy Framework. The Data Privacy Framework (including the Swiss-U.S. Privacy Framework and the UK Extension to the DPF) has been formally approved by the United States Department of Commerce and the European Commission and the European Commission has issued adopted an [adequacy decision](https://commission.europa.eu/document/fa09cbad-dd7d-4684-ae60-be03fcb0fddf_en) in favor of the DPF.  This means that personal data from the European Union (EU), Switzerland and the United Kingdom (UK) can be safely transferred from those locations by Clerk customers to Clerk in the United States (U.S.). The DPF replaces the Privacy Shield and, like Privacy Shield, personal data can be transferred to companies in the U.S. who are certified under the DPF without the need to enter into additional data transfer mechanisms such as the Standard Contractual Clauses or Binding Corporate Rules.
+
+## 1. Definitions
+
+1.1 Capitalized terms used but not defined within this DPA shall have the meaning set forth in the Agreement. The following capitalized terms used in this DPA shall be defined as follows:
+
+“Account Information” means Customer’s information, including Personal Data of Customer and Customer End User’s users, provided for account creation, access, administration, and maintenance, and may include names, usernames, login credentials, phone numbers, email addresses, and billing information associated with a Clerk account;
+
+“Australian Data Protection Laws” means the Australian Privacy Act 1988 and the Australian Privacy Principles at Schedule 1 to the Australian Privacy Act 1988.
+
+“End User” or “Customer End User” means an entity that is a user of Customer’s services;
+
+“Applicable Data Protection Laws” means all applicable laws, rules, regulations and governmental requirements relating to the privacy, confidentiality, or security of Personal Data, as they may be amended or otherwise updated from time to time;
+
+“Approved Addendum” means the template addendum, version B.1.0 issued by the UK Information Commissioner under S119A(1) Data Protection Act 2018 and laid before the UK Parliament on 2 February 2022, as it may be revised according to Section 18 of the Mandatory Clauses;
+
+“Customer Personal Data” means the Personal Data processed by Clerk on behalf of Customer or Customer End User in connection with the provision of the Services, which, however, specifically excludes Personal Data contained in Account Information;
+
+“DPF” or “Data Privacy Framework” means the EU-U.S. Data Privacy Framework, or where applicable, the UK Extension to the EU-U.S. Data Privacy Framework and the Swiss-U.S. Data Privacy Framework;
+
+“EEA” means the European Economic Area;
+
+“GDPR” means Regulation (EU) 2016/679 (the “EU GDPR”) or, where applicable, the “UK GDPR” as defined in section 3 of the Data Protection Act 2018;
+
+“LGPD” means Brazilian General Data Protection Law (Lei Gerai de Proteção de Dados Pessoais);
+
+“Mandatory Clauses” means “Part 2: Mandatory Clauses” of the Approved Addendum;
+
+“Member State” means a member state of the EEA, being a member state of the European Union, Iceland, Norway, or Liechtenstein;
+
+“Personal Data” means any information relating to an identified or identifiable individual or device, or is otherwise “personal data,” “personal information,” “personally identifiable information” and similar terms, and such terms shall have the same meaning as defined by Applicable Data Protection Laws;
+
+“Security Incident” means a breach of information or network security leading to the accidental or unlawful destruction, loss, alteration, unauthorized disclosure of, or unauthorized access to, Customer Personal Data;
+
+“Standard Contractual Clauses” or “SCCs” means Module Two (controller to processor) and/or Module Three (processor to processor) of the Standard Contractual Clauses annexed to Commission Implementing Decision (EU) 2021/914;
+
+“Sub-processor” means third-party processors appointed by Clerk to process Customer Personal Data;
+
+“UK” means the United Kingdom of Great Britain and Northern Ireland; and
+
+“US Data Protection Laws” means, to the extent applicable, federal and state laws relating to data protection, the Processing of Personal Data, privacy and/or data protection in force from time to time in the United States.
+
+1.2 The terms “controller”, “processor”, “data subject”, “process”, “supervisory authority” “sell”, and “service provider” shall have the same meaning as set out in the Applicable Data Protection Laws.
+
+## 2. Interaction With The Agreement
+
+2.1 This DPA supplements and (in case of contradictions) supersedes the Agreement with respect to any processing of Customer Personal Data.
+
+2.2 With respect to Customer End Users, by entering into the Agreement Customer warrants it is duly authorized to enter into this DPA for and on behalf of any such Customer End Users and, subject to clause 2.3, each Customer End User shall be bound by the terms of this DPA as if they were the Customer.
+
+2.3 Customer warrants that it is duly mandated by any Customer End Users on whose behalf Clerk processes Customer Personal Data in accordance with this DPA to (a) enforce the terms of this DPA on behalf of the Customer End Users, and to act on behalf of the Customer End Users in the administration and conduct of any claims arising in connection with this DPA; and (b) receive and respond to any notices or communications under this DPA on behalf of Customer End Users.
+
+2.4 The Parties agree that any notice or communication sent by Clerk to Customer shall satisfy any obligation to send such notice or communication to a Customer End User.
+
+## 3. Role Of The Parties
+
+3.1 The Parties acknowledge and agree that:
+
+　(a) for the purposes of the GDPR, Clerk acts as “processor” or “sub-processor.” Clerk’s function as processor or sub-processor will be determined by the function of Customer:
+
+　　	(i) In general, Customer functions as a controller, whereas Clerk functions as a processor.
+
+　　	(ii) In certain cases, Customer functions as a processor on behalf of Customer’s customers where Customer and Customer’s customer have concluded a data processing agreement in relation to the processing of Personal Data of Customer’s customers and Clerk is a sub-processor; and
+
+(iii) With respect to Account Information, Clerk is an independent controller, not a joint controller with Customer.   Clerk will process Account Information as a controller to manage the relationship with Customer; carry out Clerk’s core business operations; to comply with legal or regulatory obligations applicable to processing and retention of Account Information; and as otherwise permitted under Applicable Data Protection Laws, this DPA and the Agreement.   Clerk may also process Account Information as a controller to provide, optimize, and maintain the Services, to the extent permitted by Applicable Data Protection Laws.  Any processing by Clerk as a controller shall be in accordance with Clerk’s [Privacy Policy](https://clerk.com/legal/privacy.md).
+
+(b) Except for Account Information, for the purposes of the US Data Protection Laws, Clerk will act as a “service provider” or “processor” (as applicable) in its performance of its obligations pursuant to the Agreement.
+
+## 4. Details Of Data Processing
+
+4.1 The details of data processing (such as subject matter, nature and purpose of the processing, categories of Personal Data and data subjects) are described in the Agreement and in Schedule 1.
+
+4.2 Customer Personal Data will only be processed on behalf of and under the instructions of Customer and in accordance with Applicable Data Protection Laws. The Agreement and this DPA shall be Customer’s instructions for the processing of Customer Personal Data. Customer may issue further written instructions in accordance with this DPA.
+
+4.3 If Customer’s instructions will cause Clerk to process Customer Personal Data in violation of Applicable Data Protection Laws or outside the scope of the Agreement or the DPA, Clerk shall promptly inform Customer thereof, unless prohibited by Applicable Data Protection Laws (without prejudice to the SCCs).
+
+4.4 Clerk may store and process Customer Personal Data anywhere Clerk or its Sub-processors maintain facilities, subject to clause 5 of this DPA.
+
+## 5. Sub Processors
+
+5.1 Customer grants Clerk general authorization to engage Sub-processors, subject to clause 5.2, from an agreed list, as well as Clerk’s current Sub-processors listed at https://clerk.com/legal/subprocessors.md  as of the Effective Date.
+
+5.2 Clerk shall (i) enter into a written agreement with each Sub-processor imposing data protection obligations no less protective of Customer Personal Data than Clerk’s obligations under this DPA to the extent applicable to the nature of the services provided by such Sub-processor; and (ii) remain liable for each Sub-processor’s compliance with the obligations under this DPA.
+
+5.3 Clerk shall provide Customer with at least fifteen (15) days’ notice of any proposed changes to the Sub-processors it uses to process Customer Personal Data (including any addition or replacement of any Sub-processors). Customer may reasonably object to Clerk’s use of a new Sub-processor (including when exercising its right to object under clause 9(a) of the SCCs) by providing Clerk with written notice of the objection within ten (10) days after Clerk has provided notice to Customer of such proposed change (an “Objection”). In the event Customer objects to Clerk’s use of a new Sub-processor, Customer and Clerk will work together in good faith to find a mutually acceptable resolution to address such Objection. If the parties are unable to reach a mutually acceptable resolution within a reasonable timeframe, either party may, as its sole and exclusive remedy, terminate the Agreement by providing written notice to the other party. During any such Objection period, Clerk may suspend the affected portion of the Services.
+
+## 6. Data Subject Rights Requests
+
+6.1 As between the Parties, Customer shall have sole discretion and responsibility in responding to the rights asserted by any individual in relation to Customer Personal Data (“Data Subject Request”).
+
+6.2 Clerk will forward to Customer without undue delay any Data Subject Request received by Clerk or any Sub-processor from an individual in relation to their Customer Personal Data and may advise the individual to submit their request directly to Customer.
+
+6.3 Clerk will (taking into account the nature of the processing of Customer Personal Data) provide Customer and its End Users with the ability to utilize an application programming interface (API) for self-service functionality through the Services or other reasonable assistance as necessary for Customer to fulfill its obligation under Applicable Data Protection Laws to respond to Data Subject Requests. Clerk may charge Customer, and Customer shall reimburse Clerk, for any such assistance beyond providing self-service features included as part of the Services.
+
+## 7. Security And Audits
+
+7.1 Clerk will implement and maintain appropriate technical and organizational data protection and security measures designed to ensure security of Customer Personal Data, including, without limitation, protection against unauthorized or unlawful processing (including, without limitation, unauthorized or unlawful disclosure of, access to and/or alteration of Customer Personal Data) and against accidental loss, destruction, or damage of or to it.
+
+7.2 Clerk will implement and maintain as a minimum standard the measures set out in Schedule 2. Clerk may update or modify the security measures set out in Schedule 2 from time to time, provided that such updates and/or modifications do not reduce the overall level of protection afforded to the Customer Personal Data by Clerk under this DPA.
+
+7.3 Customer or its independent third-party auditor reasonably acceptable to Clerk (which shall not include any auditors who are not suitably qualified or independent or are a competitor of Clerk) may audit Clerk’s compliance with its obligations under this DPA up to once per year, or more frequently in the event a Security Incident has occurred or to the extent required by applicable data protection laws, including where mandated by Customer’s regulatory or governmental authority.
+
+7.4 To request an audit, Customer must submit a detailed proposed audit plan to Clerk at least two weeks in advance of the proposed audit date. Clerk will review the proposed audit plan and work cooperatively with Customer to agree on a final audit plan. All such audits must be conducted during regular business hours, subject to the agreed final audit plan and Clerk’s health and safety or other relevant policies, and may not unreasonably interfere with Clerk business activities. Nothing in this clause 7.4 shall require Clerk to breach any duties of confidentiality.
+
+7.5 If the requested audit scope is addressed in an ISO 27001 certification, SOC 2 Type 2 report or similar audit report performed by a qualified third-party auditor within twelve (12) months of Customer’s audit request and Clerk confirms there are no known material changes in the controls audited, Customer agrees to accept those findings in lieu of requesting an audit of the controls covered by the report.
+
+7.6 Customer will promptly notify Clerk of any non-compliance discovered during the course of an audit and provide Clerk any audit reports generated in connection with any audit, unless prohibited by applicable law or otherwise instructed by a regulatory or governmental authority. Customer may use the audit reports only for the purposes of meeting Customer’s regulatory audit requirements and/or confirming compliance with the requirements of this DPA.
+
+7.7 Any audits are at Customer’s expense. Customer shall reimburse Clerk for any time expended by Clerk or its Sub-processors in connection with such audits.
+
+7.8   Customer acknowledges and agrees that, taking into account the state of the art, the costs of implementation and the nature, scope, context and purposes of processing as well as the risk of varying likelihood and severity for the rights and freedoms of natural persons, the security measures set out in Schedule 2 are appropriate to ensure the security of the Customer Personal Data.
+
+## 8. Security Incidents
+
+Clerk will promptly notify Customer in writing in the event of any breach of this DPA, Applicable Data Protection Laws or any instruction by Customer in connection with the processing of Customer Personal Data under this DPA. Without limiting the generality of the foregoing, Clerk shall notify Customer in writing without undue delay after becoming aware of any Security Incident, and reasonably cooperate in the investigation of any such Security Incident and any obligation of Customer under Applicable Data Protection Laws to make any notifications to individuals, supervisory authorities, governmental or other regulatory authority, or the public in respect of such Security Incident. Clerk shall take reasonable steps to contain, investigate, and mitigate any Security Incident, and shall, without undue delay, send Customer timely information about the Security Incident, including, but not limited to, the nature of the Security Incident, the measures taken to mitigate or contain the Security Incident, and the status of the investigation. Clerk’s notification of or response to a Security Incident under this clause 8 will not be construed as an acknowledgement by Clerk of any fault or liability with respect to the Security Incident.
+
+## 9. Deletion And Return
+
+Clerk shall (a) if requested to do so by Customer by the date of termination or expiry of the Agreement, return a copy of all Customer Personal Data or provide self-service functionality allowing Customer to do the same; and (b) within 90 days of the termination or expiry of the Agreement, delete and use all reasonable efforts to procure the deletion of all other copies of Customer Personal Data processed by Clerk or any Sub-processors.
+
+## 10. Contract Period
+
+This DPA will commence on the Effective Date and, notwithstanding any termination of the Agreement, will remain in effect until, and automatically expire upon, Clerk’s deletion of all Customer Personal Data as described in this DPA.
+
+## 11. Cross Border Data Transfers
+
+11.1 Standard Contractual Clauses
+
+The Parties agree that the terms of the Standard Contractual Clauses Module One (Controller to Controller), Module Two (Controller to Processor) and Module Three (Processor to Processor), as further specified in Schedule 3 of this DPA, are hereby incorporated by reference and shall be deemed to have been executed by the Parties and apply to any transfers of Customer Personal Data falling within the scope of the GDPR from Customer (as data exporter) to Clerk (as data importer) to the extent and for as long as Clerk cannot rely on the DPF according to clause 11.2.
+
+11.2 Data Privacy Framework
+
+Clerk is self-certified under the DPF and complies with the data privacy principles thereunder.  To the extent and for as long as the DPF is acknowledged as a valid transfer mechanism in the relevant country/region, Personal Data originating from the EEA, UK, or Switzerland, or otherwise being subject to the GDPR shall be transferred on the basis of the DPF.  See Clerk’s DPF Policy [here](https://clerk.com/legal/dpf.md#data-privacy-framework-notice).
+
+11.3 Support for Cross-Border Data Transfers
+
+Clerk will provide Customer reasonable support to enable Customer’s compliance with the requirements imposed on the transfer of personal data to third countries with respect to data subjects located in the EEA, Switzerland, and UK. Clerk will, upon Customer’s request, provide information to Customer which is reasonably necessary for Customer to complete a transfer impact assessment (“TIA”). Clerk further agrees to implement the supplementary measures agreed upon and set forth in Schedule 4 of this DPA in order to enable Customer’s compliance with requirements imposed on the transfer of personal data to third countries. Clerk may charge Customer, and Customer shall reimburse Clerk, for any assistance provided by Clerk with respect to any TIAs, data protection impact assessments or consultation with any supervisory authority of Customer.
+
+## 12. Customer Personal Data Subject To The Uk And Swiss Data Protection Laws
+
+To the extent that the processing of Customer Personal Data is subject to UK or Swiss data protection laws, the UK Addendum and/or Swiss Addendum (as applicable) set out in Schedule 5 shall apply.
+
+## 13. Customer Personal Data Subject To Us Data Privacy Laws
+
+To the extent that the processing of Customer Personal Data is subject to us Data Protection Laws, the U.S. Addendum set out in Schedule 6 shall apply.
+
+The Customer understands and agrees that if it is using the Services for purposes of storing or transmitting protected health information under US Data Protection Laws, it must separately enter into and execute a Business Associate Agreement (“BAA”) if  Customer qualifies as a Covered Entity or Business Associate.  Where the parties have entered into a BAA, the BAA shall take precedence over this DPA with respect to any protected health information.
+
+## 14. General
+
+14.1 The Parties hereby certify that they understand the requirements in this DPA and will comply with them.
+
+14.2 This DPA and the Agreement set forth the entire agreement between the Parties with respect to the subject matter of this DPA.
+
+## Schedule 1
+
+**DETAILS OF PROCESSING**
+
+Part 1\
+**LIST OF PARTIES**
+
+1\. Data Exporter
+
+Customer and/or the Customer End Users operating in the countries which comprise the European Economic Area, UK and/or Switzerland and/or – to the extent agreed by the Parties – Customer and/or the Customer End Users in any other country to the extent the GDPR or corresponding Swiss law applies.
+
+Customer and Customer End User’s contact person’s position and contact details as well as (if appointed) the data protection officer’s and (if relevant) the representative’s contact details will be notified to Clerk prior to the processing of personal data via email to [privacy@clerk.dev](mailto:privacy@clerk.dev) or an available form provided by Clerk in Customer’s account in the Services.
+
+The activities relevant to the data transfer under these Clauses are defined by the Agreement and the data exporter who decides on the scope of the processing of personal data in connection with the Services further described in this Schedule 1 and in the Agreement.
+
+2\. Data Importer
+
+Clerk, Inc.,\
+660 King Street\
+Unit 345\
+San Francisco, CA 94107\
+United States
+
+The data importer’s contact person can be contacted at [privacy@clerk.dev](mailto:privacy@clerk.dev).   Also, the data importer’s EU representative can be contacted at\
+VeraSafe Ireland Ltd.\
+Unit 3D North Point House\
+North Point Business Park\
+New Mallow Road\
+Cork T23AT2P\
+Ireland\
+https://verasafe.com/public-resources/contact-data-protection-representative\
++420 228 881 031
+
+The data importer’s activities relevant to the data transfer under these Clauses are as follows: the data importer processes personal data provided by the data exporter on behalf of the data exporter in connection with providing the Services to the data exporter as further specified in this Schedule 1 and in the Agreement.
+
+Part 2\
+**DESCRIPTION OF TRANSFER**
+
+1\. Categories of data subjects
+
+The categories of data subjects whose personal data are transferred:
+
+Customers\
+Customer End Users\
+Contacts
+
+2\. Categories of personal data
+
+The transferred categories of personal data are:
+
+Determined by Customer’s configuration of the Services, and may include name, phone number, email address, address data, IP address, device identifiers, usage data (such as interactions between a user and Clerk’s online system, website or email, used browser, used operating system, referrer URL).
+
+Moreover, Customer may include further personal data of data subjects on behalf of its End Users as specified above (in particular in unstructured form) in connection with their use of the Services according to the Agreement.
+
+3\. Special categories of personal data (if applicable)
+
+The transferred personal data includes the following special categories of data: N/A – Clerk’s Agreement prohibits Customer from using the Services to solicit, display, store, process, send or transmit special categories of data.
+
+The applied restrictions or safeguards that fully take into consideration the nature of the data and the risks involved, such as for instance strict purpose limitation, access restrictions (including access only for staff having followed specialized training), keeping a record of access to the data, restrictions for onward transfers or additional security measures are: N/A
+
+4\. Frequency of the transfer
+
+The frequency of the transfer is: The transfer is performed on a continuous basis and is determined by Customer’s configuration of the Services.
+
+5\. Subject matter and nature of the processing
+
+The subject matter of the processing is: to provide an authentication automation platform to Customer.
+
+6\. Purpose(s) of the data transfer and further processing
+
+The purpose/s of the data transfer and further processing is: to provide the Services to Customer pursuant to the Agreement so that Customer can develop authentication processes.
+
+7\. Duration
+
+The period for which the personal data will be retained, or, if that is not possible, the criteria used to determine that period: the duration is defined in clause 10 of the DPA.
+
+8\. Sub-processor (if applicable)
+
+For transfers to sub-processors, specify subject matter, nature, and duration of the processing: as stipulated in clause 5.1 of the DPA. The Sub-processors may have access to the Personal Data for the term of this DPA or until the service contract with the respective Sub-processor is terminated or the access by the Sub-processor has been excluded as agreed between Clerk and Customer.
+
+Part 3\
+**COMPETENT SUPERVISORY AUTHORITY**
+
+Identify the competent supervisory authority/ies in accordance with clause 13 of the SCCs
+
+The competent supervisory authority is the supervisory authority in Ireland, namely the Data Protection Commission (https://www.dataprotection.ie/).
+
+## Schedule 2
+
+**TECHNICAL AND ORGANIZATIONAL MEASURES**
+
+Clerk has implemented the following technical and organizational measures (including any relevant certifications) to ensure an appropriate level of security, taking into account the nature, scope, context, and purpose of the processing, as well as the risks for the rights and freedoms of natural persons:
+
+1\. Organizational management and dedicated staff responsible for the development, implementation, and maintenance of Clerk’s information security program.
+
+2\. Audit and risk assessment procedures for the purposes of periodic review and assessment of risks to Clerk’s organization, monitoring and maintaining compliance with Clerk’s policies and procedures, and reporting the condition of its information security and compliance to internal senior management.
+
+3\. Utilization of commercially available and industry standard encryption technologies for Customer Personal Data that is:
+
+　(a) being transmitted by Clerk over public networks (i.e., the internet) or when transmitted wirelessly; or
+
+　(b) at rest.
+
+4\. Data security controls which include at a minimum, but may not be limited to, logical segregation of data, logical access controls designed to manage electronic access to data and system functionality based on authority levels and job functions, (e.g., granting access on a need-to-know and least privilege basis, use of unique IDs and passwords for all users, periodic review, and revoking/changing access promptly when employment terminates or changes in job functions occur).
+
+5\. Password controls designed to manage and control password strength, expiration and usage including prohibiting users from sharing passwords and requiring that Clerk’s passwords that are assigned to its employees: (i) be at least eight (8) characters in length, (ii) not be stored in readable format on Clerk’s computer systems; (iii) must have defined complexity; (iv) must have a history threshold to prevent reuse of recent passwords; and (v) newly issued passwords must be changed after first use.
+
+6\. System audit or event logging and related monitoring procedures to proactively record Clerk employee access and system activity for routine review.
+
+7\.  Clerk hosts Personal Data primarily in Google Cloud data centers and Cloudflare that have been certified as ISO 27001 and/or SOC2 compliant.   More details on Google Cloud controls can be found [here](https://www.google.com/about/datacenters/data-security/).  More details on Cloudfare’s controls can be found [here](https://cf-assets.www.cloudflare.com/slt3lc6tev37/2XCNxD0AemDQvMNgWvoo37/39a0d3b7ac963b2854f93673855e55f9/BDES-1265_Privacy_Compliance_Whitepapers_ISO.pdf?_gl=1*fnol4n*_ga*MjEwNjQxMDAyNC4xNzE1ODg5MTQw*_ga_SQCRB0TXZW*MTcxNTg4OTE0MC4xLjEuMTcxNTg4OTQwMS4wLjAuMA..).
+
+8\. Operational procedures and controls to provide for configuration, monitoring and maintenance of technology and information systems according to prescribed internal and adopted industry standards, including secure disposal of systems and media to render all information or data contained therein as undecipherable or unrecoverable prior to final disposal or release from Clerk’s possession.
+
+9\. Change management procedures and tracking mechanisms designed to test, approve, and monitor all changes to Clerk’s technology and information assets.
+
+10\. Incident / problem management procedures designed to allow Clerk to investigate, respond to, mitigate, and notify of events related to Clerk’s technology and information assets.
+
+11\. Network security controls that provide for the use of firewall systems, intrusion detection systems, and other traffic and event correlation procedures designed to protect systems from intrusion and limit the scope of any successful attack.
+
+12\. Vulnerability assessment, patch management and threat protection technologies and scheduled monitoring procedures designed to identify, assess, mitigate, and protect against identified security threats, viruses, and other malicious code.
+
+13\. Business resiliency/continuity and disaster recovery procedures in an effort to maintain service and/or recovery from foreseeable emergency situations or disasters.
+
+## Schedule 3
+
+**STANDARD CONTRACTUAL CLAUSES**
+
+For the purposes of the Standard Contractual Clauses:
+
+1\. Module One (Controller to Controller) shall apply in the case of the processing under clause 3.1.(a)(iii) of the DPA.  Module Two (Controller to Processor) shall apply in the case of the processing under clause 3.1(a)(i) of the DPA and Module Three (Processor to Sub-Processor) shall apply in the case of processing under clause 3.1(a)(ii) of the DPA.  For each Module, where applicable, the following applies:
+
+2\. Clause 7 of the Standard Contractual Clauses (Docking Clause) does not apply.
+
+3\. Clause 9(a) Option 2 (General written authorization) is selected, and the time period to be specified is determined in clause 5.3 of the DPA.
+
+4\. The option in clause 11(a) of the Standard Contractual Clauses (Independent dispute resolution body) does not apply.
+
+5\. With regard to clause 17 of the Standard Contractual Clauses (Governing law), the Parties agree that option one shall apply. The parties agree that the governing law shall be the law of the Republic of Ireland.
+
+6\. In clause 18 of the Standard Contractual Clauses (Choice of forum and jurisdiction), the Parties submit themselves to the jurisdiction of the courts of the Republic of Ireland.
+
+7\. For the Purpose of Annex I of the Standard Contractual Clauses, Schedule 1 contains the specifications regarding the parties, the description of transfer, and the competent supervisory authority.
+
+8\. For the Purpose of Annex II of the Standard Contractual Clauses, Schedule 2 contains the technical and organizational measures.
+
+9\. The specifications for Annex III of the Standard Contractual Clauses, are determined by clause 5.1 of the DPA. The Sub-processor’s contact person’s name, position and contact details will be provided by Clerk upon request.
+
+## Schedule 4
+
+**ADDITIONAL SUPPLEMENTARY MEASURES**
+
+Clerk further commits to implementing supplementary measures based on guidance provided by EU supervisory authorities in order to enhance the protection of Customer Personal Data in relation to the processing in a third country, as described in this Schedule 4.
+
+1\. Additional Technical Measures (Encryption)
+
+1.1 The personal data is transmitted (between the Parties and by Clerk between data centers as well as to a Sub-processor and back) using strong encryption.
+
+1.2 The personal data at rest is stored by Clerk using strong encryption
+
+2\. Additional Organizational Measures
+
+2.1 Internal policies for governance of transfers especially with groups of enterprises
+
+　(a) Adoption of adequate internal policies with clear allocation of responsibilities for data transfers, reporting channels and standard operating procedures for cases of formal or informal requests from public authorities to access the data.
+
+　(b) Development of specific training procedures for personnel in charge of managing requests for access to personal data from public authorities, which should be periodically updated to reflect new legislative and jurisprudential developments in the third country and in the EEA.
+
+2.2 Transparency and accountability measures
+
+Regular publication of transparency reports or summaries regarding governmental requests for access to data and the kind of reply provided, insofar publication is allowed by local law.
+
+2.3 Organizational methods and data minimization measures
+
+Development and implementation of best practices by both Parties to appropriately and timely involve and provide access of information to their respective data protection officers, if existent, and to their legal and internal auditing services on matters related to international transfers of personal data transfers.
+
+2.4 Others
+
+Adoption and regular review by Clerk of internal policies to assess the suitability of the implemented complementary measures and identify and implement additional or alternative solutions when necessary, to ensure that an essentially equivalent level of protection to that guaranteed within the EEA of the personal data transferred is maintained.
+
+3\. Additional Contractual Measures
+
+3.1 Transparency obligations
+
+　(a) Clerk declares that (1) it has not purposefully created back doors or similar programming that could be used to access the system and/or personal data, (2) it has not purposefully created or changed its business processes in a manner that facilitates access to personal data or systems, and (3) that national law or government policy does not require Clerk to create or maintain back doors or to facilitate access to personal data or systems or for Clerk to be in possession or to hand over the encryption key.
+
+　(b) Clerk will verify the validity of the information provided for the TIA questionnaire on a regular basis and provide notice to Customer in case of any changes without delay. Clause 14(e) of the SCCs shall remain unaffected.
+
+3.2 Obligations to take specific actions
+
+In case of any order to disclose or to grant access to the personal data, Clerk commits to inform the requesting public authority of the incompatibility of the order with the safeguards contained in the Article 46 GDPR transfer tool and the resulting conflict of obligations for Clerk.
+
+3.3 Empowering data subjects to exercise their rights
+
+　(a) Clerk commits to fairly compensate the data subject for any material and non-material damage suffered because of the disclosure of his/her personal data transferred under the chosen transfer tool in violation of the commitments it contains.
+
+　(b) Notwithstanding the foregoing, Clerk shall have no obligation to indemnify the data subject to the extent the data subject has already received compensation for the same damage.
+
+　(c) Compensation is limited to material and non-material damages as provided in the GDPR and excludes consequential damages and all other damages not resulting from Clerk’s infringement of the GDPR.
+
+4\. Additional obligations in case of requests or access by public authorities
+
+4.1 Clerk shall promptly inform Customer:
+
+　(a) Of any legally binding requests from a law enforcement or other government authority (“Public Authority”) to disclose the personal data shared by Customer (“Transferred Personal Data”); such notification shall include information about the personal data requested, the requesting authority, the legal basis for the request and the response provided. Such notification shall occur prior to the disclosure of any personal data in response to such requests.
+
+　(b) If it becomes aware of any direct access by public authorities to transfer personal data in accordance with the laws of the country of destination, such notification shall include all information available to Clerk.
+
+　(c) If Clerk is prohibited from notifying Customer and/or the data subject, Clerk agrees to use its best efforts to obtain a waiver of the prohibition, with a view to communicate as much information and as soon as possible. Clerk agrees to document its best efforts in order to be able to demonstrate them upon request of the data exporter.
+
+4.2 Clerk agrees to review, under the laws of the country of destination, the legality of the public authority’s request, notably whether it remains within the powers granted to the requesting public authority and exhaust all available remedies to challenge the request if, after a careful assessment, Clerk concludes that there are grounds under the laws of the country of destination to do so. This includes requests under section 702 of the United States Foreign Intelligence Surveillance Court or Executive Order 12333. When challenging a request, Clerk shall seek interim measures with a view to suspend the effects of the request until the court has decided on the merits. Clerk shall not disclose or provide access to the personal data requested until required to do so under the applicable procedural rules and, at such time, shall provide only the minimum amount of information required to comply with the request, based on a reasonable interpretation of the request.
+
+4.3 Clerk agrees to preserve the information required to comply with this Schedule 4 for the duration of the Agreement and, unless prohibited by applicable law, make it available to the competent supervisory authority upon request and when required by applicable law.
+
+## Schedule 5
+
+**UK AND SWISS ADDENDUM**
+
+1\. **UK ADDENDUM**
+
+With respect to any transfers of Customer Personal Data falling within the scope of the UK GDPR from Customer (as data exporter) to Clerk (as data importer):
+
+1.1 The Approved Addendum as further specified in this Schedule 5 shall form part of this DPA, and the Standard Contractual Clauses shall be read and interpreted in light of the provisions of the Approved Addendum, to the extent necessary according to clause 12 of the Mandatory Clauses.
+
+1.2 In deviation to Table 1 of the Approved Addendum and in accordance with clause 17 of the Mandatory Clauses, the parties are further specified in Schedule 1 Part 1 of this DPA.
+
+1.3 The selected Modules and Clauses to be determined according to Table 2 of the Approved Addendum are further specified in Schedule 3 of this DPA as amended by the Mandatory Clauses.
+
+1.4 Annex 1 A and B of Table 3 to the Approved Addendum are specified by Schedule 1 of this DPA, Annex II of the Approved Addendum is further specified by Schedule 2 of this DPA, and Annex III of the Approved Addendum is further specified by Schedule 1 clause B.10 of this DPA.
+
+1.5 Clerk (as data importer) may end this DPA, to the extent the Approved Addendum applies, in accordance with clause ‎19 of the Mandatory Clauses.
+
+1.6 Clause 16 of the Mandatory Clauses shall not apply.
+
+2\. **SWISS ADDENDUM**
+
+As stipulated in clause 13 of the DPA, this Swiss Addendum shall apply to any processing of Customer Personal Data subject to Swiss data protection law or to both Swiss data protection law and the GDPR.
+
+2.1 Interpretation of this Addendum
+
+　(a) Where this Addendum uses terms that are defined in the Standard Contractual Clauses as further specified in Schedule 3 of this DPA, those terms shall have the same meaning as in the Standard Contractual Clauses. In addition, the following terms have the following meanings:
+
+　　(i) “This Addendum” means This Addendum to the Clauses.
+
+　　(ii) “Clauses” means The Standard Contractual Clauses as further specified in Schedule 3 of this DPA.
+
+　　(iii) “Swiss Data Protection Laws” means The Swiss Federal Act on Data Protection of 19 June 1992 and the Swiss Ordinance to the Swiss Federal Act on Data Protection of 14 June 1993, and any new or revised version of these laws that may enter into force from time to time.
+
+　(b) This Addendum shall be read and interpreted in the light of the provisions of Swiss Data Protection Laws, and so that if fulfills the intention for it to provide the appropriate safeguards as required by Article 46 GDPR and/or Article 6(2)(a) of the Swiss Data Protection Laws, as the case may be.
+
+　(c) This Addendum shall not be interpreted in a way that conflicts with rights and obligations provided for in Swiss Data Protection Laws.
+
+　(d) Any references to legislation (or specific provisions of legislation) means that legislation (or specific provision) as it may change over time. This includes where that legislation (or specific provision) has been consolidated, re-enacted and/or replaced after this Addendum has been entered into.
+
+2.2 Hierarchy
+
+In the event of a conflict or inconsistency between this Addendum and the provisions of the Clauses or other related agreements between the Parties, existing at the time this Addendum is agreed or entered into thereafter, the provisions which provide the most protection to data subjects shall prevail.
+
+2.3 Incorporation of the Clauses
+
+　(a) In relation to any processing of personal data subject to Swiss Data Protection Laws or to both Swiss Data Protection Laws and the GDPR, this Addendum amends the DPA including as further specified in Schedule 3 of this DPA to the extent necessary so they operate:
+
+　　(i) for transfers made by the data exporter to the data importer, to the extent that Swiss Data Protection Laws or Swiss Data Protection Laws and the GDPR apply to the data exporter’s processing when making that transfer; and
+
+　　(ii) to provide appropriate safeguards for the transfers in accordance with Article 46 of the GDPR and/or Article 6(2)(a) of the Swiss Data Protection Laws, as the case may be.
+
+　(b) To the extent that any processing of personal data is exclusively subject to Swiss Data Protection Laws, the amendments to the DPA including the SCCs, as further specified in Schedule 3 of this DPA and as required by clause 2.1 of this Swiss Addendum, include (without limitation):
+
+　　(i) References to the “Clauses” or the “SCCs” means this Swiss Addendum as it amends the SCCs and
+
+　　(ii) Clause 6 Description of the transfer(s) is replaced with:
+
+“The details of the transfer(s), and in particular the categories of personal data that are transferred and the purpose(s) for which they are transferred, are those specified in Schedule 1 of this DPA where Swiss Data Protection Laws apply to the data exporter’s processing when making that transfer.”
+
+　　(iii) References to “Regulation (EU) 2016/679” or “that Regulation” or “GDPR” are replaced by “Swiss Data Protection Laws” and references to specific Article(s) of “Regulation (EU) 2016/679” or “GDPR” are replaced with the equivalent Article or Section of Swiss Data Protection Laws extent applicable.
+
+　　(iv) References to Regulation (EU) 2018/1725 are removed.
+
+　　(v) References to the “European Union”, “Union”, “EU” and “EU Member State” are all replaced with “Switzerland”.
+
+　　(vi) Clause 13(a) and Part C of Annex I are not used; the “competent supervisory authority” is the Federal Data Protection and Information Commissioner (the “FDPIC”) insofar as the transfers are governed by Swiss Data Protection Laws;
+
+　　(vii) Clause 17 is replaced to state:
+
+“These Clauses are governed by the laws of Switzerland insofar as the transfers are governed by Swiss Data Protection Laws”.
+
+　　(viii) Clause 18 is replaced to state:
+
+“Any dispute arising from these Clauses relating to Swiss Data Protection Laws shall be resolved by the courts of Switzerland. A data subject may also bring legal proceedings against the data exporter and/or data importer before the courts of Switzerland in which he/she has his/her habitual residence. The Parties agree to submit themselves to the jurisdiction of such courts.”
+
+Until the entry into force of the revised Swiss Data Protection Laws, the Clauses shall also protect personal data of legal entities and legal entities shall receive the same protection under the Clauses as natural persons.
+
+2.4 To the extent that any processing of personal data is subject to both Swiss Data Protection Laws and the GDPR, the DPA including the Clauses as further specified in Schedule 3 of this DPA will apply (i) as is and (ii) additionally, to the extent that a transfer is subject to Swiss Data Protection Laws, as amended by clauses 2.1 and 2.3 of this Swiss Addendum, with the sole exception that clause 17 of the SCCs shall not be replaced as stipulated under clause 2.3(b)(vii) of this Swiss Addendum.
+
+2.5 Customer warrants that it and/or Customer End Users have made any notifications to the FDPIC which are required under Swiss Data Protection Laws.
+
+## Schedule
+
+**U.S. ADDENDUM**
+
+As stipulated in clause 14 of the DPA, this U.S. Addendum shall apply to any processing of Customer Personal Data subject to US Data Protection Laws.
+
+To the extent required by US Data Protection Laws, Clerk is prohibited from:
+
+(a) selling Customer Personal Data or otherwise making Customer Personal Data available to any third party for monetary or other valuable consideration;
+
+(b) sharing Customer Personal Data with any third party for cross-behavioral advertising;
+
+(c) retaining, using, or disclosing Customer Personal Data for any purpose other than for the business purposes specified in the Agreement or as otherwise permitted by US Data Protection Laws;
+
+(d) retaining, using or disclosing Customer Personal Data outside of the direct business relationship between the Parties; and
+
+(e) except as otherwise permitted by US Data Protection Laws, combining Customer Personal Data with Personal Data that Clerk receives from or on behalf of another person or persons, or collects from its own interaction with the data subject.
+
+## Schedule 7
+
+**AUSTRALIAN ADDENDUM**
+
+If Customer is transferring Personal Data subject to the Australian Data Protection Laws to Clerk, Customer acknowledges that the provisions set forth in this DPA protect the information in a way that is substantially similar to the Australian Privacy Principles (except APP1). 
+
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+## Schedule 8
+
+**JAPAN ADDENDUM**
+
+In the case of a transfer of Customer Personal Data that is subject to the Japanese Act on the Protection of Personal Information (“APPI”) to a country deemed to not provide an adequate level of privacy protection, the parties agree that the DPA and its exhibits apply as legitimate measures for such transfer.
+
+The parties agree to notify the other party if, after having agreed to the DPA and for the duration of the Agreement, a party has reason to believe that either party cannot comply with its obligation under the DPA or the DPA does not comply with the provisions of the APPI.  In which case, the parties will cooperate in good faith to identity appropriate measures to be adopted.   If no appropriate measures can be implemented, the parties will cooperate to evaluate whether to suspend the transfer of Customer Personal Data.
+
+The Services are not designed to handle specific Personal Data as defined and subject to the Japanese My Number Act (i.e., the Act on the Use of Numbers to Identify a Specific Individual in the Administrative Procedure Act (Act No. 27 of 2013), as may be amended), unless otherwise agreed between Clerk and Customer in the Agreement.
+
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+## Schedule 9
+
+**BRAZIL ADDENDUM**
+
+With respect to personal data of Brazilian data subjects, the Customer agrees that Clerk may process Customer Personal Data outside of Brazil, and represents and warrants that such transfer of Customer Personal Data is in compliance with LGPD.
