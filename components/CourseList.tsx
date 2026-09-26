@@ -17,18 +17,21 @@ function iconFor(course: Course) {
   return BrainCircuit;
 }
 
-export default function CourseList() {
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function CourseList({ iniciales = [] }: { iniciales?: Course[] }) {
+  const [courses, setCourses] = useState<Course[]>(iniciales);
+  // Si el servidor ya envió los cursos, se muestran de inmediato: sin
+  // «Cargando…» y sin que el pie de página salte (CLS).
+  const [loading, setLoading] = useState(iniciales.length === 0);
   const [error, setError] = useState('');
 
   useEffect(() => {
+    if (iniciales.length > 0) return;
     api
       .courses()
       .then(setCourses)
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
-  }, []);
+  }, [iniciales.length]);
 
   if (loading) {
     return (

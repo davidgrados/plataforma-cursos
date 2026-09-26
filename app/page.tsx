@@ -1,8 +1,37 @@
 import Link from 'next/link';
 import { GraduationCap, ShieldCheck, TerminalSquare } from 'lucide-react';
 import CourseList from '@/components/CourseList';
+import { getEnv } from '@/lib/cloudflare';
+import type { Course } from '@/lib/types';
 
-export default function HomePage() {
+/**
+ * Los cursos se leen en el SERVIDOR y se envían ya renderizados.
+ *
+ * Motivo (CLS): antes se pedían desde el navegador, así que la página mostraba
+ * un pequeño «Cargando cursos…» y, al llegar los datos, la cuadrícula completa
+ * aparecía de golpe empujando el pie de página hacia abajo. Ahora la cuadrícula
+ * forma parte del HTML inicial: no hay ningún salto.
+ */
+async function leerCursos(): Promise<Course[]> {
+  try {
+    const env = await getEnv();
+    const { results } = await env.DB.prepare(
+      `SELECT c.*,
+              (SELECT COUNT(*) FROM modules m WHERE m.course_id = c.id) AS module_count
+       FROM courses c
+       ORDER BY (SELECT COUNT(*) FROM modules m WHERE m.course_id = c.id) = 0 ASC,
+                c.created_at DESC`,
+    ).all();
+    return (results ?? []) as Course[];
+  } catch {
+    // Si la lectura falla, CourseList los pedirá desde el navegador (como antes).
+    return [];
+  }
+}
+
+export default async function HomePage() {
+  const cursos = await leerCursos();
+
   return (
     <div className="flex flex-col gap-12">
       {/* Hero */}
@@ -101,7 +130,7 @@ export default function HomePage() {
           <h2 className="text-2xl font-bold text-slate-900">Cursos disponibles</h2>
           <p className="text-slate-600">Elige un curso para empezar a aprender.</p>
         </div>
-        <CourseList />
+        <CourseList iniciales={cursos} />
       </section>
     </div>
   );

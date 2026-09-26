@@ -32,7 +32,7 @@ export default function CoursePage() {
 
   if (!course) {
     return (
-      <div className="flex items-center justify-center gap-2 py-20 text-slate-500">
+      <div className="flex min-h-[75vh] items-center justify-center gap-2 py-20 text-slate-500">
         <Loader2 className="h-5 w-5 animate-spin" /> Cargando curso…
       </div>
     );

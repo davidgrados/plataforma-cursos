@@ -39,7 +39,7 @@ export default function CuentaPage() {
 
   if (!isLoaded) {
     return (
-      <div className="flex items-center justify-center py-20 text-slate-500">
+      <div className="flex min-h-[75vh] items-center justify-center py-20 text-slate-500">
         <Loader2 className="mr-2 h-5 w-5 animate-spin" />
         Cargando…
       </div>
