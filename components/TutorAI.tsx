@@ -129,6 +129,108 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
     synth.speak(u);
   }, []);
 
+  /**
+   * Igual que hablar(), pero SIN cancelar lo que ya está en cola: así se puede
+   * ir hablando la respuesta por frases mientras la IA todavía la escribe.
+   */
+  const hablarTrozo = useCallback((texto: string, primero: boolean) => {
+    if (typeof window === 'undefined' || !window.speechSynthesis || !texto) return;
+    const synth = window.speechSynthesis;
+    if (primero) synth.cancel();
+    const u = new SpeechSynthesisUtterance(texto);
+    u.lang = 'en-US';
+    u.rate = 0.95;
+    if (voiceRef.current) u.voice = voiceRef.current;
+    u.onstart = () => setEstado('hablando');
+    // Solo se marca «listo» cuando ya no queda nada por decir en la cola.
+    u.onend = () => {
+      if (!window.speechSynthesis.pending) setEstado('listo');
+    };
+    u.onerror = () => {
+      if (!window.speechSynthesis.pending) setEstado('listo');
+    };
+    synth.speak(u);
+  }, []);
+
+  /**
+   * Lee la respuesta que llega por partes y va hablando por frases, sin esperar
+   * a que termine. Devuelve lo transcrito, el texto completo y si llegó entero.
+   */
+  const leerEnVivo = useCallback(
+    async (res: Response): Promise<{ dicho: string; respuesta: string; completo: boolean }> => {
+      const lector = res.body!.getReader();
+      const dec = new TextDecoder();
+      let resto = '';
+      let dicho = '';
+      let respuesta = '';
+      let pendiente = '';
+      let dentro = 0; // profundidad de paréntesis (la ayuda en español)
+      let yaHablo = false;
+      let completo = false;
+
+      /** Quita lo que va entre paréntesis y deja solo el inglés. */
+      const soloIngles = (txt: string) => {
+        let out = '';
+        for (const c of txt) {
+          if (c === '(') {
+            dentro += 1;
+            continue;
+          }
+          if (c === ')') {
+            dentro = Math.max(0, dentro - 1);
+            continue;
+          }
+          if (dentro === 0) out += c;
+        }
+        return out.replace(/\s+/g, ' ').trim();
+      };
+
+      const decir = (txt: string) => {
+        const limpio = soloIngles(txt);
+        if (!limpio) return;
+        hablarTrozo(limpio, !yaHablo);
+        yaHablo = true;
+      };
+
+      for (;;) {
+        const { done, value } = await lector.read();
+        if (done) break;
+        resto += dec.decode(value, { stream: true });
+        const lineas = resto.split('\n');
+        resto = lineas.pop() ?? '';
+        for (const linea of lineas) {
+          const m = linea.match(/^data:\s*(.*)$/);
+          if (!m) continue;
+          let ev: any;
+          try {
+            ev = JSON.parse(m[1]);
+          } catch {
+            continue;
+          }
+          if (ev.transcript) {
+            dicho = String(ev.transcript).trim();
+            if (dicho) setTranscripcion(dicho); // se muestra en cuanto llega
+          }
+          if (ev.delta) {
+            respuesta += ev.delta;
+            pendiente += ev.delta;
+            // Se habla cada vez que hay una frase terminada.
+            let frase: RegExpMatchArray | null;
+            while ((frase = pendiente.match(/^([\s\S]*?[.!?])(\s|$)/))) {
+              pendiente = pendiente.slice(frase[0].length);
+              decir(frase[1]);
+            }
+          }
+          if (ev.done) completo = true;
+        }
+      }
+
+      decir(pendiente); // lo que quedara sin punto final
+      return { dicho, respuesta: respuesta.trim(), completo };
+    },
+    [hablarTrozo],
+  );
+
   // --- Limpieza del micrófono ---
   const soltarMicrofono = useCallback(() => {
     if (rafRef.current) {
@@ -174,8 +276,8 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
         silencioRef.current = 0;
       } else if (habloRef.current) {
         silencioRef.current += 1;
-        // ~1,2 s de silencio después de hablar: cerramos solos (más fluido)
-        if (silencioRef.current > 70) {
+        // ~0,75 s de silencio después de hablar: cerramos solos (más ágil)
+        if (silencioRef.current > 45) {
           silencioRef.current = 0;
           habloRef.current = false;
           try {
@@ -212,6 +314,31 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
           form.append('ejemplo', turn.example);
           form.append('turno', String(turnIndex + 1));
           form.append('historial', JSON.stringify(historial));
+
+          // 1) Intento «en vivo»: Colliq empieza a hablar mientras la IA escribe.
+          res = await fetch('/api/tutor?vivo=1', { method: 'POST', body: form });
+          const esFlujo =
+            res.ok &&
+            !!res.body &&
+            (res.headers.get('content-type') || '').includes('text/event-stream');
+          if (esFlujo) {
+            const { dicho, respuesta: enVivo, completo } = await leerEnVivo(res);
+            if (completo && enVivo) {
+              if (dicho) {
+                setResultado(evaluar(dicho, turn));
+                setChat((c) => [...c, { rol: 'yo', texto: dicho }]);
+              }
+              const { ingles, ayuda } = partirRespuesta(enVivo);
+              setChat((c) => [...c, { rol: 'colliq', texto: ingles, traduccion: ayuda }]);
+              if (!ingles) setEstado('listo');
+              return;
+            }
+            // Si la respuesta en vivo se cortó a medias, se repite por el
+            // camino clásico (la voz vuelve a empezar con la respuesta entera).
+            setEstado('pensando');
+          }
+
+          // 2) Camino clásico (o repetición si el directo no funcionó).
           res = await fetch('/api/tutor', { method: 'POST', body: form });
         } else {
           res = await fetch('/api/tutor', {
@@ -252,7 +379,7 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
         setDetalle(e?.message ? `Detalle: ${e.message}` : '');
       }
     },
-    [modulo, turn, turnIndex, hablar, chat],
+    [modulo, turn, turnIndex, hablar, leerEnVivo, chat],
   );
 
   // --- Empezar / detener grabación ---
@@ -343,7 +470,7 @@ export default function TutorAI({ moduloInicial }: { moduloInicial?: string }) {
   // Colliq presenta el turno (voz) cuando no está hablando el estudiante
   useEffect(() => {
     if (consent !== true || modoTexto || estado === 'grabando') return;
-    const id = window.setTimeout(() => hablar(turn.say), 250);
+    const id = window.setTimeout(() => hablar(turn.say), 120);
     return () => window.clearTimeout(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [turnIndex, practicaIdx, moduloIdx, consent, modoTexto]);

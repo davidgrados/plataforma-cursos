@@ -210,17 +210,84 @@ export async function POST(request: Request) {
   }
 
   // ---- 2. Texto -> respuesta de Colliq ----
+  //
+  //  Modo «en vivo» (?vivo=1): se envía la respuesta por partes según la IA la
+  //  va escribiendo, para que el navegador pueda empezar a hablar de inmediato
+  //  en lugar de esperar a la respuesta completa. Si ningún modelo admite
+  //  streaming, se continúa con el camino normal de más abajo.
+  const mensajes = [
+    { role: 'system', content: personalidad(modulo, ejemplo, turno) },
+    ...historial,
+    { role: 'user', content: transcripcion },
+  ];
+
+  if (new URL(request.url).searchParams.get('vivo') === '1') {
+    for (const modelo of MODELOS_CHAT) {
+      let flujo: any;
+      try {
+        flujo = await env.AI.run(modelo, {
+          messages: mensajes,
+          max_tokens: 110,
+          temperature: 0.5,
+          stream: true,
+        });
+      } catch {
+        continue; // este modelo no admite streaming: se prueba el siguiente
+      }
+      if (!flujo || typeof flujo.getReader !== 'function') continue;
+
+      const cuerpo = new ReadableStream({
+        async start(controlador) {
+          const cod = new TextEncoder();
+          const emitir = (dato: unknown) =>
+            controlador.enqueue(cod.encode(`data: ${JSON.stringify(dato)}\n\n`));
+          emitir({ transcript: transcripcion });
+          const lector = flujo.getReader();
+          const dec = new TextDecoder();
+          let resto = '';
+          try {
+            for (;;) {
+              const { done, value } = await lector.read();
+              if (done) break;
+              resto += dec.decode(value, { stream: true });
+              const lineas = resto.split('\n');
+              resto = lineas.pop() ?? '';
+              for (const linea of lineas) {
+                const m = linea.match(/^data:\s*(.*)$/);
+                if (!m || m[1].trim() === '[DONE]') continue;
+                try {
+                  const trozo = JSON.parse(m[1])?.response;
+                  if (trozo) emitir({ delta: trozo });
+                } catch {
+                  /* fragmento incompleto: se ignora */
+                }
+              }
+            }
+          } catch {
+            /* corte a mitad de camino: el navegador lo detecta y reintenta */
+          } finally {
+            emitir({ done: true });
+            controlador.close();
+          }
+        },
+      });
+
+      return new Response(cuerpo, {
+        headers: {
+          'Content-Type': 'text/event-stream; charset=utf-8',
+          'Cache-Control': 'no-cache, no-transform',
+        },
+      });
+    }
+  }
+
   let respuesta = '';
   let ultimoError = '';
   for (const modelo of MODELOS_CHAT) {
     try {
       const chat: any = await env.AI.run(modelo, {
-        messages: [
-          { role: 'system', content: personalidad(modulo, ejemplo, turno) },
-          ...historial,
-          { role: 'user', content: transcripcion },
-        ],
-        max_tokens: 180,
+        messages: mensajes,
+        max_tokens: 110,
         temperature: 0.5,
       });
       respuesta = String(chat?.response ?? '').trim();
