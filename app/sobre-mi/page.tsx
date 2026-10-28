@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { BookOpen, Github, GraduationCap, Mail, MapPin, Sparkles, Terminal } from 'lucide-react';
+import { BookOpen, Github, GraduationCap, Mail, MapPin, Music2, Sparkles, Terminal } from 'lucide-react';
 import { ARTICULOS } from '@/lib/ia/articulos';
-import { AUTOR, BIO_CORTA } from '@/lib/perfil';
+import { AUTOR, BIO_CORTA, REDES } from '@/lib/perfil';
 import { SITE_NAME, absoluteUrl, organizationJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = {
@@ -123,14 +123,24 @@ export default function SobreMiPage() {
             >
               <Mail className="h-4 w-4" /> {AUTOR.email}
             </a>
-            <a
-              href="https://github.com/davidgrados"
-              rel="me noopener"
-              target="_blank"
-              className="flex items-center gap-1.5 hover:text-sky-700"
-            >
-              <Github className="h-4 w-4" /> github.com/davidgrados
-            </a>
+            {REDES.map((red) => (
+              <a
+                key={red.nombre}
+                href={red.url}
+                // rel="me": le dice a Google que este perfil y esta página
+                // son la misma persona (verificación de identidad).
+                rel="me noopener noreferrer"
+                target="_blank"
+                className="flex items-center gap-1.5 hover:text-sky-700"
+              >
+                {red.icono === 'tiktok' ? (
+                  <Music2 className="h-4 w-4" />
+                ) : (
+                  <Github className="h-4 w-4" />
+                )}
+                {red.nombre}: {red.usuario}
+              </a>
+            ))}
           </p>
         </div>
       </header>

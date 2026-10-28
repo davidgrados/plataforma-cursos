@@ -61,8 +61,27 @@ tarda mucho más en descubrir `/sobre-mi` y `/ia`.
    con enlace al artículo completo). La constancia vale más que la extensión.
 5. Añadir «Edúcate Comas» como experiencia actual con el enlace a la web.
 
-> Cuando existan, añadir esos perfiles a `sameAs` en `lib/perfil.ts`: GitHub ya está. Faltan
-> LinkedIn, X/Twitter, YouTube o Medium si los va a usar.
+> Perfiles ya declarados en `sameAs` (`lib/perfil.ts`): **TikTok** (`@davidgradosa`) y **GitHub**
+> (`davidgrados`). Faltan LinkedIn y, si los usa, YouTube o X. Para añadir uno nuevo basta editar
+> `REDES` en `lib/perfil.ts`: aparece solo en `/sobre-mi`, en el pie y en el JSON-LD.
+
+### B bis. TikTok: cómo convertir los vídeos en señal SEO
+
+TikTok no posiciona en Google, pero **sí alimenta la identidad de la marca**: Google encuentra el
+perfil, ve el nombre completo y suma una fuente externa que confirma que la persona existe.
+
+Qué hacer en el perfil:
+
+1. **Nombre visible** (no el @): *David Grados Alzamora*. El @ es `@davidgradosa`; en el campo
+   «Nombre» hay que escribir el nombre completo, porque es lo que indexan los buscadores.
+2. **Biografía** con la palabra clave: «Inteligencia artificial explicada en simple · Fundador de
+   Edúcate Comas».
+3. **Enlace en bio**: `https://educatecomas.com/sobre-mi` (una página con más enlaces desde el
+   perfil reparte mejor la señal que la portada).
+4. **Al publicar**: di el tema en las primeras palabras del texto del vídeo («prompts», «qué es la
+   IA») y escribe el nombre completo al menos en la descripción de los vídeos importantes.
+5. **Constancia**: 2–3 vídeos por semana valen más que 10 en un día y un mes de silencio. Cada
+   vídeo puede ser el resumen de 60 segundos de una guía de `/ia`, con enlace en bio.
 
 ### C. Menciones externas (de 1 a 3 al mes, sin rellenar)
 

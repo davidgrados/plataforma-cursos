@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { REDES } from '@/lib/perfil';
 
 const CONTACTO = 'davidgradosa@hotmail.com';
 
@@ -26,6 +27,17 @@ export default function Footer() {
             <Link href="/terminos" className="transition hover:text-sky-700">
               Términos de uso
             </Link>
+            {REDES.filter((r) => r.icono === 'tiktok').map((r) => (
+              <a
+                key={r.nombre}
+                href={r.url}
+                rel="me noopener noreferrer"
+                target="_blank"
+                className="transition hover:text-sky-700"
+              >
+                TikTok
+              </a>
+            ))}
             <span>Para toda la familia</span>
           </nav>
         </div>

@@ -6,6 +6,8 @@
 //  leen Google y Bing) digan siempre lo mismo en todas las páginas.
 // ============================================================
 
+import { REDES } from './perfil';
+
 /** Dirección oficial y única del sitio (sin "www"). */
 export const SITE_URL = 'https://educatecomas.com';
 
@@ -104,7 +106,8 @@ export function organizationJsonLd() {
       name: 'Perú',
     },
     knowsLanguage: ['es', 'en'],
-    sameAs: ['https://github.com/davidgrados'],
+    // Perfiles oficiales (los mismos que declara la persona en /sobre-mi).
+    sameAs: REDES.map((r) => r.url),
   };
 }
 
