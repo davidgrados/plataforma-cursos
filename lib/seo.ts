@@ -80,9 +80,18 @@ export function organizationJsonLd() {
     foundingDate: '2026',
     founder: {
       '@type': 'Person',
+      // El mismo @id que usa /sobre-mi: así Google entiende que el fundador
+      // de la plataforma y el autor de los artículos son la misma persona.
+      '@id': `${SITE_URL}/sobre-mi#persona`,
       name: OWNER.name,
+      url: absoluteUrl('/sobre-mi'),
       email: OWNER.email,
       jobTitle: OWNER.role,
+      knowsAbout: [
+        'Inteligencia artificial',
+        'Aprendizaje automático',
+        'Modelos de lenguaje grandes (LLM)',
+      ],
     },
     address: {
       '@type': 'PostalAddress',
@@ -95,7 +104,7 @@ export function organizationJsonLd() {
       name: 'Perú',
     },
     knowsLanguage: ['es', 'en'],
-    sameAs: [] as string[],
+    sameAs: ['https://github.com/davidgrados'],
   };
 }
 

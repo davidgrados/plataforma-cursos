@@ -221,6 +221,44 @@ export default async function HomePage() {
         </p>
       </section>
 
+      {/* Puente a la sección de artículos y al autor: enlazado interno que
+          reparte autoridad hacia las páginas de marca personal. */}
+      <section className="grid gap-4 sm:grid-cols-2">
+        <Link
+          href="/ia"
+          className="group flex flex-col gap-2 rounded-2xl border border-sky-200 bg-gradient-to-br from-sky-50 via-white to-indigo-50 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+        >
+          <span className="w-fit rounded-full bg-white px-3 py-1 text-xs font-semibold text-sky-700 shadow-sm">
+            Nuevo
+          </span>
+          <h2 className="text-xl font-bold text-slate-900 group-hover:text-sky-700">
+            Guías de inteligencia artificial
+          </h2>
+          <p className="text-sm leading-relaxed text-slate-600">
+            Qué es la IA, cómo escribir buenos prompts y cómo aprender gratis desde Perú,
+            explicado en simple y sin tecnicismos.
+          </p>
+          <span className="mt-auto text-sm font-semibold text-sky-700">Leer las guías →</span>
+        </Link>
+
+        <Link
+          href="/sobre-mi"
+          className="group flex flex-col gap-2 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-sky-300 hover:shadow-lg"
+        >
+          <span className="w-fit rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+            Quién está detrás
+          </span>
+          <h2 className="text-xl font-bold text-slate-900 group-hover:text-sky-700">
+            David Grados Alzamora
+          </h2>
+          <p className="text-sm leading-relaxed text-slate-600">
+            Fundador de Edúcate Comas. Escribe sobre inteligencia artificial y educación
+            tecnológica gratuita desde Comas, Lima.
+          </p>
+          <span className="mt-auto text-sm font-semibold text-sky-700">Conocer su trabajo →</span>
+        </Link>
+      </section>
+
       {/* Preguntas frecuentes: además de ayudar a la persona, Google puede
           mostrarlas como resultados enriquecidos (datos estructurados FAQPage). */}
       <section className="flex flex-col gap-4">

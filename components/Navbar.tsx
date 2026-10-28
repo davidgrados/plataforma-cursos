@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { SignInButton, UserButton } from '@clerk/nextjs';
-import { Eye, Mic, TerminalSquare, UserCog } from 'lucide-react';
+import { Eye, Mic, Sparkles, TerminalSquare, UserCog } from 'lucide-react';
 import { PREVIEW_MODE, useAuthUser } from '@/lib/auth-context';
 
 export default function Navbar() {
@@ -34,6 +34,16 @@ export default function Navbar() {
           >
             <Mic className="h-4 w-4" />
             Tutor de inglés
+          </Link>
+
+          {/* Sección de artículos: el enlace desde todas las páginas ayuda a
+              que Google entienda que es contenido importante del sitio. */}
+          <Link
+            href="/ia"
+            className="hidden items-center gap-1.5 rounded-lg px-3 py-2 text-sm text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 sm:flex"
+          >
+            <Sparkles className="h-4 w-4" />
+            Guías de IA
           </Link>
 
           {PREVIEW_MODE ? (

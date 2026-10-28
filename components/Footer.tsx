@@ -11,6 +11,12 @@ export default function Footer() {
         <div className="flex w-full flex-col items-center justify-between gap-3 text-sm text-slate-500 sm:flex-row">
           <p>© 2026 Edúcate Comas · Todos los derechos reservados</p>
           <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+            <Link href="/ia" className="transition hover:text-sky-700">
+              Guías de IA
+            </Link>
+            <Link href="/sobre-mi" className="transition hover:text-sky-700">
+              Sobre el autor
+            </Link>
             <Link href="/privacidad" className="transition hover:text-sky-700">
               Privacidad
             </Link>
@@ -27,7 +33,10 @@ export default function Footer() {
         <div className="flex w-full flex-col items-center gap-1 border-t border-slate-200 pt-5 text-center text-xs text-slate-500">
           <p>
             Contacto:{' '}
-            <span className="font-semibold text-slate-700">David Grados Alzamora</span> ·{' '}
+            <Link href="/sobre-mi" className="font-semibold text-slate-700 hover:text-sky-700">
+              David Grados Alzamora
+            </Link>{' '}
+            ·{' '}
             <a
               href={`mailto:${CONTACTO}`}
               className="font-medium text-sky-700 underline-offset-2 transition hover:underline"
@@ -36,7 +45,10 @@ export default function Footer() {
             </a>
           </p>
           <p>
-            Un proyecto de <span className="font-semibold text-slate-700">David Grados Alzamora</span>{' '}
+            Un proyecto de{' '}
+            <Link href="/sobre-mi" className="font-semibold text-slate-700 hover:text-sky-700">
+              David Grados Alzamora
+            </Link>{' '}
             · Los contenidos y el código están protegidos: prohibida su reproducción sin
             autorización.
           </p>
