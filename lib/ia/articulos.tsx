@@ -303,6 +303,134 @@ function Articulo3() {
   );
 }
 
+function Articulo4() {
+  return (
+    <>
+      <p className="lead text-lg text-slate-700">
+        La pregunta que más se repite en las salas de profesores ya no es «¿qué es la IA?», sino
+        «¿cómo la uso sin que se me vuelva un problema?». Esta guía es para docentes de secundaria que
+        quieren ahorrar tiempo real en la planificación y evaluar mejor, sin convertir la clase en una
+        carrera contra la herramienta.
+      </p>
+
+      <h2>Primero, una respuesta clara</h2>
+      <p>
+        La IA no va a reemplazar al docente, porque el oficio no consiste en transmitir información
+        —eso ya lo hace internet desde hace veinte años— sino en <strong>decidir qué vale la pena
+        aprender, en qué orden, y acompañar a quien se está quedando atrás</strong>. Ninguna
+        herramienta hace eso sola. Lo que sí cambia es la cantidad de trabajo mecánico que puedes
+        delegar.
+      </p>
+
+      <h2>Cinco usos que ahorran tiempo de verdad</h2>
+
+      <h3>1. Planificar una sesión desde cero</h3>
+      <p>
+        En lugar de empezar con la hoja en blanco:</p>
+      <blockquote>
+        <p>
+          «Actúa como docente de secundaria en Perú. Diseña una sesión de 90 minutos sobre
+          fotosíntesis para tercero de secundaria, con inicio, desarrollo y cierre, un experimento
+          simple con materiales de cocina y tres preguntas de salida».
+        </p>
+      </blockquote>
+      <p>
+        Revisas, ajustas a tu grupo y ya no partes de cero. La sesión sigue siendo tuya: el modelo
+        propone un borrador, tú decides.
+      </p>
+
+      <h3>2. Adaptar el mismo texto a tres niveles</h3>
+      <p>
+        Un solo material para toda la clase casi nunca funciona. Pide la misma lectura en versión
+        básica, intermedia y avanzada, manteniendo las ideas centrales. En diez minutos tienes
+        diferenciación que antes costaba una tarde.
+      </p>
+
+      <h3>3. Ejercicios con distractores plausibles</h3>
+      <p>
+        Aquí la IA es especialmente buena: generar diez preguntas de opción múltiple donde los
+        distractores sean errores reales que cometen los estudiantes, no opciones absurdas. Pide
+        también la justificación de cada respuesta correcta para revisarlas rápido.
+      </p>
+
+      <h3>4. Rúbricas para trabajos abiertos</h3>
+      <p>
+        Describe la competencia y el producto que esperas, y pide tres criterios con descriptores de
+        logro alto, medio y bajo. Las rúbricas son lo más lento de escribir y lo que más se reutiliza
+        después.
+      </p>
+
+      <h3>5. Retroalimentación individual (con cuidado)</h3>
+      <p>
+        Puedes darle el texto del estudiante y pedir comentarios en dos pasos: uno sobre la idea y
+        otro sobre la forma, en un lenguaje que un adolescente entienda. El docente revisa y firma
+        cada comentario: <strong>la IA redacta, tú evalúas</strong>.
+      </p>
+
+      <h2>Los tres riesgos que sí importan</h2>
+      <p>
+        <strong>Datos de estudiantes.</strong> Nunca subas nombres, notas, diagnósticos ni
+        fotografías a una herramienta pública. Trabaja con fragmentos anónimos («estudiante A»).
+        Cumplir la ley de datos empieza por no exponerlos.
+      </p>
+      <p>
+        <strong>Respuestas falsas.</strong> Los modelos inventan datos con seguridad total: fechas,
+        fórmulas, citas. Toda cifra que vayas a dictar se verifica en la fuente original. Si no tienes
+        tiempo de verificarlo, no lo uses.
+      </p>
+      <p>
+        <strong>Sesgos.</strong> Los modelos heredan los sesgos de lo que leyeron. Revisa ejemplos y
+        lecturas: si todos los científicos del ejercicio son hombres o todos los casos son de Lima,
+        la herramienta te está repitiendo un patrón.
+      </p>
+
+      <h2>Qué hacer con las tareas hechas con IA</h2>
+      <p>
+        Los detectores no son confiables: se equivocan tanto que acusar a un estudiante por su
+        resultado es un riesgo grave. El camino que sí funciona es cambiar el diseño de la
+        evaluación:
+      </p>
+      <ul>
+        <li><strong>Evaluar el proceso, no solo el producto:</strong> pedir borradores, apuntes y la evolución del trabajo.</li>
+        <li><strong>Defensa oral breve:</strong> tres preguntas en dos minutos sobre lo que escribió.</li>
+        <li><strong>Versión en clase a mano:</strong> el esquema o la conclusión, en veinte minutos.</li>
+        <li><strong>Tareas situadas:</strong> problemas con datos locales que no están en internet.</li>
+      </ul>
+
+      <h2>Una política de aula en cuatro reglas</h2>
+      <ol>
+        <li>La IA se usa para pensar, no para copiar un entregable.</li>
+        <li>Si la usaste, lo dices: en una línea al final del trabajo, para qué y en qué parte.</li>
+        <li>Los datos y cifras se verifican; el trabajo que suene seguro y falso no vale.</li>
+        <li>Lo que se entrega lo defiendes: si no puedes explicarlo, no es tuyo.</li>
+      </ol>
+      <p>
+        Cuatro reglas caben en un afiche y se entienden sin explicación previa. Es más útil que un
+        reglamento de dos páginas que nadie lee.
+      </p>
+
+      <h2>Plan de 30 días para empezar sin agobiarte</h2>
+      <ul>
+        <li><strong>Semana 1:</strong> un solo uso —planificar sesiones— con una herramienta gratuita. Nada más.</li>
+        <li><strong>Semana 2:</strong> adapta un texto a tres niveles y pruébalo con tu grupo.</li>
+        <li><strong>Semana 3:</strong> genera un banco de 20 preguntas de tu materia y revísalas tú.</li>
+        <li><strong>Semana 4:</strong> acuerda con los estudiantes las cuatro reglas y rediseña una evaluación.</li>
+      </ul>
+      <p>
+        Un uso bien incorporado vale más que diez probados a la vez. La meta no es que la IA esté en
+        todas tus clases: es que te devuelva horas para lo que solo tú puedes hacer.
+      </p>
+
+      <p>
+        Si quieres el detalle de cómo pedirle las cosas para que la respuesta sirva a la primera, la
+        receta de cuatro partes está en la guía de <strong>cómo escribir buenos prompts</strong>. Y si
+        el objetivo es que tus estudiantes entiendan qué es esta tecnología, la guía{' '}
+        <strong>qué es la inteligencia artificial</strong> está escrita para leerse en clase.
+      </p>
+    </>
+  );
+}
+
 export const ARTICULOS: Articulo[] = [
   {
     slug: 'que-es-la-inteligencia-artificial',
@@ -357,6 +485,25 @@ export const ARTICULOS: Articulo[] = [
       'estudiar IA sin dinero',
     ],
     Contenido: Articulo3,
+  },
+  {
+    slug: 'ia-para-docentes-peru',
+    titulo: 'IA para docentes de secundaria en Perú: guía práctica para usarla en clase',
+    descripcion:
+      'Cinco usos de la inteligencia artificial que ahorran tiempo a los docentes (planificar, adaptar textos, ejercicios, rúbricas y retroalimentación), los riesgos reales y una política de aula en cuatro reglas.',
+    resumen:
+      'Qué delegar en la IA y qué no, tres riesgos que sí importan, cómo evaluar cuando la tarea pudo hacerse con IA y un plan de 30 días para empezar sin agobiarse.',
+    fecha: '2026-10-27',
+    lectura: 7,
+    tema: 'Educación',
+    palabrasClave: [
+      'IA para docentes',
+      'inteligencia artificial en el aula',
+      'IA educación secundaria Perú',
+      'planificar clases con inteligencia artificial',
+      'detectar tareas hechas con IA',
+    ],
+    Contenido: Articulo4,
   },
 ];
 
