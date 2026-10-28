@@ -4,9 +4,16 @@ import { Cookie, Lock, Mail, ShieldCheck } from 'lucide-react';
 import CookieSettings from '@/components/CookieSettings';
 
 export const metadata: Metadata = {
-  title: 'Política de Privacidad y Cookies | Edúcate Comas',
+  title: 'Política de Privacidad y Cookies',
   description:
     'Cómo Edúcate Comas trata tus datos personales y qué cookies utiliza la plataforma de cursos interactivos.',
+  alternates: { canonical: '/privacidad' },
+  openGraph: {
+    url: 'https://educatecomas.com/privacidad',
+    title: 'Política de Privacidad y Cookies | Edúcate Comas',
+    description:
+      'Cómo Edúcate Comas trata tus datos personales y qué cookies utiliza la plataforma de cursos interactivos.',
+  },
 };
 
 const ACTUALIZADO = 'Septiembre de 2026';

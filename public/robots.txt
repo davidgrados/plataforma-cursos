@@ -1,7 +1,20 @@
+# Edúcate Comas · https://educatecomas.com
+# Cursos interactivos gratis de Linux, inglés, IA y seguridad.
+
 User-agent: *
 Allow: /
 
-# No es necesario indexar las rutas de consentimiento parental (llevan un token personal)
+# Zonas privadas o con datos personales: no deben indexarse.
+Disallow: /api/
+Disallow: /cuenta
+Disallow: /sign-in
+Disallow: /sign-up
+# Autorización del tutor: lleva un token personal en la dirección.
 Disallow: /consentimiento/
+# Las lecciones se cargan en el navegador y requieren sesión iniciada.
+Disallow: /lesson/
+
+# Dirección única del sitio (sin "www").
+Host: educatecomas.com
 
 Sitemap: https://educatecomas.com/sitemap.xml

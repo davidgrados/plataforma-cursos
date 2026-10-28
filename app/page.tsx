@@ -1,8 +1,50 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { GraduationCap, ShieldCheck, TerminalSquare } from 'lucide-react';
 import CourseList from '@/components/CourseList';
 import { getEnv } from '@/lib/cloudflare';
+import { SITE_DESCRIPTION, SITE_KEYWORDS, SITE_NAME, SITE_TAGLINE, absoluteUrl } from '@/lib/seo';
 import type { Course } from '@/lib/types';
+
+/** Preguntas frecuentes: se muestran en la portada y también como datos estructurados. */
+const PREGUNTAS = [
+  {
+    q: '¿Los cursos son realmente gratis?',
+    a: 'Sí. Todos los cursos de Edúcate Comas son gratuitos y no necesitas tarjeta ni suscripción. Puedes entrar, leer las lecciones y practicar en el laboratorio sin crear una cuenta.',
+  },
+  {
+    q: '¿Necesito instalar Linux o algún programa?',
+    a: 'No. El laboratorio funciona dentro del navegador con una terminal simulada, así que puedes practicar comandos de Linux desde una computadora, una tablet o un celular.',
+  },
+  {
+    q: '¿Para qué sirve crear una cuenta?',
+    a: 'La cuenta es opcional y sirve para guardar tu progreso: lecciones completadas, resultados de los exámenes y el punto donde te quedaste. Sin cuenta puedes estudiar igual, pero el avance no se conserva.',
+  },
+  {
+    q: '¿Pueden usarlos menores de edad?',
+    a: 'Sí. El contenido está pensado para toda la familia. Si el estudiante tiene menos de 14 años, pedimos la autorización de su madre, padre o tutor para tratar sus datos, tal como exige la ley peruana.',
+  },
+  {
+    q: '¿De dónde es Edúcate Comas?',
+    a: 'Es una iniciativa educativa de Comas, Lima (Perú), impulsada por David Grados Alzamora. El objetivo es acercar la tecnología y el inglés a la comunidad, de forma gratuita y en español.',
+  },
+];
+
+export const metadata: Metadata = {  // `absolute` evita que la plantilla del layout repita la marca al final.
+  title: { absolute: `${SITE_NAME} · ${SITE_TAGLINE}` },
+  description: SITE_DESCRIPTION,
+  keywords: SITE_KEYWORDS,
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'website',
+    siteName: SITE_NAME,
+    locale: 'es_PE',
+    url: absoluteUrl('/'),
+    title: `${SITE_NAME} · ${SITE_TAGLINE}`,
+    description: SITE_DESCRIPTION,
+    images: [{ url: absoluteUrl('/og-image.png'), width: 1200, height: 630, alt: `${SITE_NAME}: ${SITE_TAGLINE}` }],
+  },
+};
 
 /**
  * Los cursos se leen en el SERVIDOR y se envían ya renderizados.
@@ -34,6 +76,30 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col gap-12">
+      {/*
+        Datos estructurados de la portada: la lista de cursos disponibles.
+        Ayuda a Google a entender que la web es un catálogo de cursos y a
+        enlazar cada uno con su página.
+      */}
+      {cursos.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'ItemList',
+              name: 'Cursos de Edúcate Comas',
+              numberOfItems: cursos.length,
+              itemListElement: cursos.map((curso, i) => ({
+                '@type': 'ListItem',
+                position: i + 1,
+                name: curso.title,
+                url: absoluteUrl(`/course/${curso.slug}`),
+              })),
+            }),
+          }}
+        />
+      )}
       {/* Hero */}
       <section className="animate-fade-up flex flex-col items-center gap-6 py-10 text-center">
         <div className="flex items-center gap-3 rounded-full border border-sky-200 bg-white px-4 py-1.5 text-sm font-medium text-sky-700">
@@ -132,6 +198,62 @@ export default async function HomePage() {
         </div>
         <CourseList iniciales={cursos} />
       </section>
+
+      {/* Texto para buscadores: explica en palabras claras qué es el sitio.
+          Es contenido real para la persona que llega desde Google, no relleno. */}
+      <section className="prose prose-slate max-w-none rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+        <h2>¿Qué puedes aprender en Edúcate Comas?</h2>
+        <p>
+          Edúcate Comas es una plataforma educativa gratuita creada en Comas, Lima (Perú), para que
+          cualquier persona pueda aprender tecnología desde su navegador, sin instalar nada. Reúne
+          cursos de <strong>Linux básico</strong>, <strong>inglés</strong> con práctica de
+          pronunciación, <strong>inteligencia artificial</strong>, <strong>seguridad informática</strong>,
+          <strong>ciberseguridad</strong>, <strong>informática forense</strong> y{' '}
+          <strong>marketing digital</strong>.
+        </p>
+        <p>
+          Cada curso combina lecciones cortas, ejemplos y un laboratorio con una{' '}
+          <strong>terminal Linux simulada</strong> donde puedes escribir comandos de verdad sin
+          riesgo. Al final de cada módulo hay prácticas y exámenes que confirman lo aprendido, y si
+          creas una cuenta (es opcional) tu progreso queda guardado para continuar donde lo dejaste.
+          El contenido está pensado para toda la familia: estudiantes de colegio, universitarios y
+          adultos que quieren dar sus primeros pasos en informática.
+        </p>
+      </section>
+
+      {/* Preguntas frecuentes: además de ayudar a la persona, Google puede
+          mostrarlas como resultados enriquecidos (datos estructurados FAQPage). */}
+      <section className="flex flex-col gap-4">
+        <h2 className="text-2xl font-bold text-slate-900">Preguntas frecuentes</h2>
+        <div className="flex flex-col gap-3">
+          {PREGUNTAS.map((p) => (
+            <details
+              key={p.q}
+              className="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-sky-300"
+            >
+              <summary className="cursor-pointer list-none font-semibold text-slate-900 marker:hidden">
+                {p.q}
+              </summary>
+              <p className="mt-2 text-sm leading-relaxed text-slate-600">{p.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: PREGUNTAS.map((p) => ({
+              '@type': 'Question',
+              name: p.q,
+              acceptedAnswer: { '@type': 'Answer', text: p.a },
+            })),
+          }),
+        }}
+      />
     </div>
   );
 }

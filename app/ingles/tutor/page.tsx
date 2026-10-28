@@ -5,9 +5,20 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import TutorAI from '@/components/TutorAI';
 
 export const metadata: Metadata = {
-  title: 'Colliq · Asistente de inglés con IA | Edúcate Comas',
+  title: 'Colliq · Asistente de inglés con IA',
   description:
     'Habla en inglés con Colliq, tu asistente de IA: te escucha, te corrige con cariño y conversa contigo. Usa el micrófono solo si lo autorizas.',
+  alternates: { canonical: '/ingles/tutor' },
+  openGraph: {
+    type: 'website',
+    siteName: 'Edúcate Comas',
+    locale: 'es_PE',
+    url: 'https://educatecomas.com/ingles/tutor',
+    title: 'Colliq · Asistente de inglés con IA | Edúcate Comas',
+    description:
+      'Practica conversación en inglés con un asistente de IA que te escucha, te corrige y te responde con voz.',
+    images: [{ url: 'https://educatecomas.com/og-image.png', width: 1200, height: 630 }],
+  },
 };
 
 export default function TutorInglesPage() {

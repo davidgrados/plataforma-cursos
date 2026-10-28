@@ -3,9 +3,16 @@ import Link from 'next/link';
 import { Copyright, Mail, ShieldCheck, Scale } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Términos y Condiciones de uso | Edúcate Comas',
+  title: 'Términos y Condiciones de uso',
   description:
     'Condiciones de uso de la plataforma educativa Edúcate Comas: uso permitido, propiedad intelectual, contenido de los cursos y responsabilidades.',
+  alternates: { canonical: '/terminos' },
+  openGraph: {
+    url: 'https://educatecomas.com/terminos',
+    title: 'Términos y Condiciones de uso | Edúcate Comas',
+    description:
+      'Condiciones de uso de la plataforma educativa Edúcate Comas: uso permitido, propiedad intelectual, contenido de los cursos y responsabilidades.',
+  },
 };
 
 const ACTUALIZADO = 'Septiembre de 2026';

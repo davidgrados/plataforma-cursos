@@ -31,6 +31,39 @@ const nextConfig = {
           },
         ],
       },
+      // ---------------------------------------------------------------------
+      //  Páginas que NO deben aparecer en Google (X-Robots-Tag: noindex).
+      //
+      //  Son zonas privadas o con datos personales: la cuenta, el acceso, las
+      //  lecciones (su contenido se carga en el navegador y solo se ve con
+      //  sesión) y la autorización del tutor (lleva un token personal). Si
+      //  Google las indexara, mostraría al visitante una pantalla vacía o de
+      //  acceso y restaría calidad al sitio.
+      // ---------------------------------------------------------------------
+      {
+        source: '/lesson/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, follow' }],
+      },
+      {
+        source: '/cuenta',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
+      {
+        source: '/sign-in/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
+      {
+        source: '/sign-up/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
+      {
+        source: '/consentimiento/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
+      {
+        source: '/api/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
     ];
   },
 };

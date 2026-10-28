@@ -1,41 +1,51 @@
 import type { MetadataRoute } from 'next';
 import { getEnv } from '@/lib/cloudflare';
+import { SITE_URL } from '@/lib/seo';
 
-// Se genera en cada petición (necesita la base de datos para listar cursos y lecciones).
+// Se genera en cada petición (necesita la base de datos para listar los cursos).
 export const dynamic = 'force-dynamic';
 
-const BASE = 'https://educatecomas.com';
-
+/**
+ * Mapa del sitio: la lista de direcciones que le decimos a Google que visite.
+ *
+ * Solo se incluyen páginas que muestran su contenido completo sin iniciar
+ * sesión (portada, cada curso, el asistente de inglés y las páginas legales).
+ * Las lecciones se quedan fuera a propósito: su contenido se carga en el
+ * navegador y exige sesión, así que indexarlas solo aportaría páginas vacías.
+ */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const ahora = new Date();
 
   const paginas: MetadataRoute.Sitemap = [
-    { url: `${BASE}/`, lastModified: ahora, changeFrequency: 'weekly', priority: 1 },
-    { url: `${BASE}/ingles/tutor`, lastModified: ahora, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE}/privacidad`, lastModified: ahora, changeFrequency: 'yearly', priority: 0.3 },
-    { url: `${BASE}/terminos`, lastModified: ahora, changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${SITE_URL}/`, lastModified: ahora, changeFrequency: 'weekly', priority: 1 },
+    {
+      url: `${SITE_URL}/ingles/tutor`,
+      lastModified: ahora,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    { url: `${SITE_URL}/privacidad`, lastModified: ahora, changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${SITE_URL}/terminos`, lastModified: ahora, changeFrequency: 'yearly', priority: 0.3 },
   ];
 
   try {
     const env = await getEnv();
 
-    const cursos = await env.DB.prepare('SELECT slug FROM courses ORDER BY created_at DESC').all();
-    const paginasCursos: MetadataRoute.Sitemap = (cursos.results as { slug: string }[]).map((c) => ({
-      url: `${BASE}/course/${c.slug}`,
-      lastModified: ahora,
+    const cursos = await env.DB.prepare(
+      'SELECT slug, created_at FROM courses ORDER BY created_at DESC',
+    ).all();
+
+    const paginasCursos: MetadataRoute.Sitemap = (cursos.results as {
+      slug: string;
+      created_at: string | null;
+    }[]).map((c) => ({
+      url: `${SITE_URL}/course/${c.slug}`,
+      lastModified: c.created_at ? new Date(c.created_at) : ahora,
       changeFrequency: 'monthly',
       priority: 0.9,
     }));
 
-    const lecciones = await env.DB.prepare('SELECT id FROM lessons ORDER BY id ASC').all();
-    const paginasLecciones: MetadataRoute.Sitemap = (lecciones.results as { id: number }[]).map((l) => ({
-      url: `${BASE}/lesson/${l.id}`,
-      lastModified: ahora,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    }));
-
-    return [...paginas, ...paginasCursos, ...paginasLecciones];
+    return [...paginas, ...paginasCursos];
   } catch {
     // Si la base de datos no responde, devolvemos al menos las páginas principales.
     return paginas;
