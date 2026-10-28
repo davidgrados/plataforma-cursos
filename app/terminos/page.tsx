@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 const ACTUALIZADO = 'Septiembre de 2026';
 const CONTACTO = 'davidgradosa@hotmail.com';
-const RESPONSABLE = 'David Grados';
+const RESPONSABLE = 'David Grados Alzamora';
 
 export default function TerminosPage() {
   return (
@@ -169,7 +169,8 @@ export default function TerminosPage() {
         <h2>13. Contacto</h2>
         <p>
           Para consultas sobre estos Términos, solicitudes de autorización de uso de contenidos o
-          cualquier comunicación, escríbenos a{' '}
+          cualquier comunicación, escribe al titular de la Plataforma,{' '}
+          <strong>{RESPONSABLE}</strong>, a{' '}
           <a href={`mailto:${CONTACTO}`}>{CONTACTO}</a>.
         </p>
       </div>

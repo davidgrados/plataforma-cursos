@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 const ACTUALIZADO = 'Septiembre de 2026';
 const CONTACTO = 'davidgradosa@hotmail.com';
-const RESPONSABLE = 'David Grados';
+const RESPONSABLE = 'David Grados Alzamora';
 
 export default function PrivacidadPage() {
   return (
@@ -331,7 +331,7 @@ export default function PrivacidadPage() {
         <h2>14. Banco de datos personales y su registro ante la ANPD</h2>
         <p>
           Los datos de las cuentas se organizan en un <strong>banco de datos personales</strong>
-          titularidad de <strong>David Grados</strong> (Edúcate Comas), tratado conforme a la Ley N° 29733
+          titularidad de <strong>{RESPONSABLE}</strong> (Edúcate Comas), tratado conforme a la Ley N° 29733
           y su Reglamento aprobado por D.S. N° 016-2024-JUS.
         </p>
         <ul>
